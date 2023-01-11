@@ -3,9 +3,29 @@
 
 #include <iostream>
 
+using namespace std;
+
+void logIn() {
+
+    string username;
+    string password;
+    bool authenticated = false;
+
+    while (authenticated == false) {
+        cout << "Username: " << endl;
+        cin >> username;
+        cout << "Password: " << endl;
+        cin >> password;
+
+        // if checks
+
+        // else authenticated = true;
+    }
+}
+
 int main()
 {
-    std::cout << "Hello World!\n";
+    logIn();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
