@@ -2,6 +2,7 @@
 //
 
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -9,17 +10,32 @@ void logIn() {
 
     string username;
     string password;
+    string choice;
+    ofstream userProfiles;
     bool authenticated = false;
 
     while (authenticated == false) {
-        cout << "Username: " << endl;
-        cin >> username;
-        cout << "Password: " << endl;
-        cin >> password;
-
-        // if checks
-
-        // else authenticated = true;
+        cout << "===========Forums===========" << endl;
+        cout << "[1] Login" << endl;
+        cout << "[2] Sign Up" << endl;
+        cout << "============================" << endl;
+        cin >> choice;
+        if (choice == "1") {
+            cout << "Enter Username: " << endl;
+            cin >> username;
+            cout << "Enter Password: " << endl;
+            cin >> password;
+        }
+        else if (choice == "2") {
+            cout << "Enter a New Username: " << endl;
+            cin >> username;
+            cout << "Enter a New Password: " << endl;
+            cin >> password;
+            //open file for writing
+            userProfiles.open("profiles.txt");
+            userProfiles << "test\n";
+            userProfiles.close();
+        }
     }
 }
 
