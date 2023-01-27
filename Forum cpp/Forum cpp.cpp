@@ -3,10 +3,13 @@
 
 #include <iostream>
 #include <fstream>
+#include "LinkedList.h"
+#include "Dictionary.h"
 
 using namespace std;
 
-void logIn() {
+bool logIn()
+{
 
     string username;
     string password;
@@ -14,34 +17,86 @@ void logIn() {
     ofstream userProfiles;
     bool authenticated = false;
 
-    while (authenticated == false) {
+    while (authenticated == false)
+    {
         cout << "===========Forums===========" << endl;
         cout << "[1] Login" << endl;
         cout << "[2] Sign Up" << endl;
         cout << "============================" << endl;
         cin >> choice;
-        if (choice == "1") {
+        if (choice == "1")
+        {
             cout << "Enter Username: " << endl;
             cin >> username;
             cout << "Enter Password: " << endl;
             cin >> password;
         }
-        else if (choice == "2") {
+        else if (choice == "2")
+        {
             cout << "Enter a New Username: " << endl;
             cin >> username;
             cout << "Enter a New Password: " << endl;
             cin >> password;
-            //open file for writing
+            // open file for writing
             userProfiles.open("profiles.txt");
             userProfiles << "test\n";
             userProfiles.close();
         }
     }
+    return authenticated;
+}
+
+List createTopic(List topicList)
+{
+
+    string topicName;
+    cout << "New topic title: " << endl;
+    cin >> topicName;
+
+    topicList.add(topicName);
+    return topicList;
+}
+
+List ListTopics(List topicList)
+{
+
+    topicList.print();
 }
 
 int main()
 {
-    logIn();
+
+    List topicList = List();
+    while (true)
+    {
+
+        logIn();
+
+        if (logIn() == true)
+        {
+
+            string choice;
+            cout << "===========Forums===========" << endl;
+            cout << "View Topics" << endl;
+            cout << "Create Topics" << endl;
+            cout << "============================" << endl;
+
+            if (choice == "1")
+            {
+                ListTopics(topicList);
+            }
+
+            else if (choice == "2")
+            {
+                createTopic(topicList);
+            }
+
+            else
+            {
+                return false;
+            }
+        }
+    }
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

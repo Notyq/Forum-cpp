@@ -1,5 +1,4 @@
 #include "Dictionary.h"
-#include "Dictionary.h"
 
 Dictionary::Dictionary() {
 	for (int i = 0; i < MAX_SIZE; i++) {
