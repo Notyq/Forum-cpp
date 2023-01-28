@@ -5,6 +5,7 @@
 #include <fstream>
 #include "LinkedList.h"
 #include "Dictionary.h"
+#include "Topic.h"
 
 using namespace std;
 
@@ -48,20 +49,20 @@ bool logIn()
     return authenticated;
 }
 
-List createTopic(List topicList)
+Topic createTopic(Topic t1)
 {
 
     string topicName;
-    cout << "New topic title: " << endl;
+    string topicDesc;
+
+    cout << "New topic title: \n";
     cin >> topicName;
+    cout << "Topic desciprtion: \n";
+    cin >> topicDesc;
 
-    topicList.add(topicName);
-    return topicList;
-}
+    Topic t1(topicName, topicDesc);
 
-void ListTopics(List topicList)
-{
-    topicList.print();
+    return t1;
 }
 
 int main()
@@ -69,6 +70,8 @@ int main()
     bool authenticated;
     List topicList = List();
     authenticated = logIn();
+    Topic topic = Topic();
+
     while (authenticated)
     {
         string choice;
@@ -80,12 +83,13 @@ int main()
 
         if (choice == "1")
         {
-            ListTopics(topicList);
+            topicList.print();
         }
 
         else if (choice == "2")
         {
-            createTopic(topicList);
+            createTopic(topic);
+            topicList.add(topic.getTitle());
         }
 
         else
