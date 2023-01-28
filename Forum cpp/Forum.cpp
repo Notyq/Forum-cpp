@@ -43,7 +43,6 @@ bool logIn()
                     while (!nameFound) {
                         getline(userProfiles, profile);
                         name = profile.substr(0, profile.find(","));
-                        cout << name << endl;
                         if (name == username) {
                             nameFound = true;
                         }
@@ -61,7 +60,6 @@ bool logIn()
                     cout << "Enter Password: " << endl;
                     cin >> password;
                     pass = profile.substr(profile.find(",")+1,profile.length() - 1);
-                    cout << pass << endl;
                     if (pass == password) {
                         authenticated = true;
                         break;
