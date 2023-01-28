@@ -75,10 +75,33 @@ bool logIn()
         // Sign Up
         else if (choice == "2")
         {
-            cout << "Enter a New Username: " << endl;
-            cin >> username;
-            cout << "Enter a New Password: " << endl;
-            cin >> password;
+            bool nameConf = false;
+            bool passConf = false;
+            string confirm;
+            while (!nameConf) {
+                cout << "Enter a New Username: " << endl;
+                cin >> username;
+                cout << "Confirm?(Y/N): " << endl;
+                cin >> confirm;
+                if (confirm == "y") {
+                    nameConf = true;
+                }
+                else {
+                    continue;
+                }
+            }
+            while (!passConf) {
+                cout << "Enter a New Password: " << endl;
+                cin >> password;
+                cout << "Confirm?(Y/N): " << endl;
+                cin >> confirm;
+                if (confirm == "y") {
+                    passConf = true;
+                }
+                else {
+                    continue;
+                }
+            }
             // open file for writing
             userProfiles.open("profiles.txt");
             userProfiles << username + "," + password;
