@@ -59,7 +59,7 @@ Topic createTopic(Topic t1)
 
     cout << "New topic title: \n";
     cin >> topicName;
-    cout << "Topic desciprtion: \n";
+    cout << "Topic description: \n";
     cin >> topicDesc;
 
     Topic t1(topicName, topicDesc);
