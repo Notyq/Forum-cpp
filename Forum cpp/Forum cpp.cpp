@@ -30,6 +30,7 @@ bool logIn()
             cin >> username;
             cout << "Enter Password: " << endl;
             cin >> password;
+            authenticated = true;
         }
         else if (choice == "2")
         {
@@ -41,6 +42,7 @@ bool logIn()
             userProfiles.open("profiles.txt");
             userProfiles << "test\n";
             userProfiles.close();
+            authenticated = true;
         }
     }
     return authenticated;
@@ -57,44 +59,38 @@ List createTopic(List topicList)
     return topicList;
 }
 
-List ListTopics(List topicList)
+void ListTopics(List topicList)
 {
-
     topicList.print();
 }
 
 int main()
 {
-
+    bool authenticated;
     List topicList = List();
-    while (true)
+    authenticated = logIn();
+    while (authenticated)
     {
+        string choice;
+        cout << "===========Forums===========" << endl;
+        cout << "View Topics" << endl;
+        cout << "Create Topics" << endl;
+        cout << "============================" << endl;
+        cin >> choice;
 
-        logIn();
-
-        if (logIn() == true)
+        if (choice == "1")
         {
+            ListTopics(topicList);
+        }
 
-            string choice;
-            cout << "===========Forums===========" << endl;
-            cout << "View Topics" << endl;
-            cout << "Create Topics" << endl;
-            cout << "============================" << endl;
+        else if (choice == "2")
+        {
+            createTopic(topicList);
+        }
 
-            if (choice == "1")
-            {
-                ListTopics(topicList);
-            }
-
-            else if (choice == "2")
-            {
-                createTopic(topicList);
-            }
-
-            else
-            {
-                return false;
-            }
+        else
+        {
+            return false;
         }
     }
 }
