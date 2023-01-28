@@ -3,8 +3,11 @@
 
 #include <iostream>
 #include <fstream>
+
 #include "LinkedList.h"
 #include "Dictionary.h"
+#include "Topic.h"
+#include "Posts.h"
 
 using namespace std;
 
@@ -94,19 +97,19 @@ bool logIn()
     }
 }
 
-List createTopic(List topicList)
+Topic createTopic(Topic t1)
 {
     string topicName;
-    cout << "New topic title: " << endl;
+    string topicDesc;
+
+    cout << "New topic title: \n";
     cin >> topicName;
+    cout << "Topic description: \n";
+    cin >> topicDesc;
 
-    topicList.add(topicName);
-    return topicList;
-}
+    Topic t1(topicName, topicDesc);
 
-void ListTopics(List topicList)
-{
-    topicList.print();
+    return t1;
 }
 
 int main()
@@ -114,30 +117,33 @@ int main()
     bool authenticated;
     List topicList = List();
     authenticated = logIn();
-    //while (authenticated)
-    //{
-    //    string choice;
-    //    cout << "===========Forums===========" << endl;
-    //    cout << "View Topics" << endl;
-    //    cout << "Create Topics" << endl;
-    //    cout << "============================" << endl;
-    //    cin >> choice;
+    Topic topic = Topic();
 
-    //    if (choice == "1")
-    //    {
-    //        ListTopics(topicList);
-    //    }
+    while (authenticated)
+    {
+        string choice;
+        cout << "===========Forums===========" << endl;
+        cout << "View Topics" << endl;
+        cout << "Create Topics" << endl;
+        cout << "============================" << endl;
+        cin >> choice;
 
-    //    else if (choice == "2")
-    //    {
-    //        createTopic(topicList);
-    //    }
+        if (choice == "1")
+        {
+            topicList.print();
+        }
 
-    //    else
-    //    {
-    //        return false;
-    //    }
-    //}
+        else if (choice == "2")
+        {
+            createTopic(topic);
+            topicList.add(topic.getTitle());
+        }
+
+        else
+        {
+            return false;
+        }
+    }
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
