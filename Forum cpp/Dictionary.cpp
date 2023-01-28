@@ -24,8 +24,7 @@ Dictionary::~Dictionary() {
 int Dictionary::hash(KeyType key) {
 	int code = 0;
 	for (int i = 0; i < key.length(); i++) {
-		int c = key[i];
-		code += c;
+		code += key[i] * pow(31, i++);
 	}
 	code = code * 52 % MAX_SIZE;
 	return code;
