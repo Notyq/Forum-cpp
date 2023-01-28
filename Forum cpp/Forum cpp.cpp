@@ -14,7 +14,7 @@ bool logIn()
     string username;
     string password;
     string choice;
-    ofstream userProfiles;
+    fstream userProfiles;
     bool authenticated = false;
 
     while (authenticated == false)
@@ -22,16 +22,56 @@ bool logIn()
         cout << "===========Forums===========" << endl;
         cout << "[1] Login" << endl;
         cout << "[2] Sign Up" << endl;
+        cout << "[0] Exit" << endl;
         cout << "============================" << endl;
+        cout << "Choice: ";
         cin >> choice;
+        // Log In
         if (choice == "1")
         {
-            cout << "Enter Username: " << endl;
-            cin >> username;
-            cout << "Enter Password: " << endl;
-            cin >> password;
-            authenticated = true;
+            userProfiles.open("profiles.txt");
+            while (!authenticated) {   //checking whether the file is open
+                bool nameFound = false;
+                string profile;
+                string name;
+                while (!nameFound) { //read data from file object and put it into string.
+                    cout << "Enter Username: ";
+                    cin >> username;
+                    while (!nameFound) {
+                        getline(userProfiles, profile);
+                        name = profile.substr(0, profile.find(","));
+                        cout << name << endl;
+                        if (name == username) {
+                            nameFound = true;
+                        }
+                        if (userProfiles.eof()) {
+                            cout << "Username is Not Found" << endl;
+                            userProfiles.clear();
+                            userProfiles.seekg(0);
+                            break;
+                        }
+                    }
+                }
+                bool passRight = false;
+                string pass;
+                while (!passRight) { //read data from file object and put it into string.
+                    cout << "Enter Password: " << endl;
+                    cin >> password;
+                    pass = profile.substr(profile.find(",")+1,profile.length() - 1);
+                    cout << pass << endl;
+                    if (pass == password) {
+                        authenticated = true;
+                        break;
+                    }
+                    else {
+                        cout << "Password is Incorrect" << endl;
+                    }
+                }
+                cout << "Successfully Logged In :)" << endl;
+                return authenticated;
+            }
         }
+        // Sign Up
         else if (choice == "2")
         {
             cout << "Enter a New Username: " << endl;
@@ -40,17 +80,22 @@ bool logIn()
             cin >> password;
             // open file for writing
             userProfiles.open("profiles.txt");
-            userProfiles << "test\n";
+            userProfiles << username + "," + password;
             userProfiles.close();
             authenticated = true;
+            return authenticated;
+        }
+        else if (choice == "0") {
+            exit(0);
+        }
+        else {
+            cout << "Please Enter a Valid Option" << endl;
         }
     }
-    return authenticated;
 }
 
 List createTopic(List topicList)
 {
-
     string topicName;
     cout << "New topic title: " << endl;
     cin >> topicName;
@@ -69,30 +114,30 @@ int main()
     bool authenticated;
     List topicList = List();
     authenticated = logIn();
-    while (authenticated)
-    {
-        string choice;
-        cout << "===========Forums===========" << endl;
-        cout << "View Topics" << endl;
-        cout << "Create Topics" << endl;
-        cout << "============================" << endl;
-        cin >> choice;
+    //while (authenticated)
+    //{
+    //    string choice;
+    //    cout << "===========Forums===========" << endl;
+    //    cout << "View Topics" << endl;
+    //    cout << "Create Topics" << endl;
+    //    cout << "============================" << endl;
+    //    cin >> choice;
 
-        if (choice == "1")
-        {
-            ListTopics(topicList);
-        }
+    //    if (choice == "1")
+    //    {
+    //        ListTopics(topicList);
+    //    }
 
-        else if (choice == "2")
-        {
-            createTopic(topicList);
-        }
+    //    else if (choice == "2")
+    //    {
+    //        createTopic(topicList);
+    //    }
 
-        else
-        {
-            return false;
-        }
-    }
+    //    else
+    //    {
+    //        return false;
+    //    }
+    //}
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
