@@ -128,13 +128,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Dictionary.cpp" />
-    <ClCompile Include="Forum cpp.cpp" />
+    <ClCompile Include="Forum.cpp" />
     <ClCompile Include="LinkedList.cpp" />
+    <ClCompile Include="Posts.cpp" />
     <ClCompile Include="Topic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dictionary.h" />
     <ClInclude Include="LinkedList.h" />
+    <ClInclude Include="Posts.h" />
     <ClInclude Include="Topic.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

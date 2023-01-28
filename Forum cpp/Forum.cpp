@@ -3,9 +3,11 @@
 
 #include <iostream>
 #include <fstream>
+
 #include "LinkedList.h"
 #include "Dictionary.h"
 #include "Topic.h"
+#include "Posts.h"
 
 using namespace std;
 
