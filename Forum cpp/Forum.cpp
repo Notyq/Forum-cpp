@@ -97,17 +97,19 @@ bool logIn()
     }
 }
 
-Topic createTopic(Topic t1)
+Topic createTopic()
 {
     string topicName;
     string topicDesc;
+    Topic t1 = Topic();
 
     cout << "New topic title: \n";
     cin >> topicName;
     cout << "Topic description: \n";
     cin >> topicDesc;
 
-    Topic t1(topicName, topicDesc);
+    t1.setTitle(topicName);
+    t1.setDesc(topicDesc);
 
     return t1;
 }
@@ -135,7 +137,7 @@ int main()
 
         else if (choice == "2")
         {
-            createTopic(topic);
+            Topic topic = createTopic();
             topicList.add(topic.getTitle());
         }
 
