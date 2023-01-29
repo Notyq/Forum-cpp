@@ -37,7 +37,7 @@ bool logIn()
                 bool nameFound = false;
                 string profile;
                 string name;
-                while (!nameFound) { //read data from file object and put it into string.
+                while (!nameFound) {
                     cout << "Enter Username: ";
                     cin >> username;
                     while (!nameFound) {
@@ -56,7 +56,7 @@ bool logIn()
                 }
                 bool passRight = false;
                 string pass;
-                while (!passRight) { //read data from file object and put it into string.
+                while (!passRight) {
                     cout << "Enter Password: " << endl;
                     cin >> password;
                     pass = profile.substr(profile.find(",")+1,profile.length() - 1);
@@ -78,6 +78,7 @@ bool logIn()
             bool nameConf = false;
             bool passConf = false;
             string confirm;
+            // New Username
             while (!nameConf) {
                 cout << "Enter a New Username: " << endl;
                 cin >> username;
@@ -90,6 +91,7 @@ bool logIn()
                     continue;
                 }
             }
+            // New Password
             while (!passConf) {
                 cout << "Enter a New Password: " << endl;
                 cin >> password;
