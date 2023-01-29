@@ -151,7 +151,7 @@ int main()
             }
         }   
 
-        else if (choice == "2")
+        else if (choice == "2") 
         {
             Topic topic = createTopic();
             
