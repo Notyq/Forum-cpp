@@ -11,14 +11,19 @@
 
 using namespace std;
 
-bool logIn()
+bool logIn(Dictionary profilesTable)
 {
-
     string username;
     string password;
+    ItemType hPass;
     string choice;
     fstream userProfiles;
     bool authenticated = false;
+
+    while (userProfiles >> username >> password) {
+        int Hpass = stoi(password);
+        profilesTable.add(username, Hpass);
+    }
 
     while (authenticated == false)
     {
@@ -59,8 +64,10 @@ bool logIn()
                 while (!passRight) {
                     cout << "Enter Password: " << endl;
                     cin >> password;
-                    pass = profile.substr(profile.find(",")+1,profile.length() - 1);
-                    if (pass == password) {
+                    pass = profile.substr(profile.find(" ")+1,profile.length() - 1);
+                    hPass = stoi(pass);
+                    ItemType check = profilesTable.get(username);
+                    if (hPass == check) {
                         authenticated = true;
                         break;
                     }
@@ -85,7 +92,7 @@ bool logIn()
                 cout << "Confirm?(Y/N): " << endl;
                 cin >> confirm;
                 if (confirm == "y") {
-                    nameConf = true;
+                    nameConf = profilesTable.add(username, 12345); // Check if Username Taken
                 }
                 else {
                     continue;
@@ -98,6 +105,9 @@ bool logIn()
                 cout << "Confirm?(Y/N): " << endl;
                 cin >> confirm;
                 if (confirm == "y") {
+                    profilesTable.remove(username);
+                    hPass = profilesTable.hash(password);
+                    profilesTable.add(username, hPass);
                     passConf = true;
                 }
                 else {
@@ -106,7 +116,7 @@ bool logIn()
             }
             // open file for writing
             userProfiles.open("profiles.txt");
-            userProfiles << username + "," + password;
+            userProfiles << username + " " + to_string(hPass);
             userProfiles.close();
             authenticated = true;
             return authenticated;
@@ -137,9 +147,10 @@ Topic createTopic()
 
 int main()
 {
+    Dictionary profiles;
     bool authenticated = true; // <--------- for yq's debugging
     List topicList = List();
-    //authenticated = logIn(); 
+    //authenticated = logIn(profiles); 
     Topic topic = Topic();
 
     while (authenticated)
