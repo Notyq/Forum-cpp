@@ -4,7 +4,7 @@
 using namespace std;
 
 const int MAX_SIZE = 101;
-typedef string ItemType;
+typedef int ItemType;
 typedef string KeyType;
 
 struct Node
@@ -36,7 +36,7 @@ public:
 	void remove(KeyType key);
 
 	// get an item with the specified key in the Dictionary (retrieve)
-	ItemType get(KeyType key);
+	int get(KeyType key);
 
 	// check if the Dictionary is empty
 	bool isEmpty();

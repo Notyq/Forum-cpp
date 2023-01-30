@@ -22,11 +22,11 @@ Dictionary::~Dictionary() {
 }
 
 int Dictionary::hash(KeyType key) {
-	int code = 0;
+	int code = 7;
 	for (int i = 0; i < key.length(); i++) {
-		code += key[i] * pow(31, i++);
+		code = code * 31 + key[i];
 	}
-	code = code * 52 % MAX_SIZE;
+	code = code % MAX_SIZE;
 	return code;
 }
 
@@ -44,14 +44,14 @@ bool Dictionary::add(KeyType newKey, ItemType newItem) {
 	else {
 		Node* current = items[index];
 		if (current->key == newKey) {
-			cout << "Collision Detected" << endl;
+			cout << "Username Taken" << endl;
 			return false;
 		}
 		while (current->next != NULL) {
 			current = current->next;
 			if (current->key == newKey)
 			{
-				cout << "Collision Detected" << endl;
+				cout << "Username Taken" << endl;
 				return false;
 			}
 		}
