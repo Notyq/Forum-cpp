@@ -30,7 +30,7 @@ int Dictionary::hash(KeyType key) {
 	return code;
 }
 
-bool Dictionary::add(KeyType newKey, ItemType newItem) {
+bool Dictionary::add(KeyType newKey, DicItemType newItem) {
 	int index = hash(newKey);
 	if (items[index] == NULL) {
 		Node* temp = new Node;
@@ -92,9 +92,9 @@ void Dictionary::remove(KeyType key) {
 	}
 }
 
-ItemType Dictionary::get(KeyType key) {
+DicItemType Dictionary::get(KeyType key) {
 	int index = hash(key);
-	ItemType item;
+	DicItemType item;
 	Node* temp = new Node;
 	if (items[index] != NULL) {
 		temp = items[index];

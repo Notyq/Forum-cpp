@@ -15,7 +15,7 @@ bool logIn(Dictionary profilesTable)
 {
     string username;
     string password;
-    ItemType hPass;
+    DItemType hPass;
     string choice;
     fstream userProfiles;
     bool authenticated = false;
@@ -66,7 +66,7 @@ bool logIn(Dictionary profilesTable)
                     cin >> password;
                     pass = profile.substr(profile.find(" ")+1,profile.length() - 1);
                     hPass = stoi(pass);
-                    ItemType check = profilesTable.get(username);
+                    DItemType check = profilesTable.get(username);
                     if (hPass == check) {
                         authenticated = true;
                         break;
@@ -152,6 +152,7 @@ int main()
     List topicList = List();
     //authenticated = logIn(profiles); 
     Topic topic = Topic();
+    logIn(profiles);
 
     while (authenticated)
     {

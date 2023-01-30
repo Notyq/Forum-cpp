@@ -4,13 +4,13 @@
 using namespace std;
 
 const int MAX_SIZE = 101;
-typedef int ItemType;
+typedef int DicItemType;
 typedef string KeyType;
 
 struct Node
 {
 	KeyType  key;   // search key
-	ItemType item;	// data item
+	DicItemType item;	// data item
 	Node* next;	// pointer pointing to next item
 };
 
@@ -30,7 +30,7 @@ public:
 	int hash(KeyType key);
 
 	// add a new item with the specified key to the Dictionary
-	bool add(KeyType newKey, ItemType newItem);
+	bool add(KeyType newKey, DicItemType newItem);
 
 	// remove an item with the specified key in the Dictionary
 	void remove(KeyType key);
