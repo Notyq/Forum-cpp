@@ -20,9 +20,15 @@ bool logIn(Dictionary profilesTable)
     fstream userProfiles;
     bool authenticated = false;
 
+    userProfiles.open("profiles.txt");
     while (userProfiles >> username >> password) {
         int Hpass = stoi(password);
         profilesTable.add(username, Hpass);
+        if (userProfiles.eof()) {
+            userProfiles.clear();
+            userProfiles.seekg(0);
+            break;
+        }
     }
 
     while (authenticated == false)
@@ -37,7 +43,6 @@ bool logIn(Dictionary profilesTable)
         // Log In
         if (choice == "1")
         {
-            userProfiles.open("profiles.txt");
             while (!authenticated) {   //checking whether the file is open
                 bool nameFound = false;
                 string profile;
@@ -47,11 +52,11 @@ bool logIn(Dictionary profilesTable)
                     cin >> username;
                     while (!nameFound) {
                         getline(userProfiles, profile);
-                        name = profile.substr(0, profile.find(","));
+                        name = profile.substr(0, profile.find(" "));
                         if (name == username) {
                             nameFound = true;
                         }
-                        if (userProfiles.eof()) {
+                        else if (userProfiles.eof()) {
                             cout << "Username is Not Found" << endl;
                             userProfiles.clear();
                             userProfiles.seekg(0);
@@ -62,7 +67,7 @@ bool logIn(Dictionary profilesTable)
                 bool passRight = false;
                 string pass;
                 while (!passRight) {
-                    cout << "Enter Password: " << endl;
+                    cout << "Enter Password: ";
                     cin >> password;
                     pass = profile.substr(profile.find(" ")+1,profile.length() - 1);
                     hPass = stoi(pass);
@@ -87,9 +92,9 @@ bool logIn(Dictionary profilesTable)
             string confirm;
             // New Username
             while (!nameConf) {
-                cout << "Enter a New Username: " << endl;
+                cout << "Enter a New Username: ";
                 cin >> username;
-                cout << "Confirm?(Y/N): " << endl;
+                cout << "Confirm?(Y/N): ";
                 cin >> confirm;
                 if (confirm == "y") {
                     nameConf = profilesTable.add(username, 12345); // Check if Username Taken
@@ -100,9 +105,9 @@ bool logIn(Dictionary profilesTable)
             }
             // New Password
             while (!passConf) {
-                cout << "Enter a New Password: " << endl;
+                cout << "Enter a New Password: ";
                 cin >> password;
-                cout << "Confirm?(Y/N): " << endl;
+                cout << "Confirm?(Y/N): ";
                 cin >> confirm;
                 if (confirm == "y") {
                     profilesTable.remove(username);
@@ -115,7 +120,6 @@ bool logIn(Dictionary profilesTable)
                 }
             }
             // open file for writing
-            userProfiles.open("profiles.txt");
             userProfiles << username + " " + to_string(hPass);
             userProfiles.close();
             authenticated = true;
