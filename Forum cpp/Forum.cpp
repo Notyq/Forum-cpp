@@ -15,7 +15,7 @@ bool logIn(Dictionary profilesTable)
 {
     string username;
     string password;
-    DItemType hPass;
+    DicItemType hPass;
     string choice;
     fstream userProfiles;
     bool authenticated = false;
@@ -66,7 +66,7 @@ bool logIn(Dictionary profilesTable)
                     cin >> password;
                     pass = profile.substr(profile.find(" ")+1,profile.length() - 1);
                     hPass = stoi(pass);
-                    DItemType check = profilesTable.get(username);
+                    DicItemType check = profilesTable.get(username);
                     if (hPass == check) {
                         authenticated = true;
                         break;

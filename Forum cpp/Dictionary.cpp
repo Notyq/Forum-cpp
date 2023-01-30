@@ -106,7 +106,7 @@ DicItemType Dictionary::get(KeyType key) {
 			return item;
 		}
 	}
-	return item;
+	return NULL;
 }
 
 bool Dictionary::isEmpty() {
