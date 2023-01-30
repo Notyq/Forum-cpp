@@ -3,12 +3,12 @@
 #include <vector>
 using namespace std;
 
-Topic::Topic(string t, string d) { title = t, desc = d; }
+Topic::Topic(string t) { title = t; }
 
 void Topic::setTitle(string t) { title = t; }
 
 string Topic::getTitle() { return title; }
 
-void Topic::setDesc(string d) { desc = d; }
+//void Topic::setDesc(string d) { desc = d; }
 
-string Topic::getDesc() { return desc; }
+//string Topic::getDesc() { return desc; 

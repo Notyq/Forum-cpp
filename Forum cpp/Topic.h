@@ -8,15 +8,15 @@ class Topic {
 
 private:
 	string title;
-	string desc;
+	//string desc;
 
 public:
 	Topic() {};
-	Topic(string, string);
+	Topic(string);
 
 	void setTitle(string);
 	string getTitle();
 
-	void setDesc(string);
-	string getDesc();
+	//void setDesc(string);
+	//string getDesc();
 };

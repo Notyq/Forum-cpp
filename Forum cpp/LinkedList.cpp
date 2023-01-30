@@ -96,19 +96,18 @@ void List::remove(int index)
 	}
 }
 
-ItemType List::get(int index)
-{
+ItemType List::get(int index) {
 
-	if (index >= 0 && index <= size)
-	{
+	if (index >= 0 && index <= size - 1) {
 
-		Node* temp = new Node();
-		for (int i = 0; i <= index; i++)
-		{
-			temp = temp->next;
+		Node* ptr;
+		ptr = firstNode;
+
+		for (int i = 0; i < index; i++) {
+			ptr = ptr->next;
 		}
-
-		return temp->item;
+		Node n = *ptr;
+		return n.item;
 	}
 }
 

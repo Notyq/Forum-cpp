@@ -120,51 +120,94 @@ bool logIn()
     }
 }
 
-Topic createTopic(Topic t1)
+Topic createTopic()
 {
     string topicName;
-    string topicDesc;
+    //string topicDesc;
+    //Topic t1 = Topic();
 
     cout << "New topic title: \n";
     cin >> topicName;
-    cout << "Topic description: \n";
-    cin >> topicDesc;
+    //cout << "Topic description: \n";
+    //cin >> topicDesc;
+    //getline(cin, topicDesc);
 
-    Topic t1(topicName, topicDesc);
-
-    return t1;
+    return topicName;
 }
 
 int main()
 {
-    bool authenticated;
+    bool authenticated = true; // <--------- for yq's debugging
     List topicList = List();
-    authenticated = logIn();
+    //authenticated = logIn(); 
     Topic topic = Topic();
 
     while (authenticated)
     {
         string choice;
         cout << "===========Forums===========" << endl;
-        cout << "View Topics" << endl;
-        cout << "Create Topics" << endl;
+        cout << "[1] View Topics" << endl;
+        cout << "[2] Create Topics" << endl;
+        cout << "[0] Exit" << endl;
         cout << "============================" << endl;
         cin >> choice;
 
         if (choice == "1")
         {
-            topicList.print();
+            string option;
+            int length = topicList.getLength();
+
+            if (length > 0) {
+                for (int i = 0; i < length; i++) {
+                    string tName = topicList.get(i);
+                    cout << "[" << i + 1 << "] " << tName << endl;
+                }
+
+                cout << "Enter option to view topic: \n";
+                cin >> option;
+                /*string temp = topicList.get(option - 1);
+                if (temp == topic);*/
+            }
+            else
+            {
+                cout << "No Topics\n";
+            }
+        }   
+
+        else if (choice == "2") 
+        {
+            Topic topic = createTopic();
+            
+            if (topicList.getLength() > 0) {
+                for (int i = 0; i < topicList.getLength(); i++) {
+                    string tName = topicList.get(i);
+                    if (tName == topic.getTitle()) {
+                        cout << "Topic already exists!\n";
+                    }
+                    else
+                    {
+                        topicList.add(topic.getTitle());
+                    }
+                }
+            }
+            else
+            {
+                topicList.add(topic.getTitle());
+            }
+            
+            //string title = topicList.get(0);
+            //cout << title << endl;
         }
 
-        else if (choice == "2")
+        else if (choice == "0")
         {
-            createTopic(topic);
-            topicList.add(topic.getTitle());
+            return false;
         }
 
         else
         {
-            return false;
+            cout << "Invalid option, please try again\n";
+            main();
         }
     }
 }
