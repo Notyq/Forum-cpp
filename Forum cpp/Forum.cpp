@@ -199,7 +199,8 @@ int main()
                         if (!postList.isEmpty()) {
                             for (int j = 0; j < postList.getLength(); j++) {                                
                                 if (newPost.getTitle() == topicList.get(i)) {
-                                    cout << "[" << j+1 << "] " << newPost.getContent() << endl;
+                                    cout << "[" << j+1 << "] " << postList.get(j) << endl;
+                                    continue;
                                 }
                                 else if (newPost.getTitle() != topicList.get(i) and j == postList.getLength())
                                 {
@@ -228,14 +229,22 @@ int main()
                         if (input == "1") {
                             cout << endl;
                             newPost = createPost();
-                            newPost.setTitle(topicList.get(i));
+                            newPost.setTitle(topicList.get(i)); // sets all topic title to the same
                             postList.add(newPost.getContent());
                             cout << "Posted!\n";
+                            postList.print();
                         }
-                    }
-                    else if (option > i)
-                    {
-                        continue;
+                        else if (input == "2") {
+                            continue;
+                        }
+                        else if (input == "0")
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            cout << "Invalid option!\n";
+                        }
                     }
                     else
                     {
