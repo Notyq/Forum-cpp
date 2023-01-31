@@ -3,7 +3,7 @@
 #include <vector>
 using namespace std;
 
-Topic::Topic(string t) { title = t; }
+Topic::Topic(string t) : title(t) { }
 
 void Topic::setTitle(string t) { title = t; }
 

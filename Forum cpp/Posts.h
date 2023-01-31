@@ -4,14 +4,16 @@
 
 using namespace std;
 
-class Posts {
+#include "Topic.h"
 
-private:
+class Posts : public Topic {
+
+protected:
 	string content;
 
 public:
 	Posts() {};
-	Posts(string);
+	Posts(string, string);
 
 	void setContent(string);
 	string getContent();

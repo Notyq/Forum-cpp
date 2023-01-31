@@ -145,11 +145,25 @@ Topic createTopic()
     return t1;
 }
 
+Posts createPost() {
+
+    Posts p1 = Posts();
+
+    string input;
+    cout << "Create Posts: \n";
+    getline(cin >> ws, input);
+    p1.setContent(input);
+
+    return p1;
+}
+
 int main()
 {
     Dictionary profiles;
     bool authenticated = true; // <--------- for yq's debugging
     List topicList = List();
+    List postList = List();
+    Posts newPost = Posts();
     //authenticated = logIn(profiles); 
     //Topic topic = Topic();
     //logIn(profiles);
@@ -157,16 +171,16 @@ int main()
     while (authenticated)
     {
         string choice;
-        cout << "===========Forums===========" << endl;
+        cout << "\n===========Forums===========" << endl;
         cout << "[1] View Topics" << endl;
         cout << "[2] Create Topics" << endl;
         cout << "[0] Exit" << endl;
-        cout << "============================" << endl;
+        cout << "============================\n" << endl;
         cin >> choice;
 
         if (choice == "1")
         {
-            string option;
+            int option;
             int length = topicList.getLength();
 
             if (length > 0) {
@@ -177,6 +191,57 @@ int main()
 
                 cout << "Enter option to view topic: \n";
                 cin >> option;
+
+                for (int i = 0; i < length; i++) {
+                    if (option - 1 == i) {
+                        cout << "\nTopic:\n" << topicList.get(i) << endl;
+                        cout << "\nPosts:\n";
+                        if (!postList.isEmpty()) {
+                            for (int j = 0; j < postList.getLength(); j++) {                                
+                                if (newPost.getTitle() == topicList.get(i)) {
+                                    cout << "[" << j+1 << "] " << newPost.getContent() << endl;
+                                }
+                                else if (newPost.getTitle() != topicList.get(i) and j == postList.getLength())
+                                {
+                                    cout << "No posts in this topic!\n";
+                                    break;
+                                }
+                                else
+                                {
+                                    continue;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            cout << "No posts!\n ";
+                        }
+
+                        cout << "\n===========Options===========" << endl;
+                        cout << "[1] Create new post" << endl;
+                        cout << "[2] Reply to post" << endl;
+                        cout << "[0] Back to Menu" << endl;
+                        cout << "===============================\n" << endl;
+                        string input;
+                        cin >> input;
+
+                        if (input == "1") {
+                            cout << endl;
+                            newPost = createPost();
+                            newPost.setTitle(topicList.get(i));
+                            postList.add(newPost.getContent());
+                            cout << "Posted!\n";
+                        }
+                    }
+                    else if (option > i)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        cout << "Invalid option!\n";
+                    }
+                }
                 /*string temp = topicList.get(option - 1);
                 if (temp == topic);*/
             }
@@ -200,8 +265,7 @@ int main()
                         break;
                     }
                     else if (tName != newTopic.getTitle() and i+1 == topicList.getLength())
-                    {
-                    
+                    {                    
                         topicList.add(newTopic.getTitle());
                         cout << "Topic created!\n";
                         break;

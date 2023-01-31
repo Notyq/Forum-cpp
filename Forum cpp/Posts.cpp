@@ -3,7 +3,9 @@
 #include <vector>
 using namespace std;
 
-Posts::Posts(string c) { content = c; }
+Posts::Posts(string t, string c) : Topic(t) {
+	content = c;
+}
 
 void Posts::setContent(string c) { content = c; }
 

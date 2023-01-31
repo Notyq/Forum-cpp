@@ -6,7 +6,7 @@ using namespace std;
 
 class Topic {
 
-private:
+protected:
 	string title;
 	//string desc;
 
