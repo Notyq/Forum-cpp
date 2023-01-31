@@ -137,16 +137,12 @@ bool logIn(Dictionary profilesTable)
 Topic createTopic()
 {
     string topicName;
-    //string topicDesc;
-    //Topic t1 = Topic();
-
     cout << "New topic title: \n";
     cin >> topicName;
-    //cout << "Topic description: \n";
-    //cin >> topicDesc;
-    //getline(cin, topicDesc);
+    Topic t1 = Topic();
+    t1.setTitle(topicName);
 
-    return topicName;
+    return t1;
 }
 
 int main()
@@ -155,8 +151,8 @@ int main()
     bool authenticated = true; // <--------- for yq's debugging
     List topicList = List();
     //authenticated = logIn(profiles); 
-    Topic topic = Topic();
-    logIn(profiles);
+    //Topic topic = Topic();
+    //logIn(profiles);
 
     while (authenticated)
     {
@@ -187,28 +183,39 @@ int main()
             else
             {
                 cout << "No Topics\n";
+                continue;
             }
         }   
 
         else if (choice == "2") 
         {
-            Topic topic = createTopic();
-            
-            if (topicList.getLength() > 0) {
+            Topic newTopic = createTopic();
+            int i = 0;
+ 
+            if (!topicList.isEmpty()) {
                 for (int i = 0; i < topicList.getLength(); i++) {
                     string tName = topicList.get(i);
-                    if (tName == topic.getTitle()) {
+                    if (tName == newTopic.getTitle()) {
                         cout << "Topic already exists!\n";
+                        break;
+                    }
+                    else if (tName != newTopic.getTitle() and i+1 == topicList.getLength())
+                    {
+                    
+                        topicList.add(newTopic.getTitle());
+                        cout << "Topic created!\n";
+                        break;
                     }
                     else
                     {
-                        topicList.add(topic.getTitle());
+                        continue;
                     }
                 }
             }
             else
             {
-                topicList.add(topic.getTitle());
+                topicList.add(newTopic.getTitle());
+                cout << "Topic created!\n";
             }
             
             //string title = topicList.get(0);
