@@ -145,7 +145,7 @@ Topic createTopic()
     return t1;
 }
 
-Posts createPost() {
+Posts createPost(Topic t) {
 
     Posts p1 = Posts();
 
@@ -153,6 +153,7 @@ Posts createPost() {
     cout << "Create Posts: \n";
     getline(cin >> ws, input);
     p1.setContent(input);
+    p1.setTitle(t.getTitle());
 
     return p1;
 }
@@ -228,10 +229,11 @@ int main()
 
                         if (input == "1") {
                             cout << endl;
-                            newPost = createPost();
-                            newPost.setTitle(topicList.get(i)); // sets all topic title to the same
-                            postList.add(newPost.getContent());
-                            cout << "Posted!\n";
+                            Posts p = Posts();
+                            p = createPost(topicList.get(i));
+                            postList.add(p.getContent());
+                            //newPost += p;            <---------------implement linkedlist for post.cpp/topic.cpp
+                            //cout << "\nPosted!\n";   <---------------for debugging
                             postList.print();
                         }
                         else if (input == "2") {
