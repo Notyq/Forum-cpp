@@ -13,6 +13,7 @@
 #include "Topic.h"
 #include "Posts.h"
 #include "Reply.h"
+#include <windows.h>
 
 using namespace std;
 
@@ -24,6 +25,8 @@ string logIn(Dictionary profilesTable)
     string choice;
     fstream userProfiles;
     bool authenticated = false;
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
 
     userProfiles.open("profiles.txt");
     while (userProfiles >> username >> password) {
@@ -56,7 +59,9 @@ string logIn(Dictionary profilesTable)
                 string profile;
                 string name;
                 while (!nameFound) {
+                    SetConsoleTextAttribute(hConsole, 12);
                     cout << "[Enter '0' to Exit]" << endl;
+                    SetConsoleTextAttribute(hConsole, 15);
                     cout << "Enter Username: ";
                     cin >> username;
                     if (username == "0") {
@@ -105,7 +110,9 @@ string logIn(Dictionary profilesTable)
             string confirm;
             // New Username
             while (!nameConf) {
+                SetConsoleTextAttribute(hConsole, 12);
                 cout << "[Enter '0' to Exit]" << endl;
+                SetConsoleTextAttribute(hConsole, 15);
                 cout << "Enter a New Username: ";
                 cin >> username;
                 if (username == "0") {
@@ -175,6 +182,9 @@ string replyPost(string& reply) {
 
 int main()
 {
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
     Dictionary profiles;
     bool authenticated = true; // <--------- for yq's debugging
     string username;
@@ -182,19 +192,41 @@ int main()
     Posts postList = Posts();
     Reply replyList = Reply();
     int id = 0;
+    fstream file;
 
-    /*while (username.empty()) {
+    string topic;
+    file.open("topics.txt");
+    while (!file.eof()) {
+        getline(file, topic);
+        if (!topic.empty()) {
+            topicList.add(topic);
+        }
+        if (file.eof()) {
+            file.clear();
+            file.seekg(0);
+            break;
+        }
+    }
+    file.close();
+
+
+
+    while (username.empty()) {
         username = logIn(profiles);
         if (!username.empty()) {
             authenticated = true;
         }
     }*/
     //Topic topic = Topic();
+
     cout << "\033[2J\033[H";
     while (authenticated)
     {
-        cout << "Current User: " + username<< endl;
+        cout << "Current User: ";
+        SetConsoleTextAttribute(hConsole, 10);
+        cout << username << endl;
         string choice;
+        SetConsoleTextAttribute(hConsole, 15);
         cout << "===========Forums===========" << endl;
         cout << "[1] View Topics" << endl;
         cout << "[2] Create Topics" << endl;
@@ -207,20 +239,29 @@ int main()
         {
             int option;
             int length = topicList.getLength();
-
+            cout << "\033[2J\033[H";
+            cout << "===========";
+            SetConsoleTextAttribute(hConsole, 14);
+            cout << "Topics";
+            SetConsoleTextAttribute(hConsole, 15);
+            cout << "===========" << endl;
             if (length > 0) {
                 for (int i = 0; i < length; i++) {
                     string tName = topicList.get(i);
                     cout << "[" << i + 1 << "] " << tName << endl;
                 }
-
+                cout << "============================" << endl;
                 cout << "Enter option to view topic: \n";
                 cin >> option;
 
                 for (int i = 0; i < length; i++) {
                     if (option - 1 == i) {
-                        cout << "\n==========" << topicList.get(i) << "==========" << endl;
-                        cout << "Posts:\n";
+                        cout << "\033[2J\033[H";
+                        cout << "==========";
+                        SetConsoleTextAttribute(hConsole, 14);
+                        cout << topicList.get(i);
+                        SetConsoleTextAttribute(hConsole, 15);
+                        cout << "==========" << endl;
                         if (!postList.isEmpty()) {
                             for (int j = 0; j < postList.getLength(); j++) {
                                 string postTitle = postList.getTitle(j);
@@ -253,17 +294,14 @@ int main()
                         }
                         else
                         {
-                            cout << "\033[2J\033[H";
                             cout << "No posts Found!\n " << endl;
                         }
-
-                        cout << "\n====================\n";
 
                         cout << "\n===========Options===========" << endl;
                         cout << "[1] Create new post" << endl;
                         cout << "[2] Reply to post" << endl;
                         cout << "[0] Back to Menu" << endl;
-                        cout << "===============================" << endl;
+                        cout << "=============================" << endl;
                         string input;
                         cin >> input;
 
@@ -296,6 +334,7 @@ int main()
                         }
                         else if (input == "0")
                         {
+                            cout << "\033[2J\033[H";
                             continue;
                         }
                         else
@@ -336,6 +375,9 @@ int main()
                     else if (tName != topicName and i+1 == topicList.getLength())
                     {                    
                         topicList.add(topicName);
+                        file.open("topics.txt", fstream::app);
+                        file << topicName + "\n";
+                        file.close();
                         cout << "\033[2J\033[H";
                         cout << "Topic created!\n";
                         break;
@@ -349,6 +391,9 @@ int main()
             else
             {
                 topicList.add(topicName);
+                file.open("topics.txt", fstream::app);
+                file << topicName + "\n";
+                file.close();
                 cout << "\033[2J\033[H";
                 cout << "Topic created!\n";
             }
@@ -359,6 +404,7 @@ int main()
 
         else if (choice == "0")
         {
+            cout << "\033[2J\033[H";
             return false;
         }
 
