@@ -163,7 +163,7 @@ void Posts::print()
 
 	while (temp != NULL)
 	{
-		cout << temp->post << endl;
+		cout << temp->post << " " << temp->title << endl;
 		temp = temp->next;
 	}
 	cout << "----------" << endl;

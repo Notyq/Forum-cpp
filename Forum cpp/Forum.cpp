@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <fstream>
+#include <iomanip>
+#include <string>
 
 #include "LinkedList.h"
 #include "Dictionary.h"
@@ -171,7 +173,7 @@ int main()
     }
     
     //Topic topic = Topic();
-    //logIn(profiles);
+    logIn(profiles);
 
     while (authenticated)
     {
@@ -200,8 +202,8 @@ int main()
 
                 for (int i = 0; i < length; i++) {
                     if (option - 1 == i) {
-                        cout << "\nTopic:\n" << topicList.get(i) << endl;
-                        cout << "\nPosts:\n";
+                        cout << "\n==========" << topicList.get(i) << "==========\n" << endl;
+                        cout << "Posts:\n";
                         if (!postList.isEmpty()) {
                             for (int j = 0; j < postList.getLength(); j++) {
                                 string postTitle = postList.getTitle(j);
@@ -224,6 +226,8 @@ int main()
                         {
                             cout << "No posts!\n ";
                         }
+
+                        cout << "\n====================\n";
 
                         cout << "\n===========Options===========" << endl;
                         cout << "[1] Create new post" << endl;
@@ -255,10 +259,9 @@ int main()
                     else
                     {
                         cout << "Invalid option!\n";
+                        continue;
                     }
                 }
-                /*string temp = topicList.get(option - 1);
-                if (temp == topic);*/
             }
             else
             {
@@ -281,7 +284,7 @@ int main()
                     }
                     else if (tName != topicName and i+1 == topicList.getLength())
                     {                    
-                        topicList.add(i, topicName);
+                        topicList.add(topicName);
                         cout << "Topic created!\n";
                         break;
                     }
@@ -309,7 +312,7 @@ int main()
         else
         {
             cout << "Invalid option, please try again\n";
-            main();
+            continue;
         }
     }
 }
