@@ -11,7 +11,7 @@
 
 using namespace std;
 
-string logIn(Dictionary profilesTable)
+bool logIn(Dictionary profilesTable)
 {
     string username;
     string password;
@@ -81,7 +81,7 @@ string logIn(Dictionary profilesTable)
                     }
                 }
                 cout << "Successfully Logged In :)" << endl;
-                return username;
+                return authenticated;
             }
         }
         // Sign Up
@@ -123,7 +123,7 @@ string logIn(Dictionary profilesTable)
             userProfiles << username + " " + to_string(hPass);
             userProfiles.close();
             authenticated = true;
-            return username;
+            return authenticated;
         }
         else if (choice == "0") {
             exit(0);
@@ -157,15 +157,9 @@ int main()
     bool authenticated = true; // <--------- for yq's debugging
     Topic topicList = Topic();
     Posts postList = Posts();
-    string username;
-
-    // login / singup function
-    username = logIn(profiles);
-    if (!username.empty()) {
-        authenticated = true;
-    }
-    Topic topic = Topic();
-    logIn(profiles);
+    //authenticated = logIn(profiles); 
+    //Topic topic = Topic();
+    //logIn(profiles);
 
     while (authenticated)
     {
