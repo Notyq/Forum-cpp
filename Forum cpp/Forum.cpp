@@ -134,37 +134,29 @@ bool logIn(Dictionary profilesTable)
     }
 }
 
-Topic createTopic()
+string createTopic(string topicName)
 {
-    string topicName;
     cout << "New topic title: \n";
     cin >> topicName;
-    Topic t1 = Topic();
-    t1.setTitle(topicName);
 
-    return t1;
+    return topicName;
 }
 
-Posts createPost(Topic t) {
+string createPost(string postContent) {
 
-    Posts p1 = Posts();
 
-    string input;
     cout << "Create Posts: \n";
-    getline(cin >> ws, input);
-    p1.setContent(input);
-    p1.setTitle(t.getTitle());
+    getline(cin >> ws, postContent);
 
-    return p1;
+    return postContent;
 }
 
 int main()
 {
     Dictionary profiles;
     bool authenticated = true; // <--------- for yq's debugging
-    List topicList = List();
-    List postList = List();
-    Posts newPost = Posts();
+    Topic topicList = Topic();
+    Posts postList = Posts();
     //authenticated = logIn(profiles); 
     //Topic topic = Topic();
     //logIn(profiles);
@@ -198,12 +190,13 @@ int main()
                         cout << "\nTopic:\n" << topicList.get(i) << endl;
                         cout << "\nPosts:\n";
                         if (!postList.isEmpty()) {
-                            for (int j = 0; j < postList.getLength(); j++) {                                
-                                if (newPost.getTitle() == topicList.get(i)) {
-                                    cout << "[" << j+1 << "] " << postList.get(j) << endl;
+                            for (int j = 0; j < postList.getLength(); j++) {
+                                string postTitle = postList.getTitle(j);
+                                if (postTitle == topicList.get(i)) {
+                                    cout << "[" << j+1 << "] " << postList.getPost(j) << endl;
                                     continue;
                                 }
-                                else if (newPost.getTitle() != topicList.get(i) and j == postList.getLength())
+                                else if (postTitle != topicList.get(i) and j == postList.getLength())
                                 {
                                     cout << "No posts in this topic!\n";
                                     break;
@@ -228,10 +221,10 @@ int main()
                         cin >> input;
 
                         if (input == "1") {
+                            string postContent;
                             cout << endl;
-                            Posts p = Posts();
-                            p = createPost(topicList.get(i));
-                            postList.add(p.getContent());
+                            createPost(postContent);
+                            postList.add(postContent, topicList.get(i));
                             //newPost += p;            <---------------implement linkedlist for post.cpp/topic.cpp
                             //cout << "\nPosted!\n";   <---------------for debugging
                             postList.print();
@@ -265,19 +258,20 @@ int main()
 
         else if (choice == "2") 
         {
-            Topic newTopic = createTopic();
+            string topicName;
+            createTopic(topicName);
             int i = 0;
  
             if (!topicList.isEmpty()) {
                 for (int i = 0; i < topicList.getLength(); i++) {
                     string tName = topicList.get(i);
-                    if (tName == newTopic.getTitle()) {
+                    if (tName == topicName) {
                         cout << "Topic already exists!\n";
                         break;
                     }
-                    else if (tName != newTopic.getTitle() and i+1 == topicList.getLength())
+                    else if (tName != topicName and i+1 == topicList.getLength())
                     {                    
-                        topicList.add(newTopic.getTitle());
+                        topicList.add(topicName);
                         cout << "Topic created!\n";
                         break;
                     }
@@ -289,8 +283,9 @@ int main()
             }
             else
             {
-                topicList.add(newTopic.getTitle());
+                topicList.add(topicName);
                 cout << "Topic created!\n";
+                topicList.print();
             }
             
             //string title = topicList.get(0);

@@ -4,8 +4,6 @@
 #include<iostream>
 using namespace std;
 
-#include "Topic.h"
-
 typedef string ItemType;
 
 class List

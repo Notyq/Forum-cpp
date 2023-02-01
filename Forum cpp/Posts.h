@@ -4,17 +4,49 @@
 
 using namespace std;
 
+typedef string ItemType;
+
 #include "Topic.h"
 
 class Posts : public Topic {
 
-protected:
-	string content;
+private:
+	struct Node
+	{
+		ItemType post;	// item
+		ItemType title; // title
+		Node* next;	// pointer pointing to next item
+	};
+	Node* firstNode;	// point to the first item
+	int  size;		// number of items in the list
 
 public:
-	Posts() {};
-	Posts(string, string);
+	// constructor
+	Posts();
 
-	void setContent(string);
-	string getContent();
+	// destructor
+	//~List();
+
+	// add an item to the back of the list (append)
+	bool add(ItemType post, ItemType t);
+
+	// add an item at a specified position in the list (insert)
+	bool add(int index, ItemType post, ItemType t);
+
+	// remove an item at a specified position in the list
+	void remove(int index);
+
+	// get an item at a specified position of the list (retrieve)
+	ItemType getPost(int index);
+
+	ItemType getTitle(int index);
+
+	// check if the list is empty
+	bool isEmpty();
+
+	// check the size of the list
+	int getLength();
+
+	// display all the items in the list
+	void print();
 };
