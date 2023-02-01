@@ -165,7 +165,7 @@ void Posts::print()
 
 	while (temp != NULL)
 	{
-		cout << temp->post << " " << temp->title << endl;
+		cout << temp->post << " " << temp->title << " " << temp->id << endl;
 		temp = temp->next;
 	}
 	cout << "----------" << endl;

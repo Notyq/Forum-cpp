@@ -174,19 +174,19 @@ string replyPost(string& reply) {
 int main()
 {
     Dictionary profiles;
-    bool authenticated = false; // <--------- for yq's debugging
+    bool authenticated = true; // <--------- for yq's debugging
     string username;
     Topic topicList = Topic();
     Posts postList = Posts();
     Reply replyList = Reply();
     int id = 0;
 
-    while (username.empty()) {
+    /*while (username.empty()) {
         username = logIn(profiles);
         if (!username.empty()) {
             authenticated = true;
         }
-    }
+    }*/
     //Topic topic = Topic();
     cout << "\033[2J\033[H";
     while (authenticated)
@@ -223,10 +223,10 @@ int main()
                             for (int j = 0; j < postList.getLength(); j++) {
                                 string postTitle = postList.getTitle(j);
                                 if (postTitle == topicList.get(i)) {
-                                    cout << "[" << id << "] " << postList.getPost(j) << endl;  
+                                    cout << "[" << j+1 << "] " << postList.getPost(j) << endl;  
                                     int n = 0;
                                     while (!replyList.isEmpty() and n < replyList.getLength()) {
-                                        if (replyList.getID(n) == to_string(id)) {
+                                        if (replyList.getID(n) == to_string(j+1)) {
                                             cout << "     - " << replyList.get(n) << endl;
                                             n++;
                                         }
@@ -272,15 +272,25 @@ int main()
                             id++;
                             postList.add(postContent, topicList.get(i), to_string(id));
                             cout << "\nPosted!\n";
+                            postList.print();
                         }
                         else if (input == "2") {
+
+                            // check if there is post in topic
                             string reply;
                             string postID;
                             cout << "Select Post id: ";
                             cin >> postID;
 
-                            replyPost(reply);
-                            replyList.push(reply, postID);
+                            if (stoi(postID) <= id and stoi(postID) > 0) {
+                                replyPost(reply);
+                                replyList.push(reply, postID);
+                                cout << "Reply posted!\n";
+                            }
+                            else
+                            {
+                                cout << "Invalid option!\n";
+                            }
                         }
                         else if (input == "0")
                         {
