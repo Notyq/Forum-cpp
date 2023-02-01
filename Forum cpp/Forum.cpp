@@ -14,7 +14,7 @@
 
 using namespace std;
 
-bool logIn(Dictionary profilesTable)
+string logIn(Dictionary profilesTable)
 {
     string username;
     string password;
@@ -33,6 +33,7 @@ bool logIn(Dictionary profilesTable)
             break;
         }
     }
+    userProfiles.close();
 
     while (authenticated == false)
     {
@@ -46,13 +47,18 @@ bool logIn(Dictionary profilesTable)
         // Log In
         if (choice == "1")
         {
+            userProfiles.open("profiles.txt");
             while (!authenticated) {   //checking whether the file is open
                 bool nameFound = false;
                 string profile;
                 string name;
                 while (!nameFound) {
+                    cout << "[Enter '0' to Exit]" << endl;
                     cout << "Enter Username: ";
                     cin >> username;
+                    if (username == "0") {
+                        return "";
+                    }
                     while (!nameFound) {
                         getline(userProfiles, profile);
                         name = profile.substr(0, profile.find(" "));
@@ -83,13 +89,14 @@ bool logIn(Dictionary profilesTable)
                         cout << "Password is Incorrect" << endl;
                     }
                 }
-                cout << "Successfully Logged In :)" << endl;
-                return authenticated;
+                userProfiles.close();
+                return username;
             }
         }
         // Sign Up
         else if (choice == "2")
         {
+            userProfiles.open("profiles.txt", fstream::app);
             bool nameConf = false;
             bool passConf = false;
             string confirm;
@@ -97,12 +104,8 @@ bool logIn(Dictionary profilesTable)
             while (!nameConf) {
                 cout << "Enter a New Username: ";
                 cin >> username;
-                cout << "Confirm?(Y/N): ";
-                cin >> confirm;
-                if (confirm == "y") {
-                    nameConf = profilesTable.add(username, 12345); // Check if Username Taken
-                }
-                else {
+                nameConf = profilesTable.add(username, 12345); // Check if Username Taken
+                if (!nameConf){
                     continue;
                 }
             }
@@ -126,7 +129,8 @@ bool logIn(Dictionary profilesTable)
             userProfiles << username + " " + to_string(hPass);
             userProfiles.close();
             authenticated = true;
-            return authenticated;
+            
+            return username;
         }
         else if (choice == "0") {
             exit(0);
@@ -165,17 +169,24 @@ string replyPost(string& reply) {
 int main()
 {
     Dictionary profiles;
-    bool authenticated = true; // <--------- for yq's debugging
+    bool authenticated = false; // <--------- for yq's debugging
+    string username;
     Topic topicList = Topic();
     Posts postList = Posts();
-    Reply replyList = Reply();
+
+    while (username.empty()) {
+        username = logIn(profiles);
+        if (!username.empty()) {
+            authenticated = true;
+        }
+    }
     
-    //authenticated = logIn(profiles); 
     //Topic topic = Topic();
     logIn(profiles);
 
     while (authenticated)
     {
+        cout << "Welcome " + username + "!" << endl;
         string choice;
         cout << "\n===========Forums===========" << endl;
         cout << "[1] View Topics" << endl;
