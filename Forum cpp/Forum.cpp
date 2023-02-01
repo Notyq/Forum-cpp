@@ -37,6 +37,7 @@ string logIn(Dictionary profilesTable)
 
     while (authenticated == false)
     {
+        cout << "\033[2J\033[H";
         cout << "===========Forums===========" << endl;
         cout << "[1] Login" << endl;
         cout << "[2] Sign Up" << endl;
@@ -102,8 +103,12 @@ string logIn(Dictionary profilesTable)
             string confirm;
             // New Username
             while (!nameConf) {
+                cout << "[Enter '0' to Exit]" << endl;
                 cout << "Enter a New Username: ";
                 cin >> username;
+                if (username == "0") {
+                    return "";
+                }
                 nameConf = profilesTable.add(username, 12345); // Check if Username Taken
                 if (!nameConf){
                     continue;
@@ -144,7 +149,7 @@ string logIn(Dictionary profilesTable)
 string createTopic(string& topicName)
 {
     cout << "New topic title: \n";
-    cin >> topicName;
+    getline(cin >> ws, topicName);
 
     return topicName;
 }
@@ -182,19 +187,18 @@ int main()
             authenticated = true;
         }
     }
-    
     //Topic topic = Topic();
-    logIn(profiles);
-
+    cout << "\033[2J\033[H";
     while (authenticated)
     {
-        cout << "Welcome " + username + "!" << endl;
+        cout << "Current User: " + username<< endl;
         string choice;
-        cout << "\n===========Forums===========" << endl;
+        cout << "===========Forums===========" << endl;
         cout << "[1] View Topics" << endl;
         cout << "[2] Create Topics" << endl;
         cout << "[0] Exit" << endl;
         cout << "============================" << endl;
+        cout << "Choice: ";
         cin >> choice;
 
         if (choice == "1")
@@ -235,7 +239,8 @@ int main()
                                 }
                                 else if (postTitle != topicList.get(i) and j == postList.getLength())
                                 {
-                                    cout << "No posts in this topic!\n";
+                                    cout << "\033[2J\033[H";
+                                    cout << "No posts in this topic!\n" << endl;
                                     break;
                                 }
                                 else
@@ -246,7 +251,8 @@ int main()
                         }
                         else
                         {
-                            cout << "No posts!\n ";
+                            cout << "\033[2J\033[H";
+                            cout << "No posts Found!\n " << endl;
                         }
 
                         cout << "\n====================\n";
@@ -282,19 +288,22 @@ int main()
                         }
                         else
                         {
-                            cout << "Invalid option!\n";
+                            cout << "\033[2J\033[H";
+                            cout << "Invalid option!\n" << endl;
                         }
                     }
                     else
                     {
-                        cout << "Invalid option!\n";
+                        cout << "\033[2J\033[H";
+                        cout << "Invalid option!\n" << endl;
                         continue;
                     }
                 }
             }
             else
             {
-                cout << "No Topics\n";
+                cout << "\033[2J\033[H";
+                cout << "No Topics Found\n" << endl;
                 continue;
             }
         }   
@@ -308,12 +317,14 @@ int main()
                 for (int i = 0; i < topicList.getLength(); i++) {
                     string tName = topicList.get(i);
                     if (tName == topicName) {
+                        cout << "\033[2J\033[H";
                         cout << "Topic already exists!\n";
                         break;
                     }
                     else if (tName != topicName and i+1 == topicList.getLength())
                     {                    
                         topicList.add(topicName);
+                        cout << "\033[2J\033[H";
                         cout << "Topic created!\n";
                         break;
                     }
@@ -326,6 +337,7 @@ int main()
             else
             {
                 topicList.add(topicName);
+                cout << "\033[2J\033[H";
                 cout << "Topic created!\n";
             }
             
@@ -340,6 +352,7 @@ int main()
 
         else
         {
+            cout << "\033[2J\033[H";
             cout << "Invalid option, please try again\n";
             continue;
         }
