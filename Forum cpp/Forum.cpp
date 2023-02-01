@@ -1,19 +1,22 @@
 // Forum cpp.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
+#pragma warning(disable : 4996)
 
 #include <iostream>
 #include <fstream>
 #include <iomanip>
 #include <string>
-#include <time.h>
+#include <chrono>
 #include <ctime>
+#include <time.h>
+#include <stdint.h>
+#include <windows.h>
 
 #include "LinkedList.h"
 #include "Dictionary.h"
 #include "Topic.h"
 #include "Posts.h"
 #include "Reply.h"
-#include <windows.h>
 
 using namespace std;
 
@@ -163,13 +166,14 @@ string createTopic(string& topicName)
     return topicName;
 }
 
-string createPost(string& postContent) {
-
+string createPost(string& postContent, time_t time) {
 
     cout << "Create Posts: \n";
     getline(cin >> ws, postContent);
+    char buffer[26];
+    ctime_s(buffer, sizeof buffer, &time);
 
-    return postContent;
+    return postContent, buffer;
 }
 
 string replyPost(string& reply) {
@@ -179,6 +183,8 @@ string replyPost(string& reply) {
 
     return reply;
 }
+
+//void displayReplies(int numReplies, )
 
 int main()
 {
@@ -216,7 +222,7 @@ int main()
         if (!username.empty()) {
             authenticated = true;
         }
-    }*/
+    }
     //Topic topic = Topic();
 
     cout << "\033[2J\033[H";
@@ -266,7 +272,8 @@ int main()
                             for (int j = 0; j < postList.getLength(); j++) {
                                 string postTitle = postList.getTitle(j);
                                 if (postTitle == topicList.get(i)) {
-                                    cout << "[" << j+1 << "] " << postList.getPost(j) << endl;  
+                                    cout << "[" << j+1 << "] " << postList.getPost(j) << endl;
+                                    cout << "      by " << username << " >> " << postList.getTime(j);
                                     int n = 0;
                                     while (!replyList.isEmpty() and n < replyList.getLength()) {
                                         if (replyList.getID(n) == to_string(j+1)) {
@@ -308,9 +315,11 @@ int main()
                         if (input == "1") {
                             string postContent;
                             cout << endl;
-                            createPost(postContent);
+                            auto now = chrono::system_clock::now();
+                            time_t now_c = chrono::system_clock::to_time_t(now);
+                            createPost(postContent, now_c);
                             id++;
-                            postList.add(postContent, topicList.get(i), to_string(id));
+                            postList.add(postContent, topicList.get(i), to_string(id), username, now_c);
                             cout << "\nPosted!\n";
                             postList.print();
                         }

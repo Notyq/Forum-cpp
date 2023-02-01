@@ -13,6 +13,8 @@ class Posts : public Topic {
 private:
 	struct Node
 	{
+		ItemType time;
+		ItemType user;
 		ItemType id;
 		ItemType post;	// item
 		ItemType title; // title
@@ -29,10 +31,10 @@ public:
 	//~List();
 
 	// add an item to the back of the list (append)
-	bool add(ItemType post, ItemType t, ItemType id);
+	bool add(ItemType post, ItemType t, ItemType id, ItemType user, time_t time);
 
 	// add an item at a specified position in the list (insert)
-	bool add(int index, ItemType post, ItemType t, ItemType id);
+	bool add(int index, ItemType post, ItemType t, ItemType id, ItemType user, time_t time);
 
 	// remove an item at a specified position in the list
 	void remove(int index);
@@ -50,4 +52,6 @@ public:
 
 	// display all the items in the list
 	void print();
+
+	string getTime(int index);
 };
