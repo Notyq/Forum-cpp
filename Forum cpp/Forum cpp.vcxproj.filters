@@ -30,6 +30,9 @@
     <ClCompile Include="Posts.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Reply.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dictionary.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Posts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Reply.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

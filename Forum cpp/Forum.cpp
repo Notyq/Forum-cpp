@@ -10,6 +10,7 @@
 #include "Dictionary.h"
 #include "Topic.h"
 #include "Posts.h"
+#include "Reply.h"
 
 using namespace std;
 
@@ -153,12 +154,22 @@ string createPost(string& postContent) {
     return postContent;
 }
 
+string replyPost(string& reply) {
+
+    cout << "Reply to post: \n";
+    getline(cin >> ws, reply);
+
+    return reply;
+}
+
 int main()
 {
     Dictionary profiles;
     bool authenticated = true; // <--------- for yq's debugging
     Topic topicList = Topic();
     Posts postList = Posts();
+    Reply replyList = Reply();
+    
     //authenticated = logIn(profiles); 
     //Topic topic = Topic();
     logIn(profiles);
@@ -189,7 +200,7 @@ int main()
 
                 for (int i = 0; i < length; i++) {
                     if (option - 1 == i) {
-                        cout << "\n==========" << topicList.get(i) << "==========\n" << endl;
+                        cout << "\n==========" << topicList.get(i) << "==========" << endl;
                         cout << "Posts:\n";
                         if (!postList.isEmpty()) {
                             for (int j = 0; j < postList.getLength(); j++) {
@@ -232,7 +243,13 @@ int main()
                             cout << "\nPosted!\n";
                         }
                         else if (input == "2") {
-                            continue;
+                            string postNum;
+                            cout << "Select Post number: ";
+                            cin >> postNum;
+
+                            for (int k = 0; k < postList.getLength(); k++) {
+                                //string post = postList.getTitle(j);
+                            }
                         }
                         else if (input == "0")
                         {
