@@ -185,9 +185,8 @@ string replyPost(string& reply) {
 
 int main()
 {
-    HANDLE  hConsole;
-    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
+    //Global variables
+    HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     Dictionary profiles;
     bool authenticated = true; // <--------- for yq's debugging
     string username;
@@ -197,6 +196,7 @@ int main()
     int id = 0;
     fstream file;
 
+    // Loading of saved topics
     string topic;
     file.open("topics.txt");
     while (!file.eof()) {
@@ -212,8 +212,7 @@ int main()
     }
     file.close();
 
-
-
+    // When user is not logged in
     while (username.empty()) {
         username = logIn(profiles);
         if (!username.empty()) {
