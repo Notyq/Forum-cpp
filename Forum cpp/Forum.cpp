@@ -149,7 +149,7 @@ string logIn(Dictionary profilesTable)
 string createTopic(string& topicName)
 {
     cout << "New topic title: \n";
-    cin >> topicName;
+    getline(cin >> ws, topicName);
 
     return topicName;
 }
@@ -190,7 +190,7 @@ int main()
     while (authenticated)
     {
         cout << "Current User: " + username<< endl;
-        string choice = "";
+        string choice;
         cout << "===========Forums===========" << endl;
         cout << "[1] View Topics" << endl;
         cout << "[2] Create Topics" << endl;
