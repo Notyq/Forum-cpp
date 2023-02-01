@@ -85,14 +85,13 @@ string logIn(Dictionary profilesTable)
                     }
                 }
                 bool passRight = false;
-                string pass;
+                int pass;
                 while (!passRight) {
                     cout << "Enter Password: ";
                     cin >> password;
-                    pass = profile.substr(profile.find(" ")+1,profile.length() - 1);
-                    hPass = stoi(pass);
+                    pass = profilesTable.hash(password);
                     DicItemType check = profilesTable.get(username);
-                    if (hPass == check) {
+                    if (pass == check) {
                         authenticated = true;
                         break;
                     }
