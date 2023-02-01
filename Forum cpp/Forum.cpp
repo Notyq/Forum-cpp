@@ -5,6 +5,8 @@
 #include <fstream>
 #include <iomanip>
 #include <string>
+#include <time.h>
+#include <ctime>
 
 #include "LinkedList.h"
 #include "Dictionary.h"
