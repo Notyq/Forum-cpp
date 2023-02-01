@@ -11,11 +11,12 @@ Posts::Posts()
 }
 
 // add an item to the back of the Posts (append)
-bool Posts::add(ItemType post, ItemType t)
+bool Posts::add(ItemType post, ItemType t, ItemType id)
 {
 	Node* newNode1 = new Node();
 	newNode1->post = post;
 	newNode1->title = t;
+	newNode1->id = id;
 	newNode1->next = NULL;
 
 	if (size == 0)
@@ -36,13 +37,14 @@ bool Posts::add(ItemType post, ItemType t)
 	return true;
 }
 
-bool Posts::add(int index, ItemType post, ItemType t)
+bool Posts::add(int index, ItemType post, ItemType t, ItemType id)
 {
 	if (index >= 0 && index <= size)
 	{
 		Node* newNode1 = new Node();
 		newNode1->post = post;
 		newNode1->title = t;
+		newNode1->id = id;
 		newNode1->next = NULL;
 
 		if (index == 0)
@@ -163,7 +165,7 @@ void Posts::print()
 
 	while (temp != NULL)
 	{
-		cout << temp->post << " " << temp->title << endl;
+		cout << temp->post << " " << temp->title << " " << temp->id << endl;
 		temp = temp->next;
 	}
 	cout << "----------" << endl;

@@ -5,8 +5,6 @@
 
 using namespace std;
 
-//typedef int ItemType;
-//typedef string ItemType;
 typedef string ItemType;
 
 class Reply
@@ -19,7 +17,7 @@ private:
 		Node* next;
 	};
 
-
+	int size;
 	Node* topNode;
 
 public:
@@ -48,4 +46,10 @@ public:
 
 	//display items in stack in order of insertion
 	void displayInOrderOfInsertion();
+
+	ItemType getID(int index);
+
+	ItemType get(int index);
+
+	int getLength();
 };

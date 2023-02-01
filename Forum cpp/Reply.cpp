@@ -1,6 +1,10 @@
 #include "Reply.h"
 
-Reply::Reply() { };
+Reply::Reply() 
+{
+	topNode = NULL;
+	size = 0;
+}
 
 Reply::~Reply() {
 	while (topNode != NULL) {
@@ -16,6 +20,7 @@ bool Reply::push(ItemType item, ItemType id) {
 
 	n->next = topNode;
 	topNode = n;
+	size++;
 
 	return true;
 }
@@ -38,6 +43,7 @@ bool Reply::pop() {
 		temp->next = NULL;
 		delete temp;
 		return true;
+		size--;
 	}
 	return false;
 }
@@ -51,6 +57,7 @@ bool Reply::pop(ItemType& item, ItemType& id) {
 		temp->next = NULL;
 		delete temp;
 		return true;
+		size--;
 	}
 	return false;
 }
@@ -81,4 +88,46 @@ void Reply::displayInOrderOfInsertion() {
 		temp = temp->next;
 	}
 	ds.displayInOrder();
+}
+
+ItemType Reply::getID(int index) {
+	if (index >= 0 && index <= size - 1) {
+
+		Node* ptr;
+		ptr = topNode;
+
+		for (int i = 0; i < index; i++) {
+			ptr = ptr->next;
+		}
+		Node n = *ptr;
+		return n.id;
+	}
+}
+
+ItemType Reply::get(int index) {
+	if (index >= 0 && index <= size - 1) {
+
+		Node* ptr;
+		ptr = topNode;
+
+		for (int i = 0; i < index; i++) {
+			ptr = ptr->next;
+		}
+		Node n = *ptr;
+		return n.item;
+	}
+}
+
+int Reply::getLength()
+{
+	int i = 0;
+	Node* temp = new Node();
+	temp = topNode;
+	while (temp != NULL)
+	{
+		i++;
+		temp = temp->next;
+	}
+
+	return i;
 }

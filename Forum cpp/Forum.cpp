@@ -184,10 +184,12 @@ int main()
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
     Dictionary profiles;
-    bool authenticated = false; // <--------- for yq's debugging
+    bool authenticated = true; // <--------- for yq's debugging
     string username;
     Topic topicList = Topic();
     Posts postList = Posts();
+    Reply replyList = Reply();
+    int id = 0;
     fstream file;
 
     string topic;
@@ -212,7 +214,7 @@ int main()
         if (!username.empty()) {
             authenticated = true;
         }
-    }
+    }*/
     //Topic topic = Topic();
 
     cout << "\033[2J\033[H";
@@ -262,7 +264,18 @@ int main()
                             for (int j = 0; j < postList.getLength(); j++) {
                                 string postTitle = postList.getTitle(j);
                                 if (postTitle == topicList.get(i)) {
-                                    cout << "[" << j+1 << "] " << postList.getPost(j) << endl;
+                                    cout << "[" << j+1 << "] " << postList.getPost(j) << endl;  
+                                    int n = 0;
+                                    while (!replyList.isEmpty() and n < replyList.getLength()) {
+                                        if (replyList.getID(n) == to_string(j+1)) {
+                                            cout << "     - " << replyList.get(n) << endl;
+                                            n++;
+                                        }
+                                        else
+                                        {
+                                            n++;
+                                        }
+                                    }
                                     continue;
                                 }
                                 else if (postTitle != topicList.get(i) and j == postList.getLength())
@@ -294,16 +307,27 @@ int main()
                             string postContent;
                             cout << endl;
                             createPost(postContent);
-                            postList.add(postContent, topicList.get(i));
+                            id++;
+                            postList.add(postContent, topicList.get(i), to_string(id));
                             cout << "\nPosted!\n";
+                            postList.print();
                         }
                         else if (input == "2") {
-                            string postNum;
-                            cout << "Select Post number: ";
-                            cin >> postNum;
 
-                            for (int k = 0; k < postList.getLength(); k++) {
-                                //string post = postList.getTitle(j);
+                            // check if there is post in topic
+                            string reply;
+                            string postID;
+                            cout << "Select Post id: ";
+                            cin >> postID;
+
+                            if (stoi(postID) <= id and stoi(postID) > 0) {
+                                replyPost(reply);
+                                replyList.push(reply, postID);
+                                cout << "Reply posted!\n";
+                            }
+                            else
+                            {
+                                cout << "Invalid option!\n";
                             }
                         }
                         else if (input == "0")
