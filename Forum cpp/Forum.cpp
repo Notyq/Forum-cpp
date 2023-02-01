@@ -123,7 +123,7 @@ string logIn(Dictionary profilesTable)
                 }
             }
             // open file for writing
-            userProfiles << username + " " + to_string(hPass) +"\n";
+            userProfiles << username + " " + to_string(hPass);
             userProfiles.close();
             authenticated = true;
             
