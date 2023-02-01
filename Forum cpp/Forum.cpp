@@ -1,5 +1,6 @@
-// Forum cpp.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+// Jason Heo Jung S10222947
+// Tang Yong Qi S10221789
+// Group 6
 
 #include <iostream>
 #include <fstream>
@@ -15,6 +16,7 @@
 
 using namespace std;
 
+// Login & SignUp Options for user authentication
 string logIn(Dictionary profilesTable)
 {
     string username;
@@ -25,7 +27,7 @@ string logIn(Dictionary profilesTable)
     bool authenticated = false;
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
-
+    // Retrieve User Profiles and put in a hash table
     userProfiles.open("profiles.txt");
     while (userProfiles >> username >> password) {
         int Hpass = stoi(password);
@@ -38,6 +40,7 @@ string logIn(Dictionary profilesTable)
     }
     userProfiles.close();
 
+    // While not logged in
     while (authenticated == false)
     {
         cout << "\033[2J\033[H";
@@ -137,7 +140,7 @@ string logIn(Dictionary profilesTable)
                     continue;
                 }
             }
-            // open file for writing
+            // open file for writing of profile
             userProfiles << username + " " + to_string(hPass);
             userProfiles.close();
             authenticated = true;
@@ -214,7 +217,7 @@ int main()
         if (!username.empty()) {
             authenticated = true;
         }
-    }*/
+    }
     //Topic topic = Topic();
 
     cout << "\033[2J\033[H";
@@ -414,14 +417,3 @@ int main()
         }
     }
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
