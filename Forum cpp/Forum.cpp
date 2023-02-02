@@ -216,15 +216,33 @@ int main()
     }
     file.close();
 
-    string Postcontent;
+    string PostContent;
     string PostTopic;
     string postId;
     string PostUsername;
     time_t PostTime;
-    file.open("topics.txt");
-    while (file >> Postcontent >> PostTopic >> postId >> PostUsername >> PostTime) {
-        if (!Postcontent.empty()) {
-            postList.add(Postcontent, PostTopic, postId, PostUsername, PostTime);
+    file.open("posts.txt");
+    while (file >> PostContent >> PostTopic >> postId >> PostUsername >> PostTime) {
+        if (!PostContent.empty()) {
+            postList.add(PostContent, PostTopic, postId, PostUsername, PostTime);
+        }
+        if (file.eof()) {
+            file.clear();
+            file.seekg(0);
+            break;
+        }
+    }
+    file.close();
+
+    string ReplyUsername;
+    string ReplyContent;
+    string ReplyPost;
+    string ReplyUsername;
+    time_t ReplyTime;
+    file.open("replies.txt");
+    while (file >> ReplyContent >> PostTopic >> postId >> PostUsername >> PostTime) {
+        if (!ReplyContent.empty()) {
+            replyList.push(ReplyContent, ReplyPost);
         }
         if (file.eof()) {
             file.clear();
@@ -357,6 +375,7 @@ int main()
                                 replyList.push(reply, postID);
                                 file.open("replies.txt", fstream::app);
                                 file << reply + " " + postID;
+                                file.close();
                                 cout << "Reply posted!\n";
                             }
                             else
