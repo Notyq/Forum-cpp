@@ -144,7 +144,7 @@ string logIn(Dictionary profilesTable)
                 }
             }
             // open file for writing of profile
-            userProfiles << username + " " + to_string(hPass);
+            userProfiles << username + " " + to_string(hPass) + "\n";
             userProfiles.close();
             authenticated = true;
             
@@ -222,6 +222,9 @@ int main()
     }
     file.close();
 
+    string Post;
+    string delimiter = "-+-";
+    int track = 0;
     string PostContent;
     string PostTopic;
     string postId;
@@ -229,13 +232,38 @@ int main()
     time_t PostTime;
     file.open("posts.txt");
     while (!file.eof()) {
-        if (!PostContent.empty()) {
-            postList.add(PostContent, PostTopic, postId, PostUsername);
+        getline(file, Post);
+        track = 0;
+        size_t pos = 0;
+        std::string token;
+        while ((pos = Post.find(delimiter)) != std::string::npos) {
+            token = Post.substr(0, pos);
+            std::cout << token << std::endl;
+            Post.erase(0, pos + delimiter.length());
+            if (track == 0) {
+                PostContent = token;
+                track++;
+            }
+            else if (track == 1) {
+                PostTopic = token;
+                track++;
+            }
+            else if (track == 2) {
+                postId = token;
+                track++;
+            }
+        }
+        if (track == 3) {
+            PostUsername = Post;
+            track++;
         }
         if (file.eof()) {
             file.clear();
             file.seekg(0);
             break;
+        }
+        if (!PostContent.empty()) {
+            postList.add(PostContent, PostTopic, postId, PostUsername);
         }
     }
     file.close();
@@ -362,7 +390,7 @@ int main()
                             id++;
                             postList.add(postContent, topicList.get(i), to_string(id), username);
                             file.open("posts.txt", fstream::app);
-                            file << postContent + "$&" + topicList.get(i) + "$&" + to_string(id) + "$&" + username +"\n";
+                            file << postContent + "-+-" + topicList.get(i) + "-+-" + to_string(id) + "-+-" + username +"\n";
                             file.close();
                             cout << "\nPosted!\n";
                             postList.print();
@@ -379,7 +407,7 @@ int main()
                                 replyPost(reply);
                                 replyList.push(reply, postID, username);
                                 file.open("replies.txt", fstream::app);
-                                file << reply + "$&" + postID + "$&" + username + "\n";
+                                file << reply + "-+-" + postID + "-+-" + username + "\n";
                                 file.close();
                                 cout << "Reply posted!\n";
                             }
