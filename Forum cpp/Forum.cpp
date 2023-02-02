@@ -209,7 +209,7 @@ int main()
     // Loading of saved topics
     string topic;
     file.open("topics.txt");
-    while (file >> topic) {
+    while (!file.eof()) {
         getline(file, topic);
         if (!topic.empty()) {
             topicList.add(topic);
@@ -228,7 +228,7 @@ int main()
     string PostUsername;
     time_t PostTime;
     file.open("posts.txt");
-    while (file >> PostContent >> PostTopic >> postId >> PostUsername) {
+    while (!file.eof()) {
         if (!PostContent.empty()) {
             postList.add(PostContent, PostTopic, postId, PostUsername);
         }
