@@ -167,14 +167,12 @@ string createTopic(string& topicName)
     return topicName;
 }
 
-string createPost(string& postContent, time_t time) {
+string createPost(string& postContent) {
 
     cout << "Create Posts: \n";
     getline(cin >> ws, postContent);
-    char buffer[26];
-    ctime_s(buffer, sizeof buffer, &time);
 
-    return postContent, buffer;
+    return postContent;
 }
 
 string replyPost(string& reply) {
@@ -184,6 +182,14 @@ string replyPost(string& reply) {
 
     return reply;
 }
+
+//void displayOwnPost(Posts postList, string username) {
+//    for (int i = 0; i < postList.getLength(); i++) {
+//        if (postList.getUser(username) == true) {
+//            cout << postList.getPost(i) << endl;
+//        }
+//    }
+//}
 
 //void displayReplies(int numReplies, )
 
@@ -221,9 +227,9 @@ int main()
     string PostUsername;
     time_t PostTime;
     file.open("posts.txt");
-    while (file >> PostContent >> PostTopic >> postId >> PostUsername >> PostTime) {
+    while (file >> PostContent >> PostTopic >> postId >> PostUsername) {
         if (!PostContent.empty()) {
-            postList.add(PostContent, PostTopic, postId, PostUsername, PostTime);
+            postList.add(PostContent, PostTopic, postId, PostUsername);
         }
         if (file.eof()) {
             file.clear();
@@ -269,6 +275,7 @@ int main()
         cout << "===========Forums===========" << endl;
         cout << "[1] View Topics" << endl;
         cout << "[2] Create Topics" << endl;
+        cout << "[3] View Your Posts and Replies" << endl;
         cout << "[0] Exit" << endl;
         cout << "============================" << endl;
         cout << "Choice: ";
@@ -306,7 +313,7 @@ int main()
                                 string postTitle = postList.getTitle(j);
                                 if (postTitle == topicList.get(i)) {
                                     cout << "[" << j+1 << "] " << postList.getPost(j) << endl;
-                                    cout << "      by " << username << " >> " << postList.getTime(j);
+                                    cout << "      by " << username << endl;
                                     int n = 0;
                                     while (!replyList.isEmpty() and n < replyList.getLength()) {
                                         if (replyList.getID(n) == to_string(j+1)) {
@@ -350,9 +357,9 @@ int main()
                             cout << endl;
                             auto now = chrono::system_clock::now();
                             time_t now_c = chrono::system_clock::to_time_t(now);
-                            createPost(postContent, now_c);
+                            createPost(postContent);
                             id++;
-                            postList.add(postContent, topicList.get(i), to_string(id), username, now_c);
+                            postList.add(postContent, topicList.get(i), to_string(id), username);
                             file.open("posts.txt", fstream::app);
                             file << postContent + " " + topicList.get(i) + "$&" + to_string(id) + "$&" + username + "$&" + to_string(now_c) +"\n";
                             file.close();
@@ -448,6 +455,18 @@ int main()
             
             //string title = topicList.get(0);
             //cout << title << endl;
+        }
+        else if (choice == "3")
+        {
+            if (!postList.isEmpty()) {
+                for (int i = 0; i < postList.getLength(); i++) {
+                    if (postList.getUser(username) == true) {
+                        cout << postList.getPost(i) << endl;
+                    }
+                }
+
+            }
+            postList.print();
         }
 
         else if (choice == "0")

@@ -11,14 +11,13 @@ Posts::Posts()
 }
 
 // add an item to the back of the Posts (append)
-bool Posts::add(ItemType post, ItemType t, ItemType id, ItemType user, time_t time)
+bool Posts::add(ItemType post, ItemType t, ItemType id, ItemType user)
 {
 	Node* newNode1 = new Node();
 	newNode1->post = post;
 	newNode1->title = t;
 	newNode1->id = id;
 	newNode1->user = user;
-	newNode1->time = time;
 	newNode1->next = NULL;
 
 	if (size == 0)
@@ -39,7 +38,7 @@ bool Posts::add(ItemType post, ItemType t, ItemType id, ItemType user, time_t ti
 	return true;
 }
 
-bool Posts::add(int index, ItemType post, ItemType t, ItemType id, ItemType user, time_t time)
+bool Posts::add(int index, ItemType post, ItemType t, ItemType id, ItemType user)
 {
 	if (index >= 0 && index <= size)
 	{
@@ -48,7 +47,6 @@ bool Posts::add(int index, ItemType post, ItemType t, ItemType id, ItemType user
 		newNode1->title = t;
 		newNode1->id = id;
 		newNode1->user = user;
-		newNode1->time = time;
 		newNode1->next = NULL;
 
 		if (index == 0)
@@ -169,22 +167,27 @@ void Posts::print()
 
 	while (temp != NULL)
 	{
-		cout << temp->post << " " << temp->title << " " << temp->id << " " << temp->time << endl;
+		cout << temp->post << " " << temp->title << " " << temp->id << " " << temp->user << endl;
 		temp = temp->next;
 	}
 	cout << "----------" << endl;
 }
 
-string Posts::getTime(int index) {
-	if (index >= 0 && index <= size - 1) {
+bool Posts::getUser(string user) {
 
-		Node* ptr;
-		ptr = firstNode;
+	Node* temp = new Node();
+	temp = firstNode;
 
-		for (int i = 0; i < index; i++) {
-			ptr = ptr->next;
+	while (temp != NULL) {
+		if (temp->user != user) {
+			return false;
+			temp = temp->next;
 		}
-		Node n = *ptr;
-		return n.time;
+		else
+		{
+			return true;
+			temp = temp->next;
+		}
 	}
+	return true;
 }
