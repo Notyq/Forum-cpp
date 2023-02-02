@@ -159,6 +159,116 @@ string logIn(Dictionary profilesTable)
     }
 }
 
+void loadTopic(Topic topicList) {
+    // Loading of saved topics
+    fstream file;
+    string topic;
+    file.open("topics.txt");
+    while (!file.eof()) {
+        getline(file, topic);
+        if (!topic.empty()) {
+            topicList.add(topic);
+        }
+        if (file.eof()) {
+            file.clear();
+            file.seekg(0);
+            break;
+        }
+    }
+    file.close();
+}
+
+void loadPost(Posts postList) {
+    fstream file;
+    string Post;
+    string delimiter = "-+-";
+    int track = 0;
+    string PostContent;
+    string PostTopic;
+    string postId;
+    string PostUsername;
+    time_t PostTime;
+    file.open("posts.txt");
+    while (!file.eof()) {
+        getline(file, Post);
+        track = 0;
+        size_t pos = 0;
+        std::string token;
+        while ((pos = Post.find(delimiter)) != std::string::npos) {
+            token = Post.substr(0, pos);
+            Post.erase(0, pos + delimiter.length());
+            if (track == 0) {
+                PostContent = token;
+                track++;
+            }
+            else if (track == 1) {
+                PostTopic = token;
+                track++;
+            }
+            else if (track == 2) {
+                postId = token;
+                track++;
+            }
+        }
+        if (track == 3) {
+            PostUsername = Post;
+            track++;
+        }
+        if (file.eof()) {
+            file.clear();
+            file.seekg(0);
+            break;
+        }
+        if (!PostContent.empty()) {
+            postList.add(PostContent, PostTopic, postId, PostUsername);
+        }
+    }
+    file.close();
+}
+
+void loadReply(Reply replyList) {
+    fstream file;
+    string Reply;
+    string delimiter = "-+-";
+    int track;
+    string ReplyUsername;
+    string ReplyContent;
+    string ReplyPost;
+
+    file.open("replies.txt");
+    while (!file.eof()) {
+        getline(file, Reply);
+        track = 0;
+        size_t pos = 0;
+        std::string token;
+        while ((pos = Reply.find(delimiter)) != std::string::npos) {
+            token = Reply.substr(0, pos);
+            Reply.erase(0, pos + delimiter.length());
+            if (track == 0) {
+                ReplyContent = token;
+                track++;
+            }
+            else if (track == 1) {
+                ReplyPost = token;
+                track++;
+            }
+        }
+        if (track == 2) {
+            ReplyUsername = Reply;
+            track++;
+        }
+        if (file.eof()) {
+            file.clear();
+            file.seekg(0);
+            break;
+        }
+        if (!ReplyContent.empty()) {
+            replyList.push(ReplyContent, ReplyPost, ReplyUsername);
+        }
+    }
+    file.close();
+}
+
 string createTopic(string& topicName)
 {
     cout << "New topic title: \n";
@@ -206,83 +316,10 @@ int main()
     int id = 1;
     fstream file;
 
-    // Loading of saved topics
-    string topic;
-    file.open("topics.txt");
-    while (!file.eof()) {
-        getline(file, topic);
-        if (!topic.empty()) {
-            topicList.add(topic);
-        }
-        if (file.eof()) {
-            file.clear();
-            file.seekg(0);
-            break;
-        }
-    }
-    file.close();
+    loadTopic(topicList);
+    loadPost(postList);
+    loadReply(replyList);
 
-    string Post;
-    string delimiter = "-+-";
-    int track = 0;
-    string PostContent;
-    string PostTopic;
-    string postId;
-    string PostUsername;
-    time_t PostTime;
-    file.open("posts.txt");
-    while (!file.eof()) {
-        getline(file, Post);
-        track = 0;
-        size_t pos = 0;
-        std::string token;
-        while ((pos = Post.find(delimiter)) != std::string::npos) {
-            token = Post.substr(0, pos);
-            std::cout << token << std::endl;
-            Post.erase(0, pos + delimiter.length());
-            if (track == 0) {
-                PostContent = token;
-                track++;
-            }
-            else if (track == 1) {
-                PostTopic = token;
-                track++;
-            }
-            else if (track == 2) {
-                postId = token;
-                track++;
-            }
-        }
-        if (track == 3) {
-            PostUsername = Post;
-            track++;
-        }
-        if (file.eof()) {
-            file.clear();
-            file.seekg(0);
-            break;
-        }
-        if (!PostContent.empty()) {
-            postList.add(PostContent, PostTopic, postId, PostUsername);
-        }
-    }
-    file.close();
-
-    string ReplyUsername;
-    string ReplyContent;
-    string ReplyPost;
-    file.open("replies.txt");
-    while (file >> ReplyContent >> ReplyPost >> ReplyUsername) {
-        if (!ReplyContent.empty()) {
-            replyList.push(ReplyContent, ReplyPost, ReplyUsername);
-        }
-        if (file.eof()) {
-            file.clear();
-            file.seekg(0);
-            break;
-        }
-    }
-    file.close();
 
     // When user is not logged in
     while (username.empty()) {
