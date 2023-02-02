@@ -533,8 +533,9 @@ int main()
             if (!postList.isEmpty()) {
                 for (int i = 0; i < postList.getLength(); i++) {
                     if (postList.getUser(i) == username) {
+                        string ID = postList.getID(i);
                         cout << postList.getTitle(i) << endl;
-                        cout << "     [" << id << "] " << postList.getPost(i) << endl;
+                        cout << "     [" << ID << "] " << postList.getPost(i) << endl;
                         continue;
                     }
                     else if ((postList.getUser(i) != username) and (i = postList.getLength())) {
@@ -542,6 +543,33 @@ int main()
                     }
                 }
             }
+
+            /*cout << "\n===========Options===========" << endl;
+            cout << "[1] Edit Post" << endl;
+            cout << "[2] Delete Post" << endl;
+            cout << "[0] Back to Menu" << endl;
+            cout << "=============================" << endl;
+            string input;
+            cin >> input;
+
+            if (input == "1") {
+                string edit;
+                cout << "Edit content:\n";
+                getline(cin >> ws, edit);
+
+
+            }
+            else if (input == "2") {
+
+            }
+            else if (input == "0") {
+
+            }
+            else
+            {
+                cout << "\nInvalid Option!\n";
+                continue;
+            }*/
         }
 
         else if (choice == "0")
