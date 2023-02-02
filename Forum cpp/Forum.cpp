@@ -203,8 +203,7 @@ int main()
     // Loading of saved topics
     string topic;
     file.open("topics.txt");
-    while (!file.eof()) {
-        getline(file, topic);
+    while (file >> topic) {
         if (!topic.empty()) {
             topicList.add(topic);
         }
@@ -237,12 +236,10 @@ int main()
     string ReplyUsername;
     string ReplyContent;
     string ReplyPost;
-    string ReplyUsername;
-    time_t ReplyTime;
     file.open("replies.txt");
-    while (file >> ReplyContent >> PostTopic >> postId >> PostUsername >> PostTime) {
+    while (file >> ReplyContent >> ReplyPost >> ReplyUsername) {
         if (!ReplyContent.empty()) {
-            replyList.push(ReplyContent, ReplyPost);
+            replyList.push(ReplyContent, ReplyPost, ReplyUsername);
         }
         if (file.eof()) {
             file.clear();
@@ -357,7 +354,7 @@ int main()
                             id++;
                             postList.add(postContent, topicList.get(i), to_string(id), username, now_c);
                             file.open("posts.txt", fstream::app);
-                            file << postContent + " " + topicList.get(i) + " " + to_string(id) + " " + username + " " + to_string(now_c) +"\n";
+                            file << postContent + " " + topicList.get(i) + "$&" + to_string(id) + "$&" + username + "$&" + to_string(now_c) +"\n";
                             file.close();
                             cout << "\nPosted!\n";
                             postList.print();
@@ -372,9 +369,9 @@ int main()
 
                             if (stoi(postID) <= id and stoi(postID) > 0) {
                                 replyPost(reply);
-                                replyList.push(reply, postID);
+                                replyList.push(reply, postID, username);
                                 file.open("replies.txt", fstream::app);
-                                file << reply + " " + postID;
+                                file << reply + "$&" + postID + "$&" + username + "\n";
                                 file.close();
                                 cout << "Reply posted!\n";
                             }

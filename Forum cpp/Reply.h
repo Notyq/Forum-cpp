@@ -12,6 +12,7 @@ class Reply
 private:
 	struct Node
 	{
+		ItemType user;
 		ItemType id;
 		ItemType item;
 		Node* next;
@@ -30,7 +31,7 @@ public:
 	bool isEmpty();
 
 	//push item on top of the stack
-	bool push(ItemType item, ItemType id);
+	bool push(ItemType item, ItemType id, ItemType user);
 
 	//pop item from top of stack
 	bool pop();

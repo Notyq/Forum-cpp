@@ -12,9 +12,10 @@ Reply::~Reply() {
 	}
 }
 
-bool Reply::push(ItemType item, ItemType id) {
+bool Reply::push(ItemType item, ItemType id, ItemType user) {
 	Node* n = new Node;
 	n->item = item;
+	n->user = user;
 	n->next = NULL;
 	n->id = id;
 
@@ -84,7 +85,7 @@ void Reply::displayInOrderOfInsertion() {
 	temp = topNode;
 	Reply ds = Reply();
 	while (temp != NULL) {
-		ds.push(temp->item, temp->id);
+		ds.push(temp->item, temp->id, temp->user);
 		temp = temp->next;
 	}
 	ds.displayInOrder();
