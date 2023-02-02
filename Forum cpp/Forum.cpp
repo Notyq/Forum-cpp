@@ -159,7 +159,7 @@ string logIn(Dictionary profilesTable)
     }
 }
 
-void loadTopic(Topic topicList) {
+Topic loadTopic(Topic topicList) {
     // Loading of saved topics
     fstream file;
     string topic;
@@ -176,9 +176,10 @@ void loadTopic(Topic topicList) {
         }
     }
     file.close();
+    return topicList;
 }
 
-void loadPost(Posts postList) {
+Posts loadPost(Posts postList) {
     fstream file;
     string Post;
     string delimiter = "-+-";
@@ -224,9 +225,10 @@ void loadPost(Posts postList) {
         }
     }
     file.close();
+    return postList;
 }
 
-void loadReply(Reply replyList) {
+Reply loadReply(Reply replyList) {
     fstream file;
     string Reply;
     string delimiter = "-+-";
@@ -267,6 +269,7 @@ void loadReply(Reply replyList) {
         }
     }
     file.close();
+    return replyList;
 }
 
 string createTopic(string& topicName)
@@ -316,10 +319,9 @@ int main()
     int id = 0;
     fstream file;
 
-    loadTopic(topicList);
-    loadPost(postList);
-    loadReply(replyList);
-
+    topicList = loadTopic(topicList);
+    postList = loadPost(postList);
+    replyList = loadReply(replyList);
 
     // When user is not logged in
     while (username.empty()) {
