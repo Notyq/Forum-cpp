@@ -210,6 +210,7 @@ int main()
     string topic;
     file.open("topics.txt");
     while (file >> topic) {
+        getline(file, topic);
         if (!topic.empty()) {
             topicList.add(topic);
         }
@@ -361,7 +362,7 @@ int main()
                             id++;
                             postList.add(postContent, topicList.get(i), to_string(id), username);
                             file.open("posts.txt", fstream::app);
-                            file << postContent + " " + topicList.get(i) + "$&" + to_string(id) + "$&" + username + "$&" + to_string(now_c) +"\n";
+                            file << postContent + "$&" + topicList.get(i) + "$&" + to_string(id) + "$&" + username +"\n";
                             file.close();
                             cout << "\nPosted!\n";
                             postList.print();
