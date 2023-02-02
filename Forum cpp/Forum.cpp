@@ -203,7 +203,7 @@ int main()
     Topic topicList = Topic();
     Posts postList = Posts();
     Reply replyList = Reply();
-    int id = 0;
+    int id = 1;
     fstream file;
 
     // Loading of saved topics
@@ -342,7 +342,7 @@ int main()
                                 string postTitle = postList.getTitle(j);
                                 if (postTitle == topicList.get(i)) {
                                     cout << "[" << j+1 << "] " << postList.getPost(j) << endl;
-                                    cout << "      by " << username << endl;
+                                    cout << "      by " << postList.getUser(j) << endl;
                                     int n = 0;
                                     while (!replyList.isEmpty() and n < replyList.getLength()) {
                                         if (replyList.getID(n) == to_string(j+1)) {
@@ -384,13 +384,17 @@ int main()
                         if (input == "1") {
                             string postContent;
                             cout << endl;
-                            auto now = chrono::system_clock::now();
-                            time_t now_c = chrono::system_clock::to_time_t(now);
+
                             createPost(postContent);
-                            id++;
-                            postList.add(postContent, topicList.get(i), to_string(id), username);
+                            if (!postList.isEmpty()) {
+                                postList.add(postContent, topicList.get(i), to_string(id + postList.getLength()), username);
+                            }
+                            else
+                            {
+                                postList.add(postContent, topicList.get(i), to_string(id), username);
+                            }
                             file.open("posts.txt", fstream::app);
-                            file << postContent + "-+-" + topicList.get(i) + "-+-" + to_string(id) + "-+-" + username +"\n";
+                            file << postContent + "-+-" + topicList.get(i) + "-+-" + to_string(postList.getLength()) + "-+-" + username +"\n";
                             file.close();
                             cout << "\nPosted!\n";
                             postList.print();
@@ -489,13 +493,16 @@ int main()
         {
             if (!postList.isEmpty()) {
                 for (int i = 0; i < postList.getLength(); i++) {
-                    if (postList.getUser(username) == true) {
-                        cout << postList.getPost(i) << endl;
+                    if (postList.getUser(i) == username) {
+                        cout << postList.getTitle(i) << endl;
+                        cout << "     [" << id << "] " << postList.getPost(i) << endl;
+                        continue;
+                    }
+                    else if ((postList.getUser(i) != username) and (i = postList.getLength())) {
+                        cout << "\n No posts by user!\n";
                     }
                 }
-
             }
-            postList.print();
         }
 
         else if (choice == "0")
