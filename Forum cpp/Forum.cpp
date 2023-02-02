@@ -216,6 +216,24 @@ int main()
     }
     file.close();
 
+    string Postcontent;
+    string PostTopic;
+    string postId;
+    string PostUsername;
+    time_t PostTime;
+    file.open("topics.txt");
+    while (file >> Postcontent >> PostTopic >> postId >> PostUsername >> PostTime) {
+        if (!Postcontent.empty()) {
+            postList.add(Postcontent, PostTopic, postId, PostUsername, PostTime);
+        }
+        if (file.eof()) {
+            file.clear();
+            file.seekg(0);
+            break;
+        }
+    }
+    file.close();
+
     // When user is not logged in
     while (username.empty()) {
         username = logIn(profiles);
@@ -320,6 +338,9 @@ int main()
                             createPost(postContent, now_c);
                             id++;
                             postList.add(postContent, topicList.get(i), to_string(id), username, now_c);
+                            file.open("posts.txt", fstream::app);
+                            file << postContent + " " + topicList.get(i) + " " + to_string(id) + " " + username + " " + to_string(now_c) +"\n";
+                            file.close();
                             cout << "\nPosted!\n";
                             postList.print();
                         }
@@ -334,6 +355,8 @@ int main()
                             if (stoi(postID) <= id and stoi(postID) > 0) {
                                 replyPost(reply);
                                 replyList.push(reply, postID);
+                                file.open("replies.txt", fstream::app);
+                                file << reply + " " + postID;
                                 cout << "Reply posted!\n";
                             }
                             else

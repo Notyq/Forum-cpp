@@ -10,7 +10,7 @@ typedef string ItemType;
 
 class Posts : public Topic {
 
-private:
+	private:
 	struct Node
 	{
 		ItemType time;
@@ -23,7 +23,7 @@ private:
 	Node* firstNode;	// point to the first item
 	int  size;		// number of items in the list
 
-public:
+	public:
 	// constructor
 	Posts();
 
