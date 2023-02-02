@@ -234,6 +234,7 @@ void loadReply(Reply replyList) {
     string ReplyUsername;
     string ReplyContent;
     string ReplyPost;
+
     file.open("replies.txt");
     while (!file.eof()) {
         getline(file, Reply);
@@ -317,7 +318,7 @@ int main()
 
     loadTopic(topicList);
     loadPost(postList);
-    //loadReply(replyList);
+    loadReply(replyList);
 
 
     // When user is not logged in
