@@ -173,21 +173,31 @@ void Posts::print()
 	cout << "----------" << endl;
 }
 
-bool Posts::getUser(string user) {
+string Posts::getUser(int index) {
 
-	Node* temp = new Node();
-	temp = firstNode;
+	if (index >= 0 && index <= size - 1) {
 
-	while (temp != NULL) {
-		if (temp->user != user) {
-			return false;
-			temp = temp->next;
+		Node* ptr;
+		ptr = firstNode;
+
+		for (int i = 0; i < index; i++) {
+			ptr = ptr->next;
 		}
-		else
-		{
-			return true;
-			temp = temp->next;
-		}
+		Node n = *ptr;
+		return n.user;
 	}
-	return true;
+}
+
+string Posts::getID(int index) {
+	if (index >= 0 && index <= size - 1) {
+
+		Node* ptr;
+		ptr = firstNode;
+
+		for (int i = 0; i < index; i++) {
+			ptr = ptr->next;
+		}
+		Node n = *ptr;
+		return n.id;
+	}
 }

@@ -52,5 +52,7 @@ class Posts : public Topic {
 	// display all the items in the list
 	void print();
 
-	bool getUser(string user);
+	string getUser(int index);
+
+	string getID(int index);
 };
