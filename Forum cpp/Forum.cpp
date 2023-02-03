@@ -432,7 +432,7 @@ int main()
                                 postList.add(postContent, topicList.get(i), to_string(id), username);
                             }
                             file.open("posts.txt", fstream::app);
-                            file << postContent + "-+-" + topicList.get(i) + "-+-" + to_string(postList.getLength()) + "-+-" + username +"\n";
+                            file << postContent + "-+-" + topicList.get(i) + "-+-" + to_string(postList.getLength()) + "-+-" + username +"\n"; 
                             file.close();
                             cout << "\nPosted!\n";
                             postList.print();
@@ -587,6 +587,43 @@ int main()
                         }                        
                     }
                     else if (input == "2") {
+                        bool match = false;
+                        string inputID;
+                        cout << "\nEnter post ID: ";
+                        cin >> inputID;
+
+                        for (int j = 0; j < postList.getLength(); j++) {
+                            if (inputID == postList.getID(j) && username == postList.getUser(j)) {
+                                match = true;
+                                string cfm;
+                                cout << "Confirm deletion (Y/N): ";
+                                cin >> cfm;
+
+                                if (cfm == "y") {
+                                    postList.remove(j);
+                                    id++;
+                                    cout << "\nDeleted!\n";
+                                    
+                                }
+                                else if (cfm == "n") {
+                                    cout << "Cancelling deletion...\n" << endl;
+                                    break;
+                                }
+                                else
+                                {
+                                    cout << "Invalid input!\n";
+                                }
+                            }
+                            else if (j + 1 == postList.getLength() && match == false)
+                            {
+                                cout << "Invalid input!\n";
+                                break;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
 
                     }
                     else if (input == "0") {
