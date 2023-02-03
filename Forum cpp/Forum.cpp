@@ -264,7 +264,7 @@ Reply loadReply(Reply replyList) {
             break;
         }
         if (!ReplyContent.empty()) {
-            replyList.push(ReplyContent, ReplyPost, ReplyUsername);
+            replyList.add(ReplyContent, ReplyPost, ReplyUsername);
         }
     }
     file.close();
@@ -293,6 +293,22 @@ string replyPost(string& reply) {
     getline(cin >> ws, reply);
 
     return reply;
+}
+
+void displayReply(Reply replyList, Posts postList) {
+
+    for (int n = 0; n < replyList.getLength(); n++) {
+        for (int j = 0; j < postList.getLength(); j++) {
+            if (replyList.getID(n) == postList.getID(j)) {
+                cout << "          [ " << replyList.get(n) << " ]" << endl;
+                cout << "                    -" << replyList.getUser(n);
+            }
+            else
+            {
+                continue;
+            }
+        }
+    }
 }
 
 //void displayOwnPost(Posts postList, string username) {
@@ -367,114 +383,112 @@ int main()
                 cout << "Enter option to view topic: \n";
                 cin >> option;
 
-                for (int i = 0; i < length; i++) {
-                    if (option - 1 == i) {
-                        cout << "\033[2J\033[H";
-                        cout << "==========";
-                        SetConsoleTextAttribute(hConsole, 14);
-                        cout << topicList.get(i);
-                        SetConsoleTextAttribute(hConsole, 15);
-                        cout << "==========" << endl;
-                        if (!postList.isEmpty()) {
-                            for (int j = 0; j < postList.getLength(); j++) {
-                                string postTitle = postList.getTitle(j);
-                                if (postTitle == topicList.get(i)) {
-                                    cout << "[" << j+1 << "] " << postList.getPost(j) << endl;
-                                    cout << "      by " << postList.getUser(j) << endl;
-                                    int n = 0;
-                                    while (!replyList.isEmpty() and n < replyList.getLength()) {
-                                        if (replyList.getID(n) == to_string(j+1)) {
-                                            cout << "     - " << replyList.get(n) << endl;
-                                            n++;
-                                        }
-                                        else
-                                        {
-                                            n++;
-                                        }
+                if (option - 1 < length) {
+                    cout << "\033[2J\033[H";
+                    cout << "==========";
+                    SetConsoleTextAttribute(hConsole, 14);
+                    cout << topicList.get(option - 1);
+                    SetConsoleTextAttribute(hConsole, 15);
+                    cout << "==========" << endl;
+                    if (!postList.isEmpty()) {
+                        for (int j = 0; j < postList.getLength(); j++) {
+                            string postTitle = postList.getTitle(j);
+                            string postID = postList.getID(j);
+                            if (postTitle == topicList.get(option - 1)) {
+                                cout << "[" << j + 1 << "] " << postList.getPost(j) << "      by " << postList.getUser(j) << endl;
+                                for (int n = 0; n < replyList.getLength(); n++) {
+                                    if (replyList.getID(n) == to_string(j + 1)) {
+                                        cout << "     - " << replyList.get(n) << endl;
                                     }
-                                    continue;
-                                }
-                                else if (postTitle != topicList.get(i) and j == postList.getLength())
-                                {
-                                    cout << "\033[2J\033[H";
-                                    cout << "No posts in this topic!\n" << endl;
-                                    break;
-                                }
-                                else
-                                {
-                                    continue;
+                                    else
+                                    {
+                                        continue;
+                                    }
                                 }
                             }
-                        }
-                        else
-                        {
-                            cout << "No posts Found!\n " << endl;
-                        }
-
-                        cout << "\n===========Options===========" << endl;
-                        cout << "[1] Create new post" << endl;
-                        cout << "[2] Reply to post" << endl;
-                        cout << "[0] Back to Menu" << endl;
-                        cout << "=============================" << endl;
-                        string input;
-                        cin >> input;
-
-                        if (input == "1") {
-                            string postContent;
-                            cout << endl;
-
-                            createPost(postContent);
-                            if (!postList.isEmpty()) {
-                                postList.add(postContent, topicList.get(i), to_string(id + postList.getLength()), username);
+                            else if (postTitle != topicList.get(option - 1) and j == postList.getLength())
+                            {
+                                cout << "\033[2J\033[H";
+                                cout << "No posts in this topic!\n" << endl;
+                                break;
                             }
                             else
                             {
-                                postList.add(postContent, topicList.get(i), to_string(id), username);
+                                continue;
                             }
-                            file.open("posts.txt", fstream::app);
-                            file << postContent + "-+-" + topicList.get(i) + "-+-" + to_string(postList.getLength()) + "-+-" + username +"\n"; 
-                            file.close();
-                            cout << "\nPosted!\n";
-                            postList.print();
                         }
-                        else if (input == "2") {
+                    }
+                    else
+                    {
+                        cout << "No posts Found!\n " << endl;
+                    }
 
-                            // check if there is post in topic
-                            string reply;
-                            string postID;
-                            cout << "Select Post id: ";
-                            cin >> postID;
+                    cout << "\n===========Options===========" << endl;
+                    cout << "[1] Create new post" << endl;
+                    cout << "[2] Reply to post" << endl;
+                    cout << "[0] Back to Menu" << endl;
+                    cout << "=============================" << endl;
+                    string input;
+                    cin >> input;
 
-                            if (stoi(postID) <= id and stoi(postID) > 0) {
+                    if (input == "1") {
+                        string postContent;
+                        cout << endl;
+
+                        createPost(postContent);
+                        if (!postList.isEmpty()) {
+                            postList.add(postContent, topicList.get(option - 1), to_string(id + postList.getLength()), username);
+                        }
+                        else
+                        {
+                            postList.add(postContent, topicList.get(option - 1), to_string(id), username);
+                        }
+                        file.open("posts.txt", fstream::app);
+                        file << postContent + "-+-" + topicList.get(option - 1) + "-+-" + to_string(postList.getLength()) + "-+-" + username + "\n";
+                        file.close();
+                        cout << "\nPosted!\n";
+                    }
+                    else if (input == "2") {
+
+                        // check if there is post in topic
+                        string reply;
+                        string postID;
+                        cout << "Select Post id: ";
+                        cin >> postID;
+
+                        for (int j = 0; j < postList.getLength(); j++) {
+                            if (postID == postList.getID(j)) {
                                 replyPost(reply);
-                                replyList.push(reply, postID, username);
+                                replyList.add(reply, postID, username);
                                 file.open("replies.txt", fstream::app);
                                 file << reply + "-+-" + postID + "-+-" + username + "\n";
                                 file.close();
                                 cout << "Reply posted!\n";
                             }
-                            else
+                            else if (postID != postList.getID(j))
+                            {
+                                continue;
+                            }
+                            else if (postID != postList.getID(j))
                             {
                                 cout << "Invalid option!\n";
                             }
                         }
-                        else if (input == "0")
-                        {
-                            cout << "\033[2J\033[H";
-                            continue;
-                        }
-                        else
-                        {
-                            cout << "\033[2J\033[H";
-                            cout << "Invalid option!\n" << endl;
-                        }
+                    }
+                    else if (input == "0")
+                    {
+                        cout << "\033[2J\033[H";
+                        continue;
                     }
                     else
                     {
                         cout << "\033[2J\033[H";
                         cout << "Invalid option!\n" << endl;
-                        continue;
                     }
+                }
+                else 
+                {
+                    cout << "\ninvalid option!\n";
                 }
             }
             else

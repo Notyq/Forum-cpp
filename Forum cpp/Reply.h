@@ -1,8 +1,7 @@
+// List.h - - Specification of List ADT (implemented using Pointers)
 #pragma once
-#pragma once
-#include <iostream>
-#include <string>
-
+#include<string>
+#include<iostream>
 using namespace std;
 
 typedef string ItemType;
@@ -14,43 +13,41 @@ private:
 	{
 		ItemType user;
 		ItemType id;
-		ItemType item;
-		Node* next;
+		ItemType item;	// item
+		Node* next;	// pointer pointing to next item
 	};
-
-	int size;
-	Node* topNode;
+	Node* firstNode;	// point to the first item
+	int  size;		// number of items in the list
 
 public:
-	//Default constructor
+	// constructor
 	Reply();
-	//Destructor
-	~Reply();
 
-	//check if the stack is empty
-	bool isEmpty();
+	// destructor
+	//~List();
 
-	//push item on top of the stack
-	bool push(ItemType item, ItemType id, ItemType user);
+	// add an item to the back of the list (append)
+	bool add(ItemType item, ItemType user, ItemType id);
 
-	//pop item from top of stack
-	bool pop();
+	// add an item at a specified position in the list (insert)
+	bool add(int index, ItemType item, ItemType user, ItemType id);
 
-	//retrieve and pop item from top of stack
-	bool pop(ItemType& item, ItemType& id);
+	// remove an item at a specified position in the list
+	void remove(int index);
 
-	//retrieve item from top of stack
-	void getTop(ItemType& item, ItemType& id);
-
-	//display items in stack in order
-	void displayInOrder();
-
-	//display items in stack in order of insertion
-	void displayInOrderOfInsertion();
-
-	ItemType getID(int index);
-
+	// get an item at a specified position of the list (retrieve)
 	ItemType get(int index);
 
+	// check if the list is empty
+	bool isEmpty();
+
+	// check the size of the list
 	int getLength();
+
+	// display all the items in the list
+	void print();
+
+	string getID(int index);
+
+	string getUser(int index);
 };
