@@ -11,6 +11,7 @@
 #include <time.h>
 #include <stdint.h>
 #include <windows.h>
+#include <vector>
 
 #include "Dictionary.h"
 #include "TopicList.h"
@@ -270,6 +271,57 @@ ReplyList loadReply(ReplyList replyList) {
     return replyList;
 }
 
+void savePost(PostList postList) {
+    fstream file;
+    string id;
+    string user;
+    string content;
+    string title;
+
+    file.open("posts.txt");
+    for (int i = 0; i < postList.getLength(); i++) {
+        id = postList.getID(i);
+        user = postList.getUser(i);
+        content = postList.getPost(i);
+        title = postList.getTitle(i);
+        file << content + "-+-" + title + "-+-" + id + "-+-" + user + "\n";
+    }
+    file.close();
+}
+
+void saveReply(ReplyList replyList) {
+    fstream file;
+    string content;
+    string id;
+    string user;
+    file.open("posts.txt");
+    for (int i = 0; i < replyList.getLength(); i++) {
+        id = replyList.getID(i);
+        user = replyList.getUser(i);
+        content = replyList.get(i);
+        file << content + "-+-" + id + "-+-" + user + "\n";
+    }
+    file.close();
+}
+
+string MainMenu(string username) {
+    HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    cout << "Current User: ";
+    SetConsoleTextAttribute(hConsole, 10);
+    cout << username << endl;
+    string choice;
+    SetConsoleTextAttribute(hConsole, 15);
+    cout << "===========Forums===========" << endl;
+    cout << "[1] View Topics" << endl;
+    cout << "[2] Create Topics" << endl;
+    cout << "[3] View Your Posts and Replies" << endl;
+    cout << "[0] Exit" << endl;
+    cout << "============================" << endl;
+    cout << "Choice: ";
+    cin >> choice;
+    return choice;
+}
+
 string createTopic(string& topicName)
 {
     cout << "New topic title: \n";
@@ -327,6 +379,7 @@ int main()
     Dictionary profiles;
     bool authenticated = true; // <--------- for yq's debugging
     string username;
+    string choice;
     TopicList topicList = TopicList();
     PostList postList = PostList();
     ReplyList replyList = ReplyList();
@@ -344,24 +397,11 @@ int main()
             authenticated = true;
         }
     }
-    //TopicList topic = TopicList();
 
     cout << "\033[2J\033[H";
     while (authenticated)
     {
-        cout << "Current User: ";
-        SetConsoleTextAttribute(hConsole, 10);
-        cout << username << endl;
-        string choice;
-        SetConsoleTextAttribute(hConsole, 15);
-        cout << "===========Forums===========" << endl;
-        cout << "[1] View Topics" << endl;
-        cout << "[2] Create Topics" << endl;
-        cout << "[3] View Your Posts and Replies" << endl;
-        cout << "[0] Exit" << endl;
-        cout << "============================" << endl;
-        cout << "Choice: ";
-        cin >> choice;
+        choice = MainMenu(username);
 
         if (choice == "1")
         {
@@ -442,9 +482,7 @@ int main()
                         {
                             postList.add(postContent, topicList.get(option - 1), to_string(id), username);
                         }
-                        file.open("posts.txt", fstream::app);
-                        file << postContent + "-+-" + topicList.get(option - 1) + "-+-" + to_string(postList.getLength()) + "-+-" + username + "\n";
-                        file.close();
+                        savePost(postList);
                         cout << "\nPosted!\n";
                     }
                     else if (input == "2") {
@@ -459,18 +497,14 @@ int main()
                             if (postID == postList.getID(j)) {
                                 replyPost(reply);
                                 replyList.add(reply, postID, username);
-                                file.open("replies.txt", fstream::app);
-                                file << reply + "-+-" + postID + "-+-" + username + "\n";
-                                file.close();
+                                saveReply(replyList);
+                                cout << "\033[2J\033[H";
                                 cout << "Reply posted!\n";
                             }
-                            else if (postID != postList.getID(j))
-                            {
-                                continue;
-                            }
-                            else if (postID != postList.getID(j))
-                            {
+                            else{
+                                cout << "\033[2J\033[H";
                                 cout << "Invalid option!\n";
+                                continue;
                             }
                         }
                     }
@@ -585,6 +619,7 @@ int main()
                                 getline(cin >> ws, edit);
                                 postList.remove(stoi(id) - 1);
                                 postList.add(stoi(id) - 1, edit + editCheck, title, id, username);
+                                savePost(postList);
                                 cout << "Edited!\n";
                                 break;
                             }
@@ -614,6 +649,7 @@ int main()
 
                                 if (cfm == "y") {
                                     postList.remove(j);
+                                    savePost(postList);
                                     id++;
                                     cout << "\nDeleted!\n";
                                     
@@ -640,10 +676,11 @@ int main()
 
                     }
                     else if (input == "0") {
-
+                        cout << "\033[2J\033[H";
                     }
                     else
                     {
+                        cout << "\033[2J\033[H";
                         cout << "\nInvalid Option!\n";
                         continue;
                     }
@@ -651,6 +688,7 @@ int main()
             }
             else
             {
+                cout << "\033[2J\033[H";
                 cout << "\n No posts by user!\n";
             }
         }
