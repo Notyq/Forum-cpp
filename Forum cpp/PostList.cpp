@@ -1,21 +1,23 @@
 #include <iostream>
-#include "Topic.h"
+#include "PostList.h"
 #include <vector>
 using namespace std;
 
 // constructor
-Topic::Topic()
+PostList::PostList()
 {
 	firstNode = NULL;
 	size = 0;
 }
 
-
-// add an item to the back of the Topic (append)
-bool Topic::add(ItemType title)
+// add an item to the back of the PostList (append)
+bool PostList::add(ItemType post, ItemType t, ItemType id, ItemType user)
 {
 	Node* newNode1 = new Node();
-	newNode1->title = title;
+	newNode1->post = post;
+	newNode1->title = t;
+	newNode1->id = id;
+	newNode1->user = user;
 	newNode1->next = NULL;
 
 	if (size == 0)
@@ -36,12 +38,15 @@ bool Topic::add(ItemType title)
 	return true;
 }
 
-bool Topic::add(int index, ItemType title)
+bool PostList::add(int index, ItemType post, ItemType t, ItemType id, ItemType user)
 {
 	if (index >= 0 && index <= size)
 	{
 		Node* newNode1 = new Node();
-		newNode1->title = title;
+		newNode1->post = post;
+		newNode1->title = t;
+		newNode1->id = id;
+		newNode1->user = user;
 		newNode1->next = NULL;
 
 		if (index == 0)
@@ -66,7 +71,7 @@ bool Topic::add(int index, ItemType title)
 	return false;
 }
 
-void Topic::remove(int index)
+void PostList::remove(int index)
 {
 	if (index >= 0 && index <= size)
 	{
@@ -99,7 +104,22 @@ void Topic::remove(int index)
 	}
 }
 
-ItemType Topic::get(int index) {
+ItemType PostList::getPost(int index) {
+
+	if (index >= 0 && index <= size - 1) {
+
+		Node* ptr;
+		ptr = firstNode;
+
+		for (int i = 0; i < index; i++) {
+			ptr = ptr->next;
+		}
+		Node n = *ptr;
+		return n.post;
+	}
+}
+
+ItemType PostList::getTitle(int index) {
 
 	if (index >= 0 && index <= size - 1) {
 
@@ -114,7 +134,7 @@ ItemType Topic::get(int index) {
 	}
 }
 
-bool Topic::isEmpty()
+bool PostList::isEmpty()
 {
 
 	if (firstNode != NULL)
@@ -125,7 +145,7 @@ bool Topic::isEmpty()
 	return true;
 }
 
-int Topic::getLength()
+int PostList::getLength()
 {
 
 	int i = 0;
@@ -140,15 +160,44 @@ int Topic::getLength()
 	return i;
 }
 
-void Topic::print()
+void PostList::print()
 {
 	Node* temp = new Node();
 	temp = firstNode;
 
 	while (temp != NULL)
 	{
-		cout << temp->title << endl;
+		cout << temp->post << " " << temp->title << " " << temp->id << " " << temp->user << endl;
 		temp = temp->next;
 	}
 	cout << "----------" << endl;
+}
+
+string PostList::getUser(int index) {
+
+	if (index >= 0 && index <= size - 1) {
+
+		Node* ptr;
+		ptr = firstNode;
+
+		for (int i = 0; i < index; i++) {
+			ptr = ptr->next;
+		}
+		Node n = *ptr;
+		return n.user;
+	}
+}
+
+string PostList::getID(int index) {
+	if (index >= 0 && index <= size - 1) {
+
+		Node* ptr;
+		ptr = firstNode;
+
+		for (int i = 0; i < index; i++) {
+			ptr = ptr->next;
+		}
+		Node n = *ptr;
+		return n.id;
+	}
 }

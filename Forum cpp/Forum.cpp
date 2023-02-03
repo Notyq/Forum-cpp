@@ -12,11 +12,10 @@
 #include <stdint.h>
 #include <windows.h>
 
-#include "LinkedList.h"
 #include "Dictionary.h"
-#include "Topic.h"
-#include "Posts.h"
-#include "Reply.h"
+#include "TopicList.h"
+#include "PostList.h"
+#include "ReplyList.h"
 
 using namespace std;
 
@@ -159,7 +158,7 @@ string logIn(Dictionary profilesTable)
     }
 }
 
-Topic loadTopic(Topic topicList) {
+TopicList loadTopic(TopicList topicList) {
     // Loading of saved topics
     fstream file;
     string topic;
@@ -179,7 +178,7 @@ Topic loadTopic(Topic topicList) {
     return topicList;
 }
 
-Posts loadPost(Posts postList) {
+PostList loadPost(PostList postList) {
     fstream file;
     string Post;
     string delimiter = "-+-";
@@ -227,9 +226,9 @@ Posts loadPost(Posts postList) {
     return postList;
 }
 
-Reply loadReply(Reply replyList) {
+ReplyList loadReply(ReplyList replyList) {
     fstream file;
-    string Reply;
+    string ReplyList;
     string delimiter = "-+-";
     int track;
     string ReplyUsername;
@@ -238,13 +237,13 @@ Reply loadReply(Reply replyList) {
 
     file.open("replies.txt");
     while (!file.eof()) {
-        getline(file, Reply);
+        getline(file, ReplyList);
         track = 0;
         size_t pos = 0;
         std::string token;
-        while ((pos = Reply.find(delimiter)) != std::string::npos) {
-            token = Reply.substr(0, pos);
-            Reply.erase(0, pos + delimiter.length());
+        while ((pos = ReplyList.find(delimiter)) != std::string::npos) {
+            token = ReplyList.substr(0, pos);
+            ReplyList.erase(0, pos + delimiter.length());
             if (track == 0) {
                 ReplyContent = token;
                 track++;
@@ -255,7 +254,7 @@ Reply loadReply(Reply replyList) {
             }
         }
         if (track == 2) {
-            ReplyUsername = Reply;
+            ReplyUsername = ReplyList;
             track++;
         }
         if (file.eof()) {
@@ -328,9 +327,9 @@ int main()
     Dictionary profiles;
     bool authenticated = true; // <--------- for yq's debugging
     string username;
-    Topic topicList = Topic();
-    Posts postList = Posts();
-    Reply replyList = Reply();
+    TopicList topicList = TopicList();
+    PostList postList = PostList();
+    ReplyList replyList = ReplyList();
     int id = 1;
     fstream file;
 
@@ -345,7 +344,7 @@ int main()
             authenticated = true;
         }
     }
-    //Topic topic = Topic();
+    //TopicList topic = TopicList();
 
     cout << "\033[2J\033[H";
     while (authenticated)

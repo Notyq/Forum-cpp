@@ -129,17 +129,15 @@
   <ItemGroup>
     <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="Forum.cpp" />
-    <ClCompile Include="LinkedList.cpp" />
-    <ClCompile Include="Posts.cpp" />
-    <ClCompile Include="Reply.cpp" />
-    <ClCompile Include="Topic.cpp" />
+    <ClCompile Include="PostList.cpp" />
+    <ClCompile Include="ReplyList.cpp" />
+    <ClCompile Include="TopicList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dictionary.h" />
-    <ClInclude Include="LinkedList.h" />
-    <ClInclude Include="Posts.h" />
-    <ClInclude Include="Reply.h" />
-    <ClInclude Include="Topic.h" />
+    <ClInclude Include="PostList.h" />
+    <ClInclude Include="ReplyList.h" />
+    <ClInclude Include="TopicList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
