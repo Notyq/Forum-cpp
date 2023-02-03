@@ -294,7 +294,7 @@ string replyPost(string& reply) {
     return reply;
 }
 
-void displayReply(Reply replyList, Posts postList) {
+void displayReply(ReplyList replyList, PostList postList) {
 
     for (int n = 0; n < replyList.getLength(); n++) {
         for (int j = 0; j < postList.getLength(); j++) {

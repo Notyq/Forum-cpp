@@ -21,7 +21,7 @@ private:
 
 public:
 	// constructor
-	Reply();
+	ReplyList();
 
 	// destructor
 	//~List();

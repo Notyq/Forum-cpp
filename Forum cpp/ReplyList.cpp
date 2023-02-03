@@ -1,15 +1,15 @@
-// Reply.cpp - Implementation of Reply ADT using Array
-#include "Reply.h" // header file
+// ReplyList.cpp - Implementation of ReplyList ADT using Array
+#include "ReplyList.h" // header file
 
 // constructor
-Reply::Reply()
+ReplyList::ReplyList()
 {
 	firstNode = NULL;
 	size = 0;
 }
 
 // add an item to the back of the Reply (append)
-bool Reply::add(ItemType item, ItemType user, ItemType id)
+bool ReplyList::add(ItemType item, ItemType user, ItemType id)
 {
 	Node* newNode1 = new Node();
 	newNode1->item = item;
@@ -35,7 +35,7 @@ bool Reply::add(ItemType item, ItemType user, ItemType id)
 	return true;
 }
 
-bool Reply::add(int index, ItemType item, ItemType user, ItemType id)
+bool ReplyList::add(int index, ItemType item, ItemType user, ItemType id)
 {
 	if (index >= 0 && index <= size)
 	{
@@ -67,7 +67,7 @@ bool Reply::add(int index, ItemType item, ItemType user, ItemType id)
 	return false;
 }
 
-void Reply::remove(int index)
+void ReplyList::remove(int index)
 {
 	if (index >= 0 && index <= size)
 	{
@@ -100,7 +100,7 @@ void Reply::remove(int index)
 	}
 }
 
-ItemType Reply::get(int index) {
+ItemType ReplyList::get(int index) {
 
 	if (index >= 0 && index <= size - 1) {
 
@@ -115,7 +115,7 @@ ItemType Reply::get(int index) {
 	}
 }
 
-bool Reply::isEmpty()
+bool ReplyList::isEmpty()
 {
 
 	if (firstNode != NULL)
@@ -126,7 +126,7 @@ bool Reply::isEmpty()
 	return true;
 }
 
-int Reply::getLength()
+int ReplyList::getLength()
 {
 
 	int i = 0;
@@ -141,7 +141,7 @@ int Reply::getLength()
 	return i;
 }
 
-void Reply::print()
+void ReplyList::print()
 {
 	Node* temp = new Node();
 	temp = firstNode;
@@ -154,7 +154,7 @@ void Reply::print()
 	cout << "----------" << endl;
 }
 
-string Reply::getID(int index) {
+string ReplyList::getID(int index) {
 	if (index >= 0 && index <= size - 1) {
 
 		Node* ptr;
@@ -168,7 +168,7 @@ string Reply::getID(int index) {
 	}
 }
 
-string Reply::getUser(int index) {
+string ReplyList::getUser(int index) {
 	if (index >= 0 && index <= size - 1) {
 
 		Node* ptr;
