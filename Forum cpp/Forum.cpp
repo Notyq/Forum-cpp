@@ -48,11 +48,11 @@ string logIn(Dictionary profilesTable)
     while (authenticated == false)
     {
         cout << "\033[2J\033[H";
-        cout << "===========Forums===========" << endl;
+        cout << "=====Login/Signup=====" << endl;
         cout << "[1] Login" << endl;
         cout << "[2] Sign Up" << endl;
         cout << "[0] Exit" << endl;
-        cout << "============================" << endl;
+        cout << "======================" << endl;
         cout << "Choice: ";
         cin >> choice;
         // Log In
@@ -408,15 +408,14 @@ int main()
             int option;
             int length = topicList.getLength();
             cout << "\033[2J\033[H";
-            cout << "===========";
-            SetConsoleTextAttribute(hConsole, 14);
-            cout << "Topics";
-            SetConsoleTextAttribute(hConsole, 15);
-            cout << "===========" << endl;
+            cout << "===========Topics===========" << endl;
             if (length > 0) {
                 for (int i = 0; i < length; i++) {
                     string tName = topicList.get(i);
-                    cout << "[" << i + 1 << "] " << tName << endl;
+                    cout << "[" << i + 1 << "] ";
+                    SetConsoleTextAttribute(hConsole, 14);
+                    cout << tName << endl;
+                    SetConsoleTextAttribute(hConsole, 15);
                 }
                 cout << "============================" << endl;
                 cout << "Enter option: ";
@@ -500,14 +499,19 @@ int main()
                         string postID;
                         cout << "Select Post id: ";
                         cin >> postID;
-                        if (stoi(postID) > postList.getLength() || stoi(postID) < 1)
-                        for (int j = 0; j < postList.getLength(); j++) {
-                            if (postID == postList.getID(j)) {
-                                replyPost(reply);
-                                replyList.add(reply, postID, username);
-                                saveReply(replyList);
-                                cout << "\033[2J\033[H";
-                                cout << "Reply posted!\n";
+                        if (stoi(postID) > postList.getLength() || stoi(postID) < 1) {
+                            cout << "\033[2J\033[H";
+                            cout << "Invalid option!\n" << endl;
+                        }
+                        else {
+                            for (int j = 0; j < postList.getLength(); j++) {
+                                if (postID == postList.getID(j)) {
+                                    replyPost(reply);
+                                    replyList.add(reply, postID, username);
+                                    saveReply(replyList);
+                                    cout << "\033[2J\033[H";
+                                    cout << "Reply posted!\n";
+                                }
                             }
                         }
                     }
@@ -535,8 +539,7 @@ int main()
             }
         }   
 
-        else if (choice == "2") 
-        {
+        else if (choice == "2") {
             string topicName; 
             createTopic(topicName);
  
@@ -577,8 +580,8 @@ int main()
             //string title = topicList.get(0);
             //cout << title << endl;
         }
-        else if (choice == "3")
-        {
+
+        else if (choice == "3") {
             int numPost = 0;
             int i = 0;
             if (!postList.isEmpty()) {
@@ -696,14 +699,12 @@ int main()
             }
         }
 
-        else if (choice == "0")
-        {
+        else if (choice == "0") {
             cout << "\033[2J\033[H";
             return false;
         }
 
-        else
-        {
+        else {
             cout << "\033[2J\033[H";
             cout << "Invalid option, please try again\n";
             continue;
