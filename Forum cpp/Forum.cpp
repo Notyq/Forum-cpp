@@ -294,7 +294,7 @@ void saveReply(ReplyList replyList) {
     string content;
     string id;
     string user;
-    file.open("posts.txt");
+    file.open("replies.txt");
     for (int i = 0; i < replyList.getLength(); i++) {
         id = replyList.getID(i);
         user = replyList.getUser(i);
