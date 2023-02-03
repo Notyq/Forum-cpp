@@ -324,7 +324,7 @@ string MainMenu(string username) {
 
 string createTopic(string& topicName)
 {
-    cout << "New topic title: \n";
+    cout << "New topic title: ";
     getline(cin >> ws, topicName);
 
     return topicName;
@@ -419,22 +419,28 @@ int main()
                     cout << "[" << i + 1 << "] " << tName << endl;
                 }
                 cout << "============================" << endl;
-                cout << "Enter option to view topic: \n";
+                cout << "Enter option: ";
                 cin >> option;
 
                 if (option - 1 < length) {
                     cout << "\033[2J\033[H";
-                    cout << "==========";
                     SetConsoleTextAttribute(hConsole, 14);
-                    cout << topicList.get(option - 1);
+                    cout << "[" + topicList.get(option - 1) + "]" << endl;
                     SetConsoleTextAttribute(hConsole, 15);
-                    cout << "==========" << endl;
                     if (!postList.isEmpty()) {
                         for (int j = 0; j < postList.getLength(); j++) {
                             string postTitle = postList.getTitle(j);
                             string postID = postList.getID(j);
                             if (postTitle == topicList.get(option - 1)) {
-                                cout << "[" << j + 1 << "] " << postList.getPost(j) << "      by " << postList.getUser(j) << endl;
+
+                                cout << "[" << j + 1 << "] ";
+                                SetConsoleTextAttribute(hConsole, 9);
+                                cout << postList.getPost(j) << endl;
+                                SetConsoleTextAttribute(hConsole, 15);
+                                cout << "    by ";
+                                SetConsoleTextAttribute(hConsole, 10);
+                                cout << postList.getUser(j) << endl;
+                                SetConsoleTextAttribute(hConsole, 15);
                                 for (int n = 0; n < replyList.getLength(); n++) {
                                     if (replyList.getID(n) == to_string(j + 1)) {
                                         cout << "     - " << replyList.get(n) << endl;
@@ -467,6 +473,7 @@ int main()
                     cout << "[2] Reply to post" << endl;
                     cout << "[0] Back to Menu" << endl;
                     cout << "=============================" << endl;
+                    cout << "Option: ";
                     string input;
                     cin >> input;
 
@@ -483,7 +490,8 @@ int main()
                             postList.add(postContent, topicList.get(option - 1), to_string(id), username);
                         }
                         savePost(postList);
-                        cout << "\nPosted!\n";
+                        cout << "\033[2J\033[H";
+                        cout << "Posted!\n";
                     }
                     else if (input == "2") {
 
@@ -492,7 +500,7 @@ int main()
                         string postID;
                         cout << "Select Post id: ";
                         cin >> postID;
-
+                        if (stoi(postID) > postList.getLength() || stoi(postID) < 1)
                         for (int j = 0; j < postList.getLength(); j++) {
                             if (postID == postList.getID(j)) {
                                 replyPost(reply);
@@ -500,11 +508,6 @@ int main()
                                 saveReply(replyList);
                                 cout << "\033[2J\033[H";
                                 cout << "Reply posted!\n";
-                            }
-                            else{
-                                cout << "\033[2J\033[H";
-                                cout << "Invalid option!\n";
-                                continue;
                             }
                         }
                     }
