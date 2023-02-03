@@ -1,18 +1,21 @@
-// List.cpp - Implementation of List ADT using Array
-#include "LinkedList.h" // header file
+#include <iostream>
+#include "TopicList.h"
+#include <vector>
+using namespace std;
 
 // constructor
-List::List()
+TopicList::TopicList()
 {
 	firstNode = NULL;
 	size = 0;
 }
 
-// add an item to the back of the list (append)
-bool List::add(ItemType item)
+
+// add an item to the back of the TopicList (append)
+bool TopicList::add(ItemType title)
 {
 	Node* newNode1 = new Node();
-	newNode1->item = item;
+	newNode1->title = title;
 	newNode1->next = NULL;
 
 	if (size == 0)
@@ -33,12 +36,12 @@ bool List::add(ItemType item)
 	return true;
 }
 
-bool List::add(int index, ItemType item)
+bool TopicList::add(int index, ItemType title)
 {
 	if (index >= 0 && index <= size)
 	{
 		Node* newNode1 = new Node();
-		newNode1->item = item;
+		newNode1->title = title;
 		newNode1->next = NULL;
 
 		if (index == 0)
@@ -63,7 +66,7 @@ bool List::add(int index, ItemType item)
 	return false;
 }
 
-void List::remove(int index)
+void TopicList::remove(int index)
 {
 	if (index >= 0 && index <= size)
 	{
@@ -96,7 +99,7 @@ void List::remove(int index)
 	}
 }
 
-ItemType List::get(int index) {
+ItemType TopicList::get(int index) {
 
 	if (index >= 0 && index <= size - 1) {
 
@@ -107,11 +110,11 @@ ItemType List::get(int index) {
 			ptr = ptr->next;
 		}
 		Node n = *ptr;
-		return n.item;
+		return n.title;
 	}
 }
 
-bool List::isEmpty()
+bool TopicList::isEmpty()
 {
 
 	if (firstNode != NULL)
@@ -122,7 +125,7 @@ bool List::isEmpty()
 	return true;
 }
 
-int List::getLength()
+int TopicList::getLength()
 {
 
 	int i = 0;
@@ -137,14 +140,14 @@ int List::getLength()
 	return i;
 }
 
-void List::print()
+void TopicList::print()
 {
 	Node* temp = new Node();
 	temp = firstNode;
 
 	while (temp != NULL)
 	{
-		cout << temp->item << endl;
+		cout << temp->title << endl;
 		temp = temp->next;
 	}
 	cout << "----------" << endl;

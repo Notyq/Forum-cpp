@@ -1,18 +1,18 @@
-#include "Reply.h"
+#include "ReplyList.h"
 
-Reply::Reply() 
+ReplyList::ReplyList() 
 {
 	topNode = NULL;
 	size = 0;
 }
 
-Reply::~Reply() {
+ReplyList::~ReplyList() {
 	while (topNode != NULL) {
 		this->pop();
 	}
 }
 
-bool Reply::push(ItemType item, ItemType id, ItemType user) {
+bool ReplyList::push(ItemType item, ItemType id, ItemType user) {
 	Node* n = new Node;
 	n->item = item;
 	n->user = user;
@@ -26,7 +26,7 @@ bool Reply::push(ItemType item, ItemType id, ItemType user) {
 	return true;
 }
 
-bool Reply::isEmpty() {
+bool ReplyList::isEmpty() {
 	bool check;
 	if (topNode == NULL) {
 		check = true;
@@ -37,7 +37,7 @@ bool Reply::isEmpty() {
 	return check;
 }
 
-bool Reply::pop() {
+bool ReplyList::pop() {
 	if (topNode != NULL) {
 		Node* temp = topNode;
 		topNode = topNode->next;
@@ -49,7 +49,7 @@ bool Reply::pop() {
 	return false;
 }
 
-bool Reply::pop(ItemType& item, ItemType& id) {
+bool ReplyList::pop(ItemType& item, ItemType& id) {
 	if (topNode != NULL) {
 		Node* temp = topNode;
 		topNode = topNode->next;
@@ -63,14 +63,14 @@ bool Reply::pop(ItemType& item, ItemType& id) {
 	return false;
 }
 
-void Reply::getTop(ItemType& item, ItemType& id) {
+void ReplyList::getTop(ItemType& item, ItemType& id) {
 	if (topNode != NULL) {
 		item = topNode->item;
 		id = topNode->id;
 	}
 }
 
-void Reply::displayInOrder() {
+void ReplyList::displayInOrder() {
 	Node* temp;
 	temp = topNode;
 	while (temp != NULL) {
@@ -80,10 +80,10 @@ void Reply::displayInOrder() {
 	cout << "---" << endl;
 }
 
-void Reply::displayInOrderOfInsertion() {
+void ReplyList::displayInOrderOfInsertion() {
 	Node* temp;
 	temp = topNode;
-	Reply ds = Reply();
+	ReplyList ds = ReplyList();
 	while (temp != NULL) {
 		ds.push(temp->item, temp->id, temp->user);
 		temp = temp->next;
@@ -91,7 +91,7 @@ void Reply::displayInOrderOfInsertion() {
 	ds.displayInOrder();
 }
 
-ItemType Reply::getID(int index) {
+ItemType ReplyList::getID(int index) {
 	if (index >= 0 && index <= size - 1) {
 
 		Node* ptr;
@@ -105,7 +105,7 @@ ItemType Reply::getID(int index) {
 	}
 }
 
-ItemType Reply::get(int index) {
+ItemType ReplyList::get(int index) {
 	if (index >= 0 && index <= size - 1) {
 
 		Node* ptr;
@@ -119,7 +119,7 @@ ItemType Reply::get(int index) {
 	}
 }
 
-int Reply::getLength()
+int ReplyList::getLength()
 {
 	int i = 0;
 	Node* temp = new Node();

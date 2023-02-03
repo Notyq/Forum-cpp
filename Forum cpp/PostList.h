@@ -1,40 +1,47 @@
-// List.h - - Specification of List ADT (implemented using Pointers)
 #pragma once
-#include<string>
-#include<iostream>
+#include <iostream>
+#include <string>
+
 using namespace std;
 
 typedef string ItemType;
 
-class List
-{
-private:
+#include "TopicList.h"
+
+class PostList : public TopicList {
+
+	private:
 	struct Node
 	{
-		ItemType item;	// item
+		ItemType user;
+		ItemType id;
+		ItemType post;	// item
+		ItemType title; // title
 		Node* next;	// pointer pointing to next item
 	};
 	Node* firstNode;	// point to the first item
 	int  size;		// number of items in the list
 
-public:
+	public:
 	// constructor
-	List();
+	PostList();
 
 	// destructor
 	//~List();
 
 	// add an item to the back of the list (append)
-	bool add(ItemType item);
+	bool add(ItemType post, ItemType t, ItemType id, ItemType user);
 
 	// add an item at a specified position in the list (insert)
-	bool add(int index, ItemType item);
+	bool add(int index, ItemType post, ItemType t, ItemType id, ItemType user);
 
 	// remove an item at a specified position in the list
 	void remove(int index);
 
 	// get an item at a specified position of the list (retrieve)
-	ItemType get(int index);
+	ItemType getPost(int index);
+
+	ItemType getTitle(int index);
 
 	// check if the list is empty
 	bool isEmpty();
@@ -44,4 +51,8 @@ public:
 
 	// display all the items in the list
 	void print();
+
+	string getUser(int index);
+
+	string getID(int index);
 };

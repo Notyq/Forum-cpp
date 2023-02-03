@@ -6,7 +6,7 @@ using namespace std;
 
 typedef string ItemType;
 
-class Topic {
+class TopicList {
 
 protected:
 
@@ -23,7 +23,7 @@ protected:
 
 public:
 	//constructor
-	Topic();
+	TopicList();
 
 	// destructor
 	//~List();

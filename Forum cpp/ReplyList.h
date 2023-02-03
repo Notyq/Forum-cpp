@@ -7,7 +7,7 @@ using namespace std;
 
 typedef string ItemType;
 
-class Reply
+class ReplyList
 {
 private:
 	struct Node
@@ -23,9 +23,9 @@ private:
 
 public:
 	//Default constructor
-	Reply();
+	ReplyList();
 	//Destructor
-	~Reply();
+	~ReplyList();
 
 	//check if the stack is empty
 	bool isEmpty();
