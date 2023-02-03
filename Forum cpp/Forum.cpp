@@ -588,8 +588,13 @@ int main()
                 while (i < postList.getLength()) {
                     if (postList.getUser(i) == username) {
                         string ID = postList.getID(i);
-                        cout << postList.getTitle(i) << endl;
-                        cout << "     [" << ID << "] " << postList.getPost(i) << endl;
+                        SetConsoleTextAttribute(hConsole, 14);
+                        cout << "[" + postList.getTitle(i) + "]" << endl;
+                        SetConsoleTextAttribute(hConsole, 15);
+                        cout << "ID:[" << ID << "] ";
+                        SetConsoleTextAttribute(hConsole, 9);
+                        cout << postList.getPost(i) << endl;
+                        SetConsoleTextAttribute(hConsole, 15);
                         numPost += 1;
                         i += 1;
                     }
