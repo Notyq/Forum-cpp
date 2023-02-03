@@ -530,46 +530,61 @@ int main()
         }
         else if (choice == "3")
         {
+            int numPost = 0;
+            int i = 0;
             if (!postList.isEmpty()) {
-                for (int i = 0; i < postList.getLength(); i++) {
+                while (i < postList.getLength()) {
                     if (postList.getUser(i) == username) {
                         string ID = postList.getID(i);
                         cout << postList.getTitle(i) << endl;
                         cout << "     [" << ID << "] " << postList.getPost(i) << endl;
-                        continue;
+                        numPost += 1;
+                        i += 1;
                     }
-                    else if ((postList.getUser(i) != username) and (i = postList.getLength())) {
-                        cout << "\n No posts by user!\n";
+                    else
+                    {
+                        i++;
+                    }
+                }
+                if (numPost == 0) {
+                    cout << "\n No posts by user!\n";;
+                }
+                else
+                {
+                    cout << "\n===========Options===========" << endl;
+                    cout << "[1] Edit Post" << endl;
+                    cout << "[2] Delete Post" << endl;
+                    cout << "[0] Back to Menu" << endl;
+                    cout << "=============================" << endl;
+                    string input;
+                    cin >> input;
+
+                    if (input == "1") {
+                        string edit;
+                        string id;
+                        cout << "\nEnter post ID: ";
+                        cout << "Edit content:\n";
+                        getline(cin >> ws, edit);
+
+
+                    }
+                    else if (input == "2") {
+
+                    }
+                    else if (input == "0") {
+
+                    }
+                    else
+                    {
+                        cout << "\nInvalid Option!\n";
+                        continue;
                     }
                 }
             }
-
-            /*cout << "\n===========Options===========" << endl;
-            cout << "[1] Edit Post" << endl;
-            cout << "[2] Delete Post" << endl;
-            cout << "[0] Back to Menu" << endl;
-            cout << "=============================" << endl;
-            string input;
-            cin >> input;
-
-            if (input == "1") {
-                string edit;
-                cout << "Edit content:\n";
-                getline(cin >> ws, edit);
-
-
-            }
-            else if (input == "2") {
-
-            }
-            else if (input == "0") {
-
-            }
             else
             {
-                cout << "\nInvalid Option!\n";
-                continue;
-            }*/
+                cout << "\n No posts by user!\n";
+            }
         }
 
         else if (choice == "0")
