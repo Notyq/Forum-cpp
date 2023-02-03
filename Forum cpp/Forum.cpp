@@ -188,7 +188,6 @@ Posts loadPost(Posts postList) {
     string PostTopic;
     string postId;
     string PostUsername;
-    time_t PostTime;
     file.open("posts.txt");
     while (!file.eof()) {
         getline(file, Post);
@@ -563,10 +562,29 @@ int main()
                         string edit;
                         string id;
                         cout << "\nEnter post ID: ";
-                        cout << "Edit content:\n";
-                        getline(cin >> ws, edit);
+                        cin >> id;
 
-
+                        for (int j = 0; j < postList.getLength(); j++) {
+                            if (id == postList.getID(j) && username == postList.getUser(j)) {
+                                string title = postList.getTitle(j);
+                                string editCheck = " [edited]";
+                                cout << "Edit content:\n";
+                                getline(cin >> ws, edit);
+                                postList.remove(stoi(id) - 1);
+                                postList.add(stoi(id) - 1, edit + editCheck, title, id, username);
+                                cout << "Edited!\n";
+                                break;
+                            }
+                            else if (j+1 == postList.getLength())
+                            {
+                                cout << "Invalid input!\n";
+                                break;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }                        
                     }
                     else if (input == "2") {
 
