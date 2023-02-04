@@ -11,9 +11,10 @@ PostList::PostList()
 }
 
 // add an item to the back of the PostList (append)
-bool PostList::add(ItemType post, ItemType t, ItemType id, ItemType user)
+bool PostList::add(ItemType post, ItemType t, ItemType id, ItemType user, ItemType likes)
 {
 	Node* newNode1 = new Node();
+	newNode1->likes = likes;
 	newNode1->post = post;
 	newNode1->title = t;
 	newNode1->id = id;
@@ -38,11 +39,12 @@ bool PostList::add(ItemType post, ItemType t, ItemType id, ItemType user)
 	return true;
 }
 
-bool PostList::add(int index, ItemType post, ItemType t, ItemType id, ItemType user)
+bool PostList::add(int index, ItemType post, ItemType t, ItemType id, ItemType user, ItemType likes)
 {
 	if (index >= 0 && index <= size)
 	{
 		Node* newNode1 = new Node();
+		newNode1->likes = likes;
 		newNode1->post = post;
 		newNode1->title = t;
 		newNode1->id = id;
@@ -200,4 +202,34 @@ string PostList::getID(int index) {
 		Node n = *ptr;
 		return n.id;
 	}
+}
+
+string PostList::getLikes(int index) {
+	if (index >= 0 && index <= size - 1) {
+
+		Node* ptr;
+		ptr = firstNode;
+
+		for (int i = 0; i < index; i++) {
+			ptr = ptr->next;
+		}
+		Node n = *ptr;
+		return n.likes;
+	}
+}
+
+bool PostList::giveLike(int index) {
+	index = index - 1;
+	if (index >= 0 && index <= size - 1) {
+		Node* ptr;
+		ptr = firstNode;
+
+		for (int i = 0; i < index; i++) {
+			ptr = ptr->next;
+		}
+		int likes = stoi(ptr->likes) + 1;
+		ptr->likes = to_string(likes);
+		return true;
+	}
+	return false;
 }

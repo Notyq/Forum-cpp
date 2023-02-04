@@ -13,6 +13,7 @@ class PostList : public TopicList {
 	private:
 	struct Node
 	{
+		ItemType likes;
 		ItemType user;
 		ItemType id;
 		ItemType post;	// item
@@ -30,10 +31,10 @@ class PostList : public TopicList {
 	//~List();
 
 	// add an item to the back of the list (append)
-	bool add(ItemType post, ItemType t, ItemType id, ItemType user);
+	bool add(ItemType post, ItemType t, ItemType id, ItemType user, ItemType likes);
 
 	// add an item at a specified position in the list (insert)
-	bool add(int index, ItemType post, ItemType t, ItemType id, ItemType user);
+	bool add(int index, ItemType post, ItemType t, ItemType id, ItemType user, ItemType likes);
 
 	// remove an item at a specified position in the list
 	void remove(int index);
@@ -55,4 +56,8 @@ class PostList : public TopicList {
 	string getUser(int index);
 
 	string getID(int index);
+
+	string getLikes(int index);
+
+	bool giveLike(int index);
 };
