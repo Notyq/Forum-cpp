@@ -311,6 +311,30 @@ void saveReply(ReplyList replyList) {
     file.close();
 }
 
+string createTopic(string& topicName)
+{
+    cout << "New topic title: ";
+    getline(cin >> ws, topicName);
+
+    return topicName;
+}
+
+string createPost(string& postContent) {
+
+    cout << "Create Posts: \n";
+    getline(cin >> ws, postContent);
+
+    return postContent;
+}
+
+string replyPost(string& reply) {
+
+    cout << "Reply to post: \n";
+    getline(cin >> ws, reply);
+
+    return reply;
+}
+
 string MainMenu(string username) {
     HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     cout << "Current User: ";
@@ -329,7 +353,8 @@ string MainMenu(string username) {
     return choice;
 }
 
-void ViewPost(int index, PostList postList, ReplyList replyList) {
+void DisplayPost(int index, PostList postList, ReplyList replyList) {
+
     index = index - 1;
     HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     string id = postList.getID(index);
@@ -380,28 +405,55 @@ void replyToPost(string postID, string username, PostList postList, ReplyList re
     }
 }
 
-string createTopic(string& topicName)
-{
-    cout << "New topic title: ";
-    getline(cin >> ws, topicName);
-
-    return topicName;
-}
-
-string createPost(string& postContent) {
-
-    cout << "Create Posts: \n";
-    getline(cin >> ws, postContent);
-
-    return postContent;
-}
-
-string replyPost(string& reply) {
-
-    cout << "Reply to post: \n";
-    getline(cin >> ws, reply);
-
-    return reply;
+void ViewPost(string username, PostList postList, ReplyList replyList) {
+    HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    string reply;
+    string postID;
+    cout << "Select Post id: ";
+    cin >> postID;
+    // check if there is post in topic
+    if (stoi(postID) > postList.getLength() || stoi(postID) < 1) {
+        cout << "\033[2J\033[H";
+        SetConsoleTextAttribute(hConsole, 12);
+        cout << "Invalid option!\n" << endl;
+        SetConsoleTextAttribute(hConsole, 15);
+    }
+    else {
+        while (true)
+        {
+            cout << "\033[2J\033[H";
+            DisplayPost(stoi(postID), postList, replyList);
+            cout << "\n===========Options===========" << endl;
+            cout << "[1] Reply" << endl;
+            cout << "[2] Like" << endl;
+            cout << "[0] Back to Menu" << endl;
+            cout << "=============================" << endl;
+            cout << "Option: ";
+            string input;
+            cin >> input;
+            if (input == "1") {
+                replyToPost(postID, username, postList, replyList);
+            }
+            else if (input == "2") {
+                postList.giveLike(stoi(postID));
+                savePost(postList);
+                cout << "\033[2J\033[H";
+                SetConsoleTextAttribute(hConsole, 12);
+                cout << "Post Liked!\n";
+                SetConsoleTextAttribute(hConsole, 15);
+            }
+            else if (input == "0") {
+                cout << "\033[2J\033[H";
+                break;
+            }
+            else {
+                cout << "\033[2J\033[H";
+                SetConsoleTextAttribute(hConsole, 12);
+                cout << "Invalid Option" << endl;
+                SetConsoleTextAttribute(hConsole, 15);
+            }
+        }
+    }
 }
 
 void displayReply(ReplyList replyList, PostList postList) {
@@ -419,16 +471,6 @@ void displayReply(ReplyList replyList, PostList postList) {
         }
     }
 }
-
-//void displayOwnPost(Posts postList, string username) {
-//    for (int i = 0; i < postList.getLength(); i++) {
-//        if (postList.getUser(username) == true) {
-//            cout << postList.getPost(i) << endl;
-//        }
-//    }
-//}
-
-//void displayReplies(int numReplies, )
 
 int main()
 {
@@ -535,54 +577,7 @@ int main()
                             cout << "Posted!\n";
                         }
                         else if (input == "2") {
-
-                            // check if there is post in topic
-                            string reply;
-                            string postID;
-                            cout << "Select Post id: ";
-                            cin >> postID;
-                            if (stoi(postID) > postList.getLength() || stoi(postID) < 1) {
-                                cout << "\033[2J\033[H";
-                                SetConsoleTextAttribute(hConsole, 12);
-                                cout << "Invalid option!\n" << endl;
-                                SetConsoleTextAttribute(hConsole, 15);
-                            }
-                            else {
-                                while (true) 
-                                {
-                                    cout << "\033[2J\033[H";
-                                    ViewPost(stoi(postID), postList, replyList);
-                                    cout << "\n===========Options===========" << endl;
-                                    cout << "[1] Reply" << endl;
-                                    cout << "[2] Like" << endl;
-                                    cout << "[0] Back to Menu" << endl;
-                                    cout << "=============================" << endl;
-                                    cout << "Option: ";
-                                    string input;
-                                    cin >> input;
-                                    if (input == "1") {
-                                        replyToPost(postID, username, postList, replyList);
-                                    }
-                                    else if (input == "2") {
-                                        postList.giveLike(stoi(postID));
-                                        savePost(postList);
-                                        cout << "\033[2J\033[H";
-                                        SetConsoleTextAttribute(hConsole, 12);
-                                        cout << "Post Liked!\n";
-                                        SetConsoleTextAttribute(hConsole, 15);
-                                    }
-                                    else if (input == "0") {
-                                        cout << "\033[2J\033[H";
-                                        break;
-                                    }
-                                    else {
-                                        cout << "\033[2J\033[H";
-                                        SetConsoleTextAttribute(hConsole, 12);
-                                        cout << "Invalid Option" << endl;
-                                        SetConsoleTextAttribute(hConsole, 15);
-                                    }
-                                }
-                            }
+                            ViewPost(username, postList, replyList);
                         }
                         else if (input == "0")
                         {
@@ -764,7 +759,53 @@ int main()
 
                     }
                     else if (input == "3") {
-                        ViewPost()
+                        // check if there is post in topic
+                        string reply;
+                        string postID;
+                        cout << "Select Post id: ";
+                        cin >> postID;
+                        if (stoi(postID) > postList.getLength() || stoi(postID) < 1) {
+                            cout << "\033[2J\033[H";
+                            SetConsoleTextAttribute(hConsole, 12);
+                            cout << "Invalid option!\n" << endl;
+                            SetConsoleTextAttribute(hConsole, 15);
+                        }
+                        else {
+                            while (true)
+                            {
+                                cout << "\033[2J\033[H";
+                                DisplayPost(stoi(postID), postList, replyList);
+                                cout << "\n===========Options===========" << endl;
+                                cout << "[1] Reply" << endl;
+                                cout << "[2] Like" << endl;
+                                cout << "[0] Back to Menu" << endl;
+                                cout << "=============================" << endl;
+                                cout << "Option: ";
+                                string input;
+                                cin >> input;
+                                if (input == "1") {
+                                    replyToPost(postID, username, postList, replyList);
+                                }
+                                else if (input == "2") {
+                                    postList.giveLike(stoi(postID));
+                                    savePost(postList);
+                                    cout << "\033[2J\033[H";
+                                    SetConsoleTextAttribute(hConsole, 12);
+                                    cout << "Post Liked!\n";
+                                    SetConsoleTextAttribute(hConsole, 15);
+                                }
+                                else if (input == "0") {
+                                    cout << "\033[2J\033[H";
+                                    break;
+                                }
+                                else {
+                                    cout << "\033[2J\033[H";
+                                    SetConsoleTextAttribute(hConsole, 12);
+                                    cout << "Invalid Option" << endl;
+                                    SetConsoleTextAttribute(hConsole, 15);
+                                }
+                            }
+                        }
                     }
                     else if (input == "0") {
                         cout << "\033[2J\033[H";
