@@ -393,7 +393,7 @@ bool DisplayPost(int index, PostList postList, ReplyList replyList) {
     SetConsoleTextAttribute(hConsole, 15);
     cout << "Replies: " << endl;
     for (int n = 0; n < replyList.getLength(); n++) {
-        if (replyList.getID(n) == to_string(index + 1)) {
+        if (replyList.getID(n) == to_string(index)) {
             SetConsoleTextAttribute(hConsole, 10);
             cout << "[" + replyList.getUser(n) + "]";
             SetConsoleTextAttribute(hConsole, 15);
@@ -405,19 +405,6 @@ bool DisplayPost(int index, PostList postList, ReplyList replyList) {
         }
     }
     return true;
-}
-// Reply to a post
-void replyToPost(string postID, string username, PostList postList, ReplyList replyList) {
-    string reply;
-    for (int j = 0; j < postList.getLength(); j++) {
-        if (postID == postList.getID(j)) {
-            replyPost(reply);
-            replyList.add(reply, username, postID);
-            saveReply(replyList);
-            cout << "\033[2J\033[H";
-            cout << "Reply posted!\n";
-        }
-    }
 }
 
 void ViewPost(string username, PostList postList, ReplyList replyList) {
@@ -455,7 +442,16 @@ void ViewPost(string username, PostList postList, ReplyList replyList) {
                 string input;
                 cin >> input;
                 if (input == "1") {
-                    replyToPost(postID, username, postList, replyList);
+                    string reply;
+                    for (int j = 0; j < postList.getLength(); j++) {
+                        if (postID == postList.getID(j)) {
+                            replyPost(reply);
+                            replyList.add(reply, username, postID);
+                            saveReply(replyList);
+                            cout << "\033[2J\033[H";
+                            cout << "Reply posted!\n";
+                        }
+                    }
                 }
                 else if (input == "2") {
                     postList.giveLike(stoi(postID));
