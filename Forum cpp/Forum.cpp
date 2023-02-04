@@ -731,12 +731,15 @@ int main()
                                     string title = postList.getTitle(j);
                                     string likes = postList.getLikes(j);
                                     string editCheck = " [edited]";
-                                    cout << "Edit content:\n";
+                                    cout << "Edit content: ";
                                     getline(cin >> ws, edit);
                                     postList.remove(stoi(id) - 1);
                                     postList.add(stoi(id) - 1, edit + editCheck, title, id, username, likes);
                                     savePost(postList);
+                                    cout << "\033[2J\033[H";
+                                    SetConsoleTextAttribute(hConsole, 10);
                                     cout << "Edited!\n";
+                                    SetConsoleTextAttribute(hConsole, 15);
                                     break;
                                 }
                                 else if (j + 1 == postList.getLength())
