@@ -821,7 +821,7 @@ int main()
             else
             {
                 cout << "\033[2J\033[H";
-                cout << "\n No posts by user!\n";
+                cout << "No posts by user!\n" << endl;
             }
         }
 
