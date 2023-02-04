@@ -158,7 +158,7 @@ string logIn(Dictionary profilesTable)
         }
     }
 }
-// Load Topics from Text File
+
 TopicList loadTopic(TopicList topicList) {
     // Loading of saved topics
     fstream file;
@@ -178,7 +178,7 @@ TopicList loadTopic(TopicList topicList) {
     file.close();
     return topicList;
 }
-// Load Posts from Text File
+
 PostList loadPost(PostList postList) {
     fstream file;
     string Post;
@@ -231,7 +231,7 @@ PostList loadPost(PostList postList) {
     file.close();
     return postList;
 }
-// Load Replies from Text File
+
 ReplyList loadReply(ReplyList replyList) {
     fstream file;
     string ReplyList;
@@ -275,7 +275,7 @@ ReplyList loadReply(ReplyList replyList) {
     file.close();
     return replyList;
 }
-// Save Posts into Text File from PostList
+
 void savePost(PostList postList) {
     fstream file;
     string id;
@@ -295,7 +295,7 @@ void savePost(PostList postList) {
     }
     file.close();
 }
-// Save Replies into Text File from ReplyList
+
 void saveReply(ReplyList replyList) {
     fstream file;
     string content;
@@ -310,7 +310,7 @@ void saveReply(ReplyList replyList) {
     }
     file.close();
 }
-// Input of Topic
+
 string createTopic(string& topicName)
 {
     cout << "New topic title: ";
@@ -318,7 +318,7 @@ string createTopic(string& topicName)
 
     return topicName;
 }
-// Input of Post
+
 string createPost(string& postContent) {
 
     cout << "Create Posts: \n";
@@ -326,7 +326,7 @@ string createPost(string& postContent) {
 
     return postContent;
 }
-// Input of Reply
+
 string replyPost(string& reply) {
 
     cout << "Reply to post: \n";
@@ -334,7 +334,7 @@ string replyPost(string& reply) {
 
     return reply;
 }
-// Display Main Menu
+
 string MainMenu(string username) {
     HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     cout << "Current User: ";
@@ -352,7 +352,7 @@ string MainMenu(string username) {
     cin >> choice;
     return choice;
 }
-// Display post & options for post
+
 bool DisplayPost(int index, PostList postList, ReplyList replyList) {
     HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     string id;
@@ -406,7 +406,7 @@ bool DisplayPost(int index, PostList postList, ReplyList replyList) {
     }
     return true;
 }
-// Reply to a post
+
 void replyToPost(string postID, string username, PostList postList, ReplyList replyList) {
     string reply;
     for (int j = 0; j < postList.getLength(); j++) {
