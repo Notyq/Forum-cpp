@@ -275,6 +275,18 @@ ReplyList loadReply(ReplyList replyList) {
     file.close();
     return replyList;
 }
+
+void saveTopic(TopicList topicList) {
+    fstream file;
+    string topic;
+
+    file.open("topics.txt");
+    for (int i = 0; i < topicList.getLength(); i++) {
+        topic = topicList.get(i);
+        file << topic + "\n";
+    }
+    file.close();
+}
 // Save Posts into Text File from PostList
 void savePost(PostList postList) {
     fstream file;
@@ -685,9 +697,7 @@ int main()
                     else if (tName != topicName and i+1 == topicList.getLength())
                     {                    
                         topicList.add(topicName);
-                        file.open("topics.txt", fstream::app);
-                        file << topicName + "\n";
-                        file.close();
+                        saveTopic(topicList);
                         cout << "\033[2J\033[H";
                         cout << "Topic created!\n";
                         break;
