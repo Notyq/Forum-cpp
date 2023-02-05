@@ -10,6 +10,12 @@ TopicList::TopicList()
 	size = 0;
 }
 
+// destructor
+//TopicList::~TopicList() {
+//	for (int i = 0; i < size; i++) {
+//		this->remove(i);
+//	}
+//}
 
 // add an item to the back of the TopicList (append)
 bool TopicList::add(ItemType title)
@@ -36,6 +42,7 @@ bool TopicList::add(ItemType title)
 	return true;
 }
 
+// add an item at a specified position in the list (insert)
 bool TopicList::add(int index, ItemType title)
 {
 	if (index >= 0 && index <= size)
@@ -66,6 +73,7 @@ bool TopicList::add(int index, ItemType title)
 	return false;
 }
 
+// remove an item at a specified position in the list
 void TopicList::remove(int index)
 {
 	if (index >= 0 && index <= size)
@@ -99,6 +107,7 @@ void TopicList::remove(int index)
 	}
 }
 
+// get an item at a specified position of the list (retrieve)
 ItemType TopicList::get(int index) {
 
 	if (index >= 0 && index <= size - 1) {
@@ -114,6 +123,7 @@ ItemType TopicList::get(int index) {
 	}
 }
 
+// check if the list is empty
 bool TopicList::isEmpty()
 {
 
@@ -125,6 +135,7 @@ bool TopicList::isEmpty()
 	return true;
 }
 
+// check the size of the list
 int TopicList::getLength()
 {
 
@@ -140,6 +151,7 @@ int TopicList::getLength()
 	return i;
 }
 
+// display all the items in the list
 void TopicList::print()
 {
 	Node* temp = new Node();
@@ -153,6 +165,7 @@ void TopicList::print()
 	cout << "----------" << endl;
 }
 
+// swaps node at index with firstNode
 void TopicList::swap(int index) {
 	if (index == 0) return; // No need to swap the first node with itself
 
@@ -165,8 +178,10 @@ void TopicList::swap(int index) {
         node = node->next;
     }
 
-    // Swap the node with the first node
-    prev->next = node->next;
-    node->next = firstNode;
-    firstNode = node;
+	if (prev != NULL) {
+		// Swap the node with the first node
+		prev->next = node->next;
+		node->next = firstNode;
+		firstNode = node;
+	}
 }

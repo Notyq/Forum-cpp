@@ -343,7 +343,7 @@ string createTopic(string& topicName)
 // Input of Post content
 string createPost(string& postContent) {
 
-    cout << "Create Posts: \n";
+    cout << "Create Post: \n";
     getline(cin >> ws, postContent);
 
     return postContent;
@@ -377,7 +377,7 @@ string MainMenu(string username) {
     return choice;
 }
 // Display post & options for post and returns a bool value to check if a post is displayed
-bool DisplayPost(int index, PostList postList, ReplyList replyList) {
+bool DisplayPost(string index, PostList postList, ReplyList replyList) {
     HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     string id;
     string content;
@@ -385,7 +385,7 @@ bool DisplayPost(int index, PostList postList, ReplyList replyList) {
     string topic;
     string likes;
     for (int i = 0; i < postList.getLength(); i++) {
-        if (index == stoi(postList.getID(i))) {
+        if (index == postList.getID(i)) {
             id = postList.getID(i);
             content = postList.getPost(i);
             user = postList.getUser(i);
@@ -417,7 +417,7 @@ bool DisplayPost(int index, PostList postList, ReplyList replyList) {
     SetConsoleTextAttribute(hConsole, 15);
     cout << "Replies: " << endl;
     for (int n = 0; n < replyList.getLength(); n++) {
-        if (replyList.getID(n) == to_string(index)) {
+        if (replyList.getID(n) == index) {
             SetConsoleTextAttribute(hConsole, 10);
             cout << "[" + replyList.getUser(n) + "]";
             SetConsoleTextAttribute(hConsole, 15);
@@ -451,7 +451,7 @@ void ViewPost(string username, PostList postList, ReplyList replyList) {
         while (true)
         {
             cout << "\033[2J\033[H";
-            bool displayed = DisplayPost(stoi(postID), postList, replyList);
+            bool displayed = DisplayPost(postID, postList, replyList);
             if (!displayed) {
                 cout << "\033[2J\033[H";
                 SetConsoleTextAttribute(hConsole, 12);
@@ -605,8 +605,6 @@ int main()
 
                             if (input == "1") {
                                 string postContent;
-                                cout << endl;
-
                                 createPost(postContent);
                                 if (!postList.isEmpty()) {
                                     postList.add(postContent, topicList.get(topicid - 1), to_string(id + postList.getLength()), username, "0");
@@ -630,19 +628,13 @@ int main()
                                 cout << "\nChoose Post to stick: ";
                                 cin >> index;
 
-                                if (postList.getLength() >= index) {
-                                    if (postList.getTitle(topicList.get(topicid - 1)) == true && postList.getID(to_string(index)) == true)
-                                    {
-                                        postList.swap(index - 1);
-                                        cout << "\nSticky post added!\n";
-                                        savePost(postList);
+                                if (postList.getLength() >= index && postList.compareTitle(topicList.get(topicid - 1)) == true && postList.compareID(to_string(index)) == true) {
+                                    postList.swap(to_string(index));
+                                    cout << "\033[2J\033[H";
+                                    cout << "Sticky post added!\n";
+                                    savePost(postList);
 
-                                        continue;
-                                    }
-                                    else
-                                    {
-                                        cout << "\nInvalid option!\n";
-                                    }
+                                    continue;
                                 }
                                 else
                                 {

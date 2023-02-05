@@ -1,5 +1,6 @@
 #include "Dictionary.h"
 
+// constructor
 Dictionary::Dictionary() {
 	for (int i = 0; i < MAX_SIZE; i++) {
 		items[i] = NULL;
@@ -7,6 +8,7 @@ Dictionary::Dictionary() {
 	size = 0;
 }
 
+// destructor
 Dictionary::~Dictionary() {
 	for (int i = 0; i < MAX_SIZE; i++) {
 		Node* temp;
@@ -30,6 +32,7 @@ int Dictionary::hash(KeyType key) {
 	return code;
 }
 
+// add a new item with the specified key to the Dictionary
 bool Dictionary::add(KeyType newKey, DicItemType newItem) {
 	int index = hash(newKey);
 	if (items[index] == NULL) {
@@ -65,6 +68,7 @@ bool Dictionary::add(KeyType newKey, DicItemType newItem) {
 	}
 }
 
+// remove an item with the specified key in the Dictionary
 void Dictionary::remove(KeyType key) {
 	int index = hash(key);
 	Node* temp = items[index];
@@ -92,6 +96,7 @@ void Dictionary::remove(KeyType key) {
 	}
 }
 
+// get an item with the specified key in the Dictionary (retrieve)
 DicItemType Dictionary::get(KeyType key) {
 	int index = hash(key);
 	DicItemType item;
@@ -109,6 +114,7 @@ DicItemType Dictionary::get(KeyType key) {
 	return NULL;
 }
 
+// check if the Dictionary is empty
 bool Dictionary::isEmpty() {
 	if (size == 0) {
 		return true;
@@ -116,10 +122,12 @@ bool Dictionary::isEmpty() {
 	return false;
 }
 
+// check the size of the Dictionary
 int Dictionary::getLength() {
 	return size;
 }
 
+// display the items in the Dictionary
 void Dictionary::print() {
 	for (int i = 0; i < MAX_SIZE; i++) {
 		Node* temp = items[i];

@@ -11,7 +11,7 @@ class ReplyList
 private:
 	struct Node
 	{
-		ItemType user;
+		ItemType user; 
 		ItemType id;
 		ItemType item;	// item
 		Node* next;	// pointer pointing to next item
@@ -24,7 +24,7 @@ public:
 	ReplyList();
 
 	// destructor
-	//~List();
+	//~ReplyList();
 
 	// add an item to the back of the list (append)
 	bool add(ItemType item, ItemType user, ItemType id);
@@ -47,7 +47,9 @@ public:
 	// display all the items in the list
 	void print();
 
-	string getID(int index);
+	// gets the id of reply at a specific index
+	ItemType getID(int index);
 
+	// gets the user of reply at a specific index
 	string getUser(int index);
 };

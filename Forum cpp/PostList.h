@@ -28,7 +28,7 @@ class PostList : public TopicList {
 	PostList();
 
 	// destructor
-	//~List();
+	//~PostList();
 
 	// add an item to the back of the list (append)
 	bool add(ItemType post, ItemType t, ItemType id, ItemType user, ItemType likes);
@@ -42,9 +42,11 @@ class PostList : public TopicList {
 	// get an item at a specified position of the list (retrieve)
 	ItemType getPost(int index);
 
+	// get the title at a specified position of the list (retrieve)
 	ItemType getTitle(int index);
 
-	bool getTitle(string title);
+	// returns true if title is in list of post
+	bool compareTitle(string title);
 
 	// check if the list is empty
 	bool isEmpty();
@@ -55,16 +57,21 @@ class PostList : public TopicList {
 	// display all the items in the list
 	void print();
 
+	// get the user at a specified position of the list (retrieve)
 	string getUser(int index);
 
-	string getID(int index);
+	// get the ID at a specified position of the list (retrieve)
+	ItemType getID(int index);
 
-	bool getID(string id);
+	// returns true if id is in list of post
+	bool compareID(string id);
 
+	// get the amount of likes of a specific post at the specified position of the list (retrieve)
 	string getLikes(int index);
 
+	// returns true if like attribute is increased
 	bool giveLike(int index);
 
 	// swaps node at index with firstNode
-	void swap(int index);
+	void swap(string id);
 };

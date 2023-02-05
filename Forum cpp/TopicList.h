@@ -26,7 +26,7 @@ public:
 	TopicList();
 
 	// destructor
-	//~List();
+	//~TopicList();
 
 	// add an item to the back of the list (append)
 	bool add(ItemType title);

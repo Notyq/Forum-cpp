@@ -8,6 +8,13 @@ ReplyList::ReplyList()
 	size = 0;
 }
 
+// destructor
+//ReplyList::~ReplyList() {
+//	for (int i = 0; i < size; i++) {
+//		this->remove(i);
+//	}
+//}
+
 // add an item to the back of the Reply (append)
 bool ReplyList::add(ItemType item, ItemType user, ItemType id)
 {
@@ -35,6 +42,7 @@ bool ReplyList::add(ItemType item, ItemType user, ItemType id)
 	return true;
 }
 
+// add an item at a specified position in the list (insert)
 bool ReplyList::add(int index, ItemType item, ItemType user, ItemType id)
 {
 	if (index >= 0 && index <= size)
@@ -67,6 +75,7 @@ bool ReplyList::add(int index, ItemType item, ItemType user, ItemType id)
 	return false;
 }
 
+// remove an item at a specified position in the list
 void ReplyList::remove(int index)
 {
 	if (index >= 0 && index <= size)
@@ -100,6 +109,7 @@ void ReplyList::remove(int index)
 	}
 }
 
+// get an item at a specified position of the list (retrieve)
 ItemType ReplyList::get(int index) {
 
 	if (index >= 0 && index <= size - 1) {
@@ -115,6 +125,7 @@ ItemType ReplyList::get(int index) {
 	}
 }
 
+// check if the list is empty
 bool ReplyList::isEmpty()
 {
 
@@ -126,6 +137,7 @@ bool ReplyList::isEmpty()
 	return true;
 }
 
+// check the size of the list
 int ReplyList::getLength()
 {
 
@@ -141,6 +153,7 @@ int ReplyList::getLength()
 	return i;
 }
 
+// display all the items in the list
 void ReplyList::print()
 {
 	Node* temp = new Node();
@@ -154,6 +167,7 @@ void ReplyList::print()
 	cout << "----------" << endl;
 }
 
+// gets the id of reply at a specific index
 string ReplyList::getID(int index) {
 	if (index >= 0 && index <= size - 1) {
 
@@ -168,6 +182,7 @@ string ReplyList::getID(int index) {
 	}
 }
 
+// gets the user of reply at a specific index
 string ReplyList::getUser(int index) {
 	if (index >= 0 && index <= size - 1) {
 

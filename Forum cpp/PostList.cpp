@@ -10,6 +10,13 @@ PostList::PostList()
 	size = 0;
 }
 
+// destructor
+//PostList::~PostList() {
+//	for (int i = 0; i < size; i++) {
+//		this->remove(i);
+//	}
+//}
+
 // add an item to the back of the PostList (append)
 bool PostList::add(ItemType post, ItemType t, ItemType id, ItemType user, ItemType likes)
 {
@@ -39,6 +46,7 @@ bool PostList::add(ItemType post, ItemType t, ItemType id, ItemType user, ItemTy
 	return true;
 }
 
+// add an item at a specified position in the list (insert)
 bool PostList::add(int index, ItemType post, ItemType t, ItemType id, ItemType user, ItemType likes)
 {
 	if (index >= 0 && index <= size)
@@ -73,6 +81,7 @@ bool PostList::add(int index, ItemType post, ItemType t, ItemType id, ItemType u
 	return false;
 }
 
+// remove an item at a specified position in the list
 void PostList::remove(int index)
 {
 	if (index >= 0 && index <= size)
@@ -106,6 +115,7 @@ void PostList::remove(int index)
 	}
 }
 
+// get an item at a specified position of the list (retrieve)
 ItemType PostList::getPost(int index) {
 
 	if (index >= 0 && index <= size - 1) {
@@ -121,6 +131,7 @@ ItemType PostList::getPost(int index) {
 	}
 }
 
+// get the title at a specified position of the list (retrieve)
 ItemType PostList::getTitle(int index) {
 
 	if (index >= 0 && index <= size - 1) {
@@ -136,7 +147,8 @@ ItemType PostList::getTitle(int index) {
 	}
 }
 
-bool PostList::getTitle(string title) {
+// returns true if title is in list of post
+bool PostList::compareTitle(string title) {
 
 	Node* temp = firstNode;
 
@@ -153,6 +165,7 @@ bool PostList::getTitle(string title) {
 	return false;
 }
 
+// check if the list is empty
 bool PostList::isEmpty()
 {
 
@@ -164,6 +177,7 @@ bool PostList::isEmpty()
 	return true;
 }
 
+// check the size of the list
 int PostList::getLength()
 {
 
@@ -179,6 +193,7 @@ int PostList::getLength()
 	return i;
 }
 
+// display all the items in the list
 void PostList::print()
 {
 	Node* temp = new Node();
@@ -192,6 +207,7 @@ void PostList::print()
 	cout << "----------" << endl;
 }
 
+// get the user at a specified position of the list (retrieve)
 string PostList::getUser(int index) {
 
 	if (index >= 0 && index <= size - 1) {
@@ -207,7 +223,8 @@ string PostList::getUser(int index) {
 	}
 }
 
-string PostList::getID(int index) {
+// get the ID at a specified position of the list (retrieve)
+ItemType PostList::getID(int index) {
 	if (index >= 0 && index <= size - 1) {
 
 		Node* ptr;
@@ -221,7 +238,8 @@ string PostList::getID(int index) {
 	}
 }
 
-bool PostList::getID(string id) {
+// returns true if id is in list of post
+bool PostList::compareID(string id) {
 	Node* temp = firstNode;
 
 	while (temp != NULL) {
@@ -237,6 +255,7 @@ bool PostList::getID(string id) {
 	return false;
 }
 
+// get the amount of likes of a specific post at the specified position of the list (retrieve)
 string PostList::getLikes(int index) {
 	if (index >= 0 && index <= size - 1) {
 
@@ -251,6 +270,7 @@ string PostList::getLikes(int index) {
 	}
 }
 
+// returns true if like attribute is increased
 bool PostList::giveLike(int index) {
 	index = index - 1;
 	if (index >= 0 && index <= size - 1) {
@@ -267,20 +287,22 @@ bool PostList::giveLike(int index) {
 	return false;
 }
 
-void PostList::swap(int index) {
-	if (index == 0) return; // No need to swap the first node with itself
+// swaps node at index with firstNode
+void PostList::swap(string id) {
+	if (size < 1) return; // No need to swap the first node with itself
 
 	Node* prev = NULL;
 	Node* node = firstNode;
 
-	// Find the node at the given index
-	for (int i = 0; i < index; i++) {
+	while (node != NULL && node->id != id) {
 		prev = node;
-		node = node->next;
+		node = node->next; // traverse to the next node
 	}
 
-	// Swap the node with the first node
-	prev->next = node->next;
-	node->next = firstNode;
-	firstNode = node;
+	if (prev != NULL) {
+		// Swap the node with the first node
+		prev->next = node->next;
+		node->next = firstNode;
+		firstNode = node;
+	}
 }
