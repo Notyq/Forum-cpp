@@ -48,4 +48,7 @@ public:
 
 	// display all the items in the list
 	void print();
+
+	// swaps node at index with firstNode
+	void swap(int index);
 };

@@ -492,6 +492,22 @@ void displayReply(ReplyList replyList, PostList postList) {
     }
 }
 
+void chooseStickyTopic(TopicList topicList) {
+
+    int index;
+    cout << "\nChoose topic to stick: ";
+    cin >> index;
+
+    if (topicList.getLength() > index) {
+        topicList.swap(index);
+        cout << "\nSticky topic added!\n";
+    }
+    else
+    {
+        cout << "\nInvalid option!\n";
+    }
+}
+
 int main()
 {
     //Global variables
@@ -531,97 +547,117 @@ int main()
             if (length > 0) {
                 for (int i = 0; i < length; i++) {
                     string tName = topicList.get(i);
-                    cout << "[" << i + 1 << "] ";
+                    cout << i + 1 << " ";
                     SetConsoleTextAttribute(hConsole, 14);
                     cout << tName << endl;
                     SetConsoleTextAttribute(hConsole, 15);
                 }
                 cout << "============================" << endl;
-                cout << "Enter option: ";
+                cout << "[1] View topic";
+                cout << "\n[2] Stick topic\n";
+                cout << "============================" << endl;
+                cout << "Option: ";
                 cin >> option;
 
-                if (option - 1 < length) {
-                    cout << "\033[2J\033[H";
-                    while (true) {
-                    SetConsoleTextAttribute(hConsole, 14);
-                    cout << "[" + topicList.get(option - 1) + "]" << endl;
-                    SetConsoleTextAttribute(hConsole, 15);
-                    if (!postList.isEmpty()) {
-                        for (int j = 0; j < postList.getLength(); j++) {
-                            string postTitle = postList.getTitle(j);
-                            string postID = postList.getID(j);
-                            if (postTitle == topicList.get(option - 1)) {
+                if (option == 1) {
+                    int topicid;
+                    cout << "Enter topic ID: ";
+                    cin >> topicid;
 
-                                cout << "[" << postID << "] ";
-                                SetConsoleTextAttribute(hConsole, 9);
-                                cout << postList.getPost(j) << endl;
-                                SetConsoleTextAttribute(hConsole, 15);
-                                cout << "    by ";
-                                SetConsoleTextAttribute(hConsole, 10);
-                                cout << postList.getUser(j) << endl;
-                                SetConsoleTextAttribute(hConsole, 15);
+                    if (topicid - 1 < length) {
+                        cout << "\033[2J\033[H";
+                        while (true) {
+                            SetConsoleTextAttribute(hConsole, 14);
+                            cout << "[" + topicList.get(topicid - 1) + "]" << endl;
+                            SetConsoleTextAttribute(hConsole, 15);
+                            if (!postList.isEmpty()) {
+                                for (int j = 0; j < postList.getLength(); j++) {
+                                    string postTitle = postList.getTitle(j);
+                                    string postID = postList.getID(j);
+                                    if (postTitle == topicList.get(topicid - 1)) {
+
+                                        cout << "[" << postID << "] ";
+                                        SetConsoleTextAttribute(hConsole, 9);
+                                        cout << postList.getPost(j) << endl;
+                                        SetConsoleTextAttribute(hConsole, 15);
+                                        cout << "    by ";
+                                        SetConsoleTextAttribute(hConsole, 10);
+                                        cout << postList.getUser(j) << endl;
+                                        SetConsoleTextAttribute(hConsole, 15);
+                                    }
+                                    else
+                                    {
+                                        continue;
+                                    }
+                                }
                             }
                             else
                             {
-                                continue;
+                                cout << "No posts Found!\n " << endl;
+                            }
+                            cout << "\n===========Options===========" << endl;
+                            cout << "[1] Create new post" << endl;
+                            cout << "[2] View post" << endl;
+                            cout << "[0] Back to Menu" << endl;
+                            cout << "=============================" << endl;
+                            cout << "Option: ";
+                            string input;
+                            cin >> input;
+
+                            if (input == "1") {
+                                string postContent;
+                                cout << endl;
+
+                                createPost(postContent);
+                                if (!postList.isEmpty()) {
+                                    postList.add(postContent, topicList.get(topicid - 1), to_string(id + postList.getLength()), username, "0");
+                                }
+                                else
+                                {
+                                    postList.add(postContent, topicList.get(topicid - 1), to_string(id), username, "0");
+                                }
+                                savePost(postList);
+                                cout << "\033[2J\033[H";
+                                SetConsoleTextAttribute(hConsole, 10);
+                                cout << "Posted!\n";
+                                SetConsoleTextAttribute(hConsole, 15);
+                            }
+                            else if (input == "2") {
+                                ViewPost(username, postList, replyList);
+                            }
+                            else if (input == "0")
+                            {
+                                cout << "\033[2J\033[H";
+                                break;
+                            }
+                            else
+                            {
+                                cout << "\033[2J\033[H";
+                                SetConsoleTextAttribute(hConsole, 12);
+                                cout << "Invalid option!\n" << endl;
+                                SetConsoleTextAttribute(hConsole, 15);
                             }
                         }
                     }
                     else
                     {
-                        cout << "No posts Found!\n " << endl;
+                        cout << "\033[2J\033[H";
+                        SetConsoleTextAttribute(hConsole, 12);
+                        cout << "Invalid option!\n" << endl;
+                        SetConsoleTextAttribute(hConsole, 15);
                     }
-                        cout << "\n===========Options===========" << endl;
-                        cout << "[1] Create new post" << endl;
-                        cout << "[2] View post" << endl;
-                        cout << "[0] Back to Menu" << endl;
-                        cout << "=============================" << endl;
-                        cout << "Option: ";
-                        string input;
-                        cin >> input;
-
-                        if (input == "1") {
-                            string postContent;
-                            cout << endl;
-
-                            createPost(postContent);
-                            if (!postList.isEmpty()) {
-                                postList.add(postContent, topicList.get(option - 1), to_string(id + postList.getLength()), username, "0");
-                            }
-                            else
-                            {
-                                postList.add(postContent, topicList.get(option - 1), to_string(id), username, "0");
-                            }
-                            savePost(postList);
-                            cout << "\033[2J\033[H";
-                            SetConsoleTextAttribute(hConsole, 10);
-                            cout << "Posted!\n";
-                            SetConsoleTextAttribute(hConsole, 15);
-                        }
-                        else if (input == "2") {
-                            ViewPost(username, postList, replyList);
-                        }
-                        else if (input == "0")
-                        {
-                            cout << "\033[2J\033[H";
-                            break;
-                        }
-                        else
-                        {
-                            cout << "\033[2J\033[H";
-                            SetConsoleTextAttribute(hConsole, 12);
-                            cout << "Invalid option!\n" << endl;
-                            SetConsoleTextAttribute(hConsole, 15);
-                        }
-                    }
-                    
                 }
-                else 
+                else if (option == 2)
+                {
+                    chooseStickyTopic(topicList);
+                }
+                else
                 {
                     cout << "\033[2J\033[H";
                     SetConsoleTextAttribute(hConsole, 12);
-                    cout << "Invalid option!\n" << endl;
+                    cout << "Invalid Option\n" << endl;
                     SetConsoleTextAttribute(hConsole, 15);
+                    continue;
                 }
             }
             else
@@ -702,7 +738,8 @@ int main()
                         }
                     }
                     if (numPost == 0) {
-                        cout << "\n No posts by user!\n";;
+                        cout << "No posts by user!\n\n";;
+                        break;
                     }
                     else
                     {
