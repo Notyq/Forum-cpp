@@ -286,7 +286,7 @@ void saveTopic(TopicList topicList) {
     fstream file;
     string topic;
 
-    file.open("topics.txt");
+    file.open("topics.txt", ofstream::trunc);
     for (int i = 0; i < topicList.getLength(); i++) {
         topic = topicList.get(i);
         file << topic + "\n";
@@ -303,7 +303,7 @@ void savePost(PostList postList) {
     string title;
     string likes;
 
-    file.open("posts.txt");
+    file.open("posts.txt", ofstream::trunc);
     for (int i = 0; i < postList.getLength(); i++) {
         id = postList.getID(i);
         user = postList.getUser(i);
@@ -321,7 +321,7 @@ void saveReply(ReplyList replyList) {
     string content;
     string id;
     string user;
-    file.open("replies.txt");
+    file.open("replies.txt", ofstream::trunc);
     for (int i = 0; i < replyList.getLength(); i++) {
         id = replyList.getID(i);
         user = replyList.getUser(i);
