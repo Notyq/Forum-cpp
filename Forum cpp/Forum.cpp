@@ -661,9 +661,7 @@ int main()
                     else if (tName != topicName and i+1 == topicList.getLength())
                     {                    
                         topicList.add(topicName);
-                        file.open("topics.txt", fstream::app);
-                        file << topicName + "\n";
-                        file.close();
+                        saveTopic(topicList);
                         cout << "\033[2J\033[H";
                         cout << "Topic created!\n";
                         break;
