@@ -503,7 +503,8 @@ void ViewPost(string username, PostList postList, ReplyList replyList) {
     }
 }
 
-void displayPost(PostList postList, TopicList topicList, int index) {
+// Displays all posts under a topic using the postlist, topic list
+void displayPostList(PostList postList, TopicList topicList, int index) {
     if (!postList.isEmpty()) {
         for (int j = 0; j < postList.getLength(); j++) {
             string postTitle = postList.getTitle(j);
@@ -526,23 +527,6 @@ void displayPost(PostList postList, TopicList topicList, int index) {
         }
     }
 }
-
-void displayReply(ReplyList replyList, PostList postList) {
-
-    for (int n = 0; n < replyList.getLength(); n++) {
-        for (int j = 0; j < postList.getLength(); j++) {
-            if (replyList.getID(n) == postList.getID(j)) {
-                cout << "          [ " << replyList.get(n) << " ]" << endl;
-                cout << "                    -" << replyList.getUser(n);
-            }
-            else
-            {
-                continue;
-            }
-        }
-    }
-}
-
 
 
 int main()
@@ -607,7 +591,7 @@ int main()
                             cout << "[" + topicList.get(topicid - 1) + "]" << endl;
                             SetConsoleTextAttribute(hConsole, 15);
 
-                            displayPost(postList, topicList, topicid);
+                            displayPostList(postList, topicList, topicid);
                             
                             cout << "\n===========Options===========" << endl;
                             cout << "[1] Create new post" << endl;
