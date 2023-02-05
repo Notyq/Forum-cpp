@@ -20,6 +20,8 @@
 
 using namespace std;
 
+HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
 // Login & SignUp Options for user authentication
 string logIn(Dictionary profilesTable)
 {
@@ -488,6 +490,30 @@ void ViewPost(string username, PostList postList, ReplyList replyList) {
     }
 }
 
+void displayPost(PostList postList, TopicList topicList, int index) {
+    if (!postList.isEmpty()) {
+        for (int j = 0; j < postList.getLength(); j++) {
+            string postTitle = postList.getTitle(j);
+            string postID = postList.getID(j);
+            if (postTitle == topicList.get(index - 1)) {
+
+                cout << "[" << postID << "] ";
+                SetConsoleTextAttribute(hConsole, 9);
+                cout << postList.getPost(j) << endl;
+                SetConsoleTextAttribute(hConsole, 15);
+                cout << "    by ";
+                SetConsoleTextAttribute(hConsole, 10);
+                cout << postList.getUser(j) << endl;
+                SetConsoleTextAttribute(hConsole, 15);
+            }
+            else
+            {
+                continue;
+            }
+        }
+    }
+}
+
 void displayReply(ReplyList replyList, PostList postList) {
 
     for (int n = 0; n < replyList.getLength(); n++) {
@@ -504,10 +530,11 @@ void displayReply(ReplyList replyList, PostList postList) {
     }
 }
 
+
+
 int main()
 {
     //Global variables
-    HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     Dictionary profiles;
     bool authenticated = true; // <--------- for yq's debugging
     string username;
@@ -566,34 +593,13 @@ int main()
                             SetConsoleTextAttribute(hConsole, 14);
                             cout << "[" + topicList.get(topicid - 1) + "]" << endl;
                             SetConsoleTextAttribute(hConsole, 15);
-                            if (!postList.isEmpty()) {
-                                for (int j = 0; j < postList.getLength(); j++) {
-                                    string postTitle = postList.getTitle(j);
-                                    string postID = postList.getID(j);
-                                    if (postTitle == topicList.get(topicid - 1)) {
 
-                                        cout << "[" << postID << "] ";
-                                        SetConsoleTextAttribute(hConsole, 9);
-                                        cout << postList.getPost(j) << endl;
-                                        SetConsoleTextAttribute(hConsole, 15);
-                                        cout << "    by ";
-                                        SetConsoleTextAttribute(hConsole, 10);
-                                        cout << postList.getUser(j) << endl;
-                                        SetConsoleTextAttribute(hConsole, 15);
-                                    }
-                                    else
-                                    {
-                                        continue;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                cout << "No posts Found!\n " << endl;
-                            }
+                            displayPost(postList, topicList, topicid);
+                            
                             cout << "\n===========Options===========" << endl;
                             cout << "[1] Create new post" << endl;
                             cout << "[2] View post" << endl;
+                            cout << "[3] Set sticky post" << endl;
                             cout << "[0] Back to Menu" << endl;
                             cout << "=============================" << endl;
                             cout << "Option: ";
@@ -620,6 +626,31 @@ int main()
                             }
                             else if (input == "2") {
                                 ViewPost(username, postList, replyList);
+                            }
+                            else if (input == "3")
+                            {
+                                int index;
+                                cout << "\nChoose Post to stick: ";
+                                cin >> index;
+
+                                if (postList.getLength() >= index) {
+                                    if (postList.getTitle(topicList.get(topicid - 1)) == true)
+                                    {
+                                        postList.swap(index - 1);
+                                        cout << "\nSticky post added!\n";
+                                        savePost(postList);
+
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        cout << "\nInvalid option!asdas\n";
+                                    }
+                                }
+                                else
+                                {
+                                    cout << "\nInvalid option!\n";
+                                }
                             }
                             else if (input == "0")
                             {
