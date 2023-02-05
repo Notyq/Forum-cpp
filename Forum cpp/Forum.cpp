@@ -158,7 +158,8 @@ string logIn(Dictionary profilesTable)
         }
     }
 }
-// Load Topics from Text File
+
+// Load Topics from Text File and returns a topicList
 TopicList loadTopic(TopicList topicList) {
     // Loading of saved topics
     fstream file;
@@ -178,7 +179,8 @@ TopicList loadTopic(TopicList topicList) {
     file.close();
     return topicList;
 }
-// Load Posts from Text File
+
+// Load Posts from Text File and returns a PostList
 PostList loadPost(PostList postList) {
     fstream file;
     string Post;
@@ -231,7 +233,8 @@ PostList loadPost(PostList postList) {
     file.close();
     return postList;
 }
-// Load Replies from Text File
+
+// Load Replies from Text File and returns a ReplyList
 ReplyList loadReply(ReplyList replyList) {
     fstream file;
     string ReplyList;
@@ -276,6 +279,7 @@ ReplyList loadReply(ReplyList replyList) {
     return replyList;
 }
 
+// Save Topics into Text File from TopicList
 void saveTopic(TopicList topicList) {
     fstream file;
     string topic;
@@ -287,6 +291,7 @@ void saveTopic(TopicList topicList) {
     }
     file.close();
 }
+
 // Save Posts into Text File from PostList
 void savePost(PostList postList) {
     fstream file;
@@ -307,6 +312,7 @@ void savePost(PostList postList) {
     }
     file.close();
 }
+
 // Save Replies into Text File from ReplyList
 void saveReply(ReplyList replyList) {
     fstream file;
@@ -322,7 +328,8 @@ void saveReply(ReplyList replyList) {
     }
     file.close();
 }
-// Input of Topic
+
+// Input of Topic content
 string createTopic(string& topicName)
 {
     cout << "New topic title: ";
@@ -330,7 +337,8 @@ string createTopic(string& topicName)
 
     return topicName;
 }
-// Input of Post
+
+// Input of Post content
 string createPost(string& postContent) {
 
     cout << "Create Posts: \n";
@@ -338,7 +346,8 @@ string createPost(string& postContent) {
 
     return postContent;
 }
-// Input of Reply
+
+// Input of Reply content
 string replyPost(string& reply) {
 
     cout << "Reply to post: \n";
@@ -346,7 +355,8 @@ string replyPost(string& reply) {
 
     return reply;
 }
-// Display Main Menu
+// Display Main Menu with username and returns choice of option
+
 string MainMenu(string username) {
     HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     cout << "Current User: ";
@@ -364,7 +374,7 @@ string MainMenu(string username) {
     cin >> choice;
     return choice;
 }
-// Display post & options for post
+// Display post & options for post and returns a bool value to check if a post is displayed
 bool DisplayPost(int index, PostList postList, ReplyList replyList) {
     HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     string id;
@@ -419,6 +429,9 @@ bool DisplayPost(int index, PostList postList, ReplyList replyList) {
     return true;
 }
 
+// Displays the Post and its details, likes and replies and also allows
+// users to reply to the post and like it. This requires the username, 
+// PostList and ReplyList
 void ViewPost(string username, PostList postList, ReplyList replyList) {
     HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     string reply;
