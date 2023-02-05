@@ -542,6 +542,7 @@ int main()
     int id = 1;
     fstream file;
 
+    // LinkedLists to store all information
     topicList = loadTopic(topicList);
     postList = loadPost(postList);
     replyList = loadReply(replyList);
@@ -557,8 +558,9 @@ int main()
     cout << "\033[2J\033[H";
     while (authenticated)
     {
+        //display main menu
         choice = MainMenu(username);
-        if (choice == "1")
+        if (choice == "1") // view all topics
         {
             int option;
             int length = topicList.getLength();
@@ -579,7 +581,7 @@ int main()
                 cout << "Option: ";
                 cin >> option;
 
-                if (option == 1) {
+                if (option == 1) { // view into specific topic
                     int topicid;
                     cout << "Enter topic ID: ";
                     cin >> topicid;
@@ -603,7 +605,7 @@ int main()
                             string input;
                             cin >> input;
 
-                            if (input == "1") {
+                            if (input == "1") { // create new posts
                                 string postContent;
                                 createPost(postContent);
                                 if (!postList.isEmpty()) {
@@ -619,10 +621,10 @@ int main()
                                 cout << "Posted!\n";
                                 SetConsoleTextAttribute(hConsole, 15);
                             }
-                            else if (input == "2") {
+                            else if (input == "2") { // view into specific posts (replies, likes)
                                 ViewPost(username, postList, replyList);
                             }
-                            else if (input == "3")
+                            else if (input == "3") // set sticky posts
                             {
                                 int index;
                                 cout << "\nChoose Post to stick: ";
@@ -699,14 +701,14 @@ int main()
             }
         }   
 
-        else if (choice == "2") {
+        else if (choice == "2") { // creates topic
             string topicName; 
             createTopic(topicName);
  
             if (!topicList.isEmpty()) {
                 for (int i = 0; i < topicList.getLength(); i++) {
                     string tName = topicList.get(i);
-                    if (tName == topicName) {
+                    if (tName == topicName) { // validation if new topic name is already existing
                         cout << "\033[2J\033[H";
                         cout << "Topic already exists!\n";
                         break;
@@ -725,7 +727,7 @@ int main()
                     }
                 }
             }
-            else
+            else // adds immediately if no topics in topicList
             {
                 topicList.add(topicName);
                 file.open("topics.txt", fstream::app);
@@ -734,20 +736,18 @@ int main()
                 cout << "\033[2J\033[H";
                 cout << "Topic created!\n";
             }
-            
-            //string title = topicList.get(0);
-            //cout << title << endl;
         }
 
-        else if (choice == "3") {
+        else if (choice == "3") { // views all topics and post by own user
             cout << "\033[2J\033[H";
             while (true) {
                 int numPost = 0;
                 int i = 0;
                 cout << "==============Topics and Posts by you==============" << endl;
                 if (!postList.isEmpty()) {
-                    while (i < postList.getLength()) {
+                    while (i < postList.getLength()) { // displays all posts
                         if (postList.getUser(i) == username) {
+                            
                             string ID = postList.getID(i);
                             SetConsoleTextAttribute(hConsole, 14);
                             cout << "[" + postList.getTitle(i) + "]" << endl;
@@ -764,7 +764,7 @@ int main()
                             i++;
                         }
                     }
-                    if (numPost == 0) {
+                    if (numPost == 0) { // if no posts made by user
                         cout << "No posts by user!\n\n";;
                         break;
                     }
@@ -780,20 +780,20 @@ int main()
                         string input;
                         cin >> input;
 
-                        if (input == "1") {
+                        if (input == "1") { // edit posts
                             string edit;
                             string id;
                             cout << "\nEnter post ID: ";
                             cin >> id;
 
                             for (int j = 0; j < postList.getLength(); j++) {
-                                if (id == postList.getID(j) && username == postList.getUser(j)) {
+                                if (postList.compareID(id) == true && username == postList.getUser(j)) { // if current user matches post's user
                                     string title = postList.getTitle(j);
                                     string likes = postList.getLikes(j);
                                     string editCheck = " [edited]";
                                     cout << "Edit content: ";
                                     getline(cin >> ws, edit);
-                                    postList.remove(stoi(id));
+                                    postList.remove(id);
                                     postList.add(stoi(id), edit + editCheck, title, id, username, likes);
                                     savePost(postList);
                                     cout << "\033[2J\033[H";

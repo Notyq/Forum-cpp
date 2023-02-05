@@ -39,6 +39,9 @@ class PostList : public TopicList {
 	// remove an item at a specified position in the list
 	void remove(int index);
 
+	// deletes nodes if node.id = id
+	void remove(string id);
+
 	// get an item at a specified position of the list (retrieve)
 	ItemType getPost(int index);
 

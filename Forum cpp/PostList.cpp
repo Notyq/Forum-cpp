@@ -115,6 +115,28 @@ void PostList::remove(int index)
 	}
 }
 
+// deletes nodes if node.id = id
+void PostList::remove(string id)
+{
+	Node* current = firstNode;
+	Node* previous = nullptr;
+	while (current != nullptr) {
+		if (current->id == id) {
+			if (previous == nullptr) {
+				firstNode = current->next;
+			}
+			else {
+				previous->next = current->next;
+			}
+			delete current;
+			size--;
+			break;
+		}
+		previous = current;
+		current = current->next;
+	}
+}
+
 // get an item at a specified position of the list (retrieve)
 ItemType PostList::getPost(int index) {
 
