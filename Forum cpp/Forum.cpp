@@ -275,6 +275,18 @@ ReplyList loadReply(ReplyList replyList) {
     file.close();
     return replyList;
 }
+
+void saveTopic(TopicList topicList) {
+    fstream file;
+    string topic;
+
+    file.open("topics.txt");
+    for (int i = 0; i < topicList.getLength(); i++) {
+        topic = topicList.get(i);
+        file << topic + "\n";
+    }
+    file.close();
+}
 // Save Posts into Text File from PostList
 void savePost(PostList postList) {
     fstream file;
