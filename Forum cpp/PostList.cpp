@@ -136,6 +136,23 @@ ItemType PostList::getTitle(int index) {
 	}
 }
 
+bool PostList::getTitle(string title) {
+
+	Node* temp = firstNode;
+
+	while (temp != NULL) {
+		if (temp->title != title) {
+			temp = temp->next;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool PostList::isEmpty()
 {
 
@@ -204,6 +221,22 @@ string PostList::getID(int index) {
 	}
 }
 
+bool PostList::getID(string id) {
+	Node* temp = firstNode;
+
+	while (temp != NULL) {
+		if (temp->id != id) {
+			temp = temp->next;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 string PostList::getLikes(int index) {
 	if (index >= 0 && index <= size - 1) {
 
@@ -232,4 +265,22 @@ bool PostList::giveLike(int index) {
 		return true;
 	}
 	return false;
+}
+
+void PostList::swap(int index) {
+	if (index == 0) return; // No need to swap the first node with itself
+
+	Node* prev = NULL;
+	Node* node = firstNode;
+
+	// Find the node at the given index
+	for (int i = 0; i < index; i++) {
+		prev = node;
+		node = node->next;
+	}
+
+	// Swap the node with the first node
+	prev->next = node->next;
+	node->next = firstNode;
+	firstNode = node;
 }

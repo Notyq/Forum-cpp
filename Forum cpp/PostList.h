@@ -44,6 +44,8 @@ class PostList : public TopicList {
 
 	ItemType getTitle(int index);
 
+	bool getTitle(string title);
+
 	// check if the list is empty
 	bool isEmpty();
 
@@ -57,7 +59,12 @@ class PostList : public TopicList {
 
 	string getID(int index);
 
+	bool getID(string id);
+
 	string getLikes(int index);
 
 	bool giveLike(int index);
+
+	// swaps node at index with firstNode
+	void swap(int index);
 };
