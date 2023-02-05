@@ -221,6 +221,22 @@ string PostList::getID(int index) {
 	}
 }
 
+bool PostList::getID(string id) {
+	Node* temp = firstNode;
+
+	while (temp != NULL) {
+		if (temp->id != id) {
+			temp = temp->next;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 string PostList::getLikes(int index) {
 	if (index >= 0 && index <= size - 1) {
 

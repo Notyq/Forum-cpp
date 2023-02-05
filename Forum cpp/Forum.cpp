@@ -634,7 +634,7 @@ int main()
                                 cin >> index;
 
                                 if (postList.getLength() >= index) {
-                                    if (postList.getTitle(topicList.get(topicid - 1)) == true)
+                                    if (postList.getTitle(topicList.get(topicid - 1)) == true && postList.getID(to_string(index)) == true)
                                     {
                                         postList.swap(index - 1);
                                         cout << "\nSticky post added!\n";
@@ -644,7 +644,7 @@ int main()
                                     }
                                     else
                                     {
-                                        cout << "\nInvalid option!asdas\n";
+                                        cout << "\nInvalid option!\n";
                                     }
                                 }
                                 else

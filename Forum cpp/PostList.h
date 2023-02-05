@@ -59,6 +59,8 @@ class PostList : public TopicList {
 
 	string getID(int index);
 
+	bool getID(string id);
+
 	string getLikes(int index);
 
 	bool giveLike(int index);
