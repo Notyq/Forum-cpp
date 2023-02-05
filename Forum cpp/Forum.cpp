@@ -802,7 +802,7 @@ int main()
                                     SetConsoleTextAttribute(hConsole, 15);
                                     break;
                                 }
-                                else if (j + 1 == postList.getLength())
+                                else if (j + 1 == postList.getLength()) // checks for valid id
                                 {
                                     cout << "\033[2J\033[H";
                                     SetConsoleTextAttribute(hConsole, 12);
@@ -816,23 +816,24 @@ int main()
                                 }
                             }
                         }
-                        else if (input == "2") {
+                        else if (input == "2") { // delete post
                             bool match = false;
                             string inputID;
                             cout << "\nEnter post ID: ";
                             cin >> inputID;
 
                             for (int j = 0; j < postList.getLength(); j++) {
-                                if (inputID == postList.getID(j) && username == postList.getUser(j)) {
+                                if (postList.compareID(inputID) && username == postList.getUser(j)) {
                                     match = true;
                                     string cfm;
                                     cout << "Confirm deletion (Y/N): ";
                                     cin >> cfm;
 
                                     if (cfm == "y") {
-                                        postList.remove(j);
-                                        savePost(postList);
+                                        postList.remove(inputID);
                                         id++;
+                                        //postList.print();
+                                        savePost(postList);
                                         cout << "\nDeleted!\n";
 
                                     }
