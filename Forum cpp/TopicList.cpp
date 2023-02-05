@@ -156,20 +156,17 @@ void TopicList::print()
 void TopicList::swap(int index) {
 	if (index == 0) return; // No need to swap the first node with itself
 
-	Node* prev = NULL;
-	Node* node = firstNode;
+    Node *prev = NULL;
+    Node *node = firstNode;
 
-	// Find the node at the given index
-	for (int i = 0; i < index; i++) {
-		prev = node;
-		node = node->next;
-	}
+    // Find the node at the given index
+    for (int i = 0; i < index; i++) {
+        prev = node;
+        node = node->next;
+    }
 
-	// Swap the node with the first node
-	if (prev != NULL) {
-		prev->next = firstNode;
-		node->next = firstNode->next;
-		firstNode->next = node->next;
-		firstNode = node;
-	}
+    // Swap the node with the first node
+    prev->next = node->next;
+    node->next = firstNode;
+    firstNode = node;
 }

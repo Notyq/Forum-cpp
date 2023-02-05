@@ -357,7 +357,7 @@ string MainMenu(string username) {
     cout << "===========Forums===========" << endl;
     cout << "[1] View Topics" << endl;
     cout << "[2] Create Topics" << endl;
-    cout << "[3] View Your Posts and Replies" << endl;
+    cout << "[3] View Your Topics and Posts by you" << endl;
     cout << "[0] Exit" << endl;
     cout << "============================" << endl;
     cout << "Choice: ";
@@ -504,22 +504,6 @@ void displayReply(ReplyList replyList, PostList postList) {
     }
 }
 
-void chooseStickyTopic(TopicList topicList) {
-
-    int index;
-    cout << "\nChoose topic to stick: ";
-    cin >> index;
-
-    if (topicList.getLength() > index) {
-        topicList.swap(index);
-        cout << "\nSticky topic added!\n";
-    }
-    else
-    {
-        cout << "\nInvalid option!\n";
-    }
-}
-
 int main()
 {
     //Global variables
@@ -661,7 +645,20 @@ int main()
                 }
                 else if (option == 2)
                 {
-                    chooseStickyTopic(topicList);
+                    int index;
+                    cout << "\nChoose topic to stick: ";
+                    cin >> index;
+
+                    if (topicList.getLength() >= index) {
+                        topicList.swap(index - 1);
+                        cout << "\nSticky topic added!\n";
+
+                        saveTopic(topicList);
+                    }
+                    else
+                    {
+                        cout << "\nInvalid option!\n";
+                    }
                 }
                 else
                 {
@@ -727,7 +724,7 @@ int main()
             while (true) {
                 int numPost = 0;
                 int i = 0;
-                cout << "===================Posts===================" << endl;
+                cout << "==============Topics and Posts by you==============" << endl;
                 if (!postList.isEmpty()) {
                     while (i < postList.getLength()) {
                         if (postList.getUser(i) == username) {
