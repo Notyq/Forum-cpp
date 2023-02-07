@@ -477,6 +477,7 @@ void ViewPost(string username, PostList postList, ReplyList replyList) {
                             saveReply(replyList);
                             cout << "\033[2J\033[H";
                             cout << "Reply posted!\n";
+                            break;
                         }
                     }
                 }
