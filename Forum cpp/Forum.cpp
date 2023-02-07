@@ -441,13 +441,7 @@ void ViewPost(string username, PostList postList, ReplyList replyList) {
     cout << "Select Post id: ";
     cin >> postID;
     // check if there is post in topic
-    if (stoi(postID) > postList.getLength() || stoi(postID) < 1) {
-        cout << "\033[2J\033[H";
-        SetConsoleTextAttribute(hConsole, 12);
-        cout << "Invalid option!" << endl;
-        SetConsoleTextAttribute(hConsole, 15);
-    }
-    else {
+    if (postList.compareID(postID) == true) {
         while (true)
         {
             cout << "\033[2J\033[H";
@@ -501,6 +495,12 @@ void ViewPost(string username, PostList postList, ReplyList replyList) {
                 }
             }
         }
+    }
+    else {
+        cout << "\033[2J\033[H";
+        SetConsoleTextAttribute(hConsole, 12);
+        cout << "Invalid option!" << endl;
+        SetConsoleTextAttribute(hConsole, 15);
     }
 }
 
