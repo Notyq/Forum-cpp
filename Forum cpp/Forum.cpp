@@ -471,7 +471,7 @@ void ViewPost(string username, PostList postList, ReplyList replyList) {
                 if (input == "1") {
                     string reply;
                     for (int j = 0; j < postList.getLength(); j++) {
-                        if (postID == postList.getID(j)) {
+                        if (postList.compareID(postID) == true) {
                             replyPost(reply);
                             replyList.add(reply, username, postID);
                             saveReply(replyList);
@@ -742,12 +742,11 @@ int main()
             cout << "\033[2J\033[H";
             while (true) {
                 int numPost = 0;
-                int i = 0;
                 cout << "==============Topics and Posts by you==============" << endl;
                 if (!postList.isEmpty()) {
-                    while (i < postList.getLength()) { // displays all posts
+                    for (int i = 0; i < postList.getLength(); i++) {
                         if (postList.getUser(i) == username) {
-                            
+
                             string ID = postList.getID(i);
                             SetConsoleTextAttribute(hConsole, 14);
                             cout << "[" + postList.getTitle(i) + "]" << endl;
@@ -757,13 +756,8 @@ int main()
                             cout << postList.getPost(i) << endl;
                             SetConsoleTextAttribute(hConsole, 15);
                             numPost += 1;
-                            i += 1;
                         }
-                        else
-                        {
-                            i++;
-                        }
-                    }
+                    }                    
                     if (numPost == 0) { // if no posts made by user
                         cout << "No posts by user!\n\n";;
                         break;
