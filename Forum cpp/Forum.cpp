@@ -303,7 +303,7 @@ void savePost(PostList postList) {
     string title;
     string likes;
 
-    file.open("posts.txt", ofstream::trunc);
+    file.open("posts.txt");
     for (int i = 0; i < postList.getLength(); i++) {
         id = postList.getID(i);
         user = postList.getUser(i);

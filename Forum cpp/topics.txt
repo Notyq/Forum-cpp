@@ -1,8 +1,1 @@
-Welcome to the Forum!
-C++ Help
-Data Structures
-Algorithms
-Artificial Intelligience for Games
-Test Automation
-Scrum Master Questions
-C#
+New Topic
