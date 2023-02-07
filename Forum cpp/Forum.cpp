@@ -789,7 +789,7 @@ int main()
                                     cout << "Edit content: ";
                                     getline(cin >> ws, edit);
                                     postList.remove(id);
-                                    postList.add(stoi(id), edit + editCheck, title, id, username, likes);
+                                    postList.add(j, edit + editCheck, title, id, username, likes);
                                     savePost(postList);
                                     cout << "\033[2J\033[H";
                                     SetConsoleTextAttribute(hConsole, 10);
